@@ -1,0 +1,24 @@
+{
+    "_comment_0": "auth/layouts/app",
+
+    "Login": "เข้าสู่ระบบ",
+    "Logout": "ออกจากระบบ",
+    "System by": "ระบบโดย",
+    "Version": "เวอร์ชั่น",
+
+    "_comment_0_1": "Menu",
+    "Dashboard": "หน้าควบคุม",
+    "Orders": "คำสั่งซื้อ",
+    "Product": "สินค้า",
+    "Customer": "ลูกค้า",
+    "Supplier": "ผู้ผลิต",
+    "Setting": "ตั้งค่า",
+
+
+    "_comment_1": "auth/login",
+
+    "E-Mail Address": "อีเมลล์",
+    "Password": "รหัสผ่าน",
+    "Remember Me": "จดจำการเข้าระบบ"
+
+}
