@@ -1,11 +1,16 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Niramit');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+main {
+    min-height: 83vh;
+}
 
 #navBar {
     .navbar-nav {
@@ -31,6 +36,12 @@
                 margin: 0px;
                 padding: 0px 15px;
             }
+        }
+    }
+
+    .footer {
+        .language {
+            margin-left: auto;
         }
     }
 }
