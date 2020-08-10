@@ -163,12 +163,11 @@
 
     <footer class="footer mt-auto bg-white border-top py-3 shadow">
         <div class="container d-flex">
-            <span class="text-dark">{{ __('System by') }} <a target="_blank" href="https://web.sadiqeen.com/">sadiqeen.com</a></span>
-            <span class="mx-auto d-none d-sm-none d-md-block">{{ __('Version') }} : 0.1</span>
+            <small class="text-dark">{{ __('System by') }} <a target="_blank" href="https://web.sadiqeen.com/">Sadiqeen.com</a></small>
+            <small class="mx-auto d-none d-sm-none d-md-block">{{ __('Version') }} : 0.1</small>
             <small class="float-right language">
                 <a class="ml-2" href="{{ route('language', 'en') }}">English</a>
                 <a class="ml-2" href="{{ route('language', 'th') }}">Thai</a>
-                <a class="ml-2" href="{{ route('language', 'ms') }}">Malay</a>
             </small>
         </div>
     </footer>
