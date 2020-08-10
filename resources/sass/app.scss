@@ -1,0 +1,36 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Niramit');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+#navBar {
+    .navbar-nav {
+        .nav-item {
+            margin: 0px 3px;
+
+            .nav-link {
+                color: $white !important;
+            }
+
+            &.active, &:hover {
+                background-color: $navActive;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    #navBar {
+        .navbar-nav {
+            .nav-item {
+                margin: 0px;
+                padding: 0px 15px;
+            }
+        }
+    }
+}
