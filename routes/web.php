@@ -18,15 +18,7 @@ Route::get('/', function () {
 });
 
 // Change Language
-Route::get('locale/{locale}', function ($locale){
-    if (!in_array($locale, ['en', 'th', 'ms'])) {
-        abort(400);
-    }
-
-    \Session::put('locale',$locale);
-
-    return redirect()->back();
-})->name('language');
+Route::get('locale/{locale}', 'LanguageController@index')->name('language');
 
 Auth::routes([
     'register' => false, // Registration Routes...
