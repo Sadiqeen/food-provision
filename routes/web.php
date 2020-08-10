@@ -17,6 +17,17 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+// Change Language
+Route::get('locale/{locale}', function ($locale){
+    if (!in_array($locale, ['en', 'th', 'ms'])) {
+        abort(400);
+    }
+
+    \Session::put('locale',$locale);
+
+    return redirect()->back();
+})->name('language');
+
 Auth::routes([
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
