@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
 Auth::routes([
@@ -24,6 +24,6 @@ Auth::routes([
 ]);
 
 Route::middleware('auth')->group(function () {
-	Route::get('/dashboard', 'DashboardController@index')->name('home');
+	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
 
