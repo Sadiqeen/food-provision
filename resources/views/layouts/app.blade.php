@@ -16,7 +16,7 @@
 <body>
     <div id="app">
         {{-- Top bar --}}
-        <nav class="navbar navbar-expand-sm navbar-light bg-white shadow d-none d-sm-none d-md-block">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white shadow @auth d-none d-sm-none d-md-block @endauth">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -29,6 +29,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
@@ -36,13 +37,6 @@
                                 {{ __('Login') }}
                             </a>
                         </li>
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">
-                                {{ __('Register') }}
-                            </a>
-                        </li>
-                        @endif
                         @else
                         <li class="nav-item dropdown">
                             <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
@@ -51,7 +45,7 @@
                                 <span class="caret">
                                 </span>
                             </a>
-                            <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
+                            <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right mb-3">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -83,20 +77,20 @@
                     <ul class="navbar-nav m-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">
-                                Dashboard
+                                {{ __('Dashboard') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                Orders
+                                {{ __('Orders') }}
                             </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
                                 data-toggle="dropdown" href="#" id="productDropdown" role="button">
-                                Product
+                                {{ __('Product') }}
                             </a>
-                            <div aria-labelledby="productDropdown" class="dropdown-menu">
+                            <div aria-labelledby="productDropdown" class="dropdown-menu mb-3">
                                 <a class="dropdown-item" href="#">
                                     Action
                                 </a>
@@ -107,20 +101,20 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                Customer
+                                {{ __('Customer') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                Supplier
+                                {{ __('Supplier') }}
                             </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
                                 data-toggle="dropdown" href="#" id="settingDropdown" role="button">
-                                Setting
+                                {{ __('Setting') }}
                             </a>
-                            <div aria-labelledby="settingDropdown" class="dropdown-menu">
+                            <div aria-labelledby="settingDropdown" class="dropdown-menu mb-3">
                                 <a class="dropdown-item" href="#">
                                     Action
                                 </a>
@@ -149,7 +143,7 @@
                                 <span class="caret">
                                 </span>
                             </a>
-                            <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
+                            <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right mb-3">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -166,6 +160,18 @@
             @yield('content')
         </main>
     </div>
+
+    <footer class="footer mt-auto bg-white border-top py-3 shadow">
+        <div class="container d-flex">
+            <span class="text-dark">{{ __('System by') }} <a target="_blank" href="https://web.sadiqeen.com/">sadiqeen.com</a></span>
+            <span class="mx-auto d-none d-sm-none d-md-block">{{ __('Version') }} : 0.1</span>
+            <small class="float-right language">
+                <a class="ml-2" href="{{ route('language', 'en') }}">English</a>
+                <a class="ml-2" href="{{ route('language', 'th') }}">Thai</a>
+                <a class="ml-2" href="{{ route('language', 'ms') }}">Malay</a>
+            </small>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script defer="" src="{{ asset('js/app.js') }}"></script>
