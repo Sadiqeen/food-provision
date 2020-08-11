@@ -28,13 +28,31 @@
 
 @push('script')
 <script>
+    const chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    }
+
     const chart1 = {
         data: {
-            labels: ['one', 'two', 'three', 'four', 'five'],
+            labels: ['1st Week', '2nd Week', '3rd Week', '4th Week', '5th Week'],
             datasets: [{
-                label: 'Sales',
-                backgroundColor: '#f87979',
-                data: [40, 20, 23, 15, 10]
+                label: '{{ __('Last month') }}',
+                data: [40, 20, 23, 15, 10],
+                backgroundColor: chartColors.red,
+				borderColor: chartColors.red,
+                fill: false
+            },{
+                label: '{{ __('This month') }}',
+                data: [13, 25, 12, 15],
+                backgroundColor: chartColors.green,
+				borderColor: chartColors.green,
+                fill: false
             }]
         },
         options: {

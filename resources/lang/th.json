@@ -1,5 +1,5 @@
 {
-    "_comment_0": "auth/layouts/app",
+    "_comment_0": "layouts/app",
 
     "Login": "เข้าสู่ระบบ",
     "Logout": "ออกจากระบบ",
@@ -19,6 +19,12 @@
 
     "E-Mail Address": "อีเมลล์",
     "Password": "รหัสผ่าน",
-    "Remember Me": "จดจำการเข้าระบบ"
+    "Remember Me": "จดจำการเข้าระบบ",
 
+    "_comment_2": "dashboard",
+    "Last month": "เดือนที่แล้ว",
+    "This month": "เดือนนี้",
+
+
+    "_comment_": "End of file"
 }
