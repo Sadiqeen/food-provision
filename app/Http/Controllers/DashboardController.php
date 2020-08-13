@@ -13,7 +13,7 @@ class DashboardController extends Controller
      */
     public function __construct()
     {
-    	// 
+    	//
     }
 
     /**
@@ -23,6 +23,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboad');
+        return view('admin.dashboad');
     }
 }
