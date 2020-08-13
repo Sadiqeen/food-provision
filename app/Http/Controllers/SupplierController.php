@@ -24,8 +24,14 @@ class SupplierController extends Controller
      */
     public function index_api()
     {
-        $supplier = Supplier::all();
-        return datatables()->of($supplier)->toJson();
+        $supplier = Supplier::query();
+        return datatables()->of($supplier)
+                    ->addColumn('action', function ($supplier) {
+                        $view = '<a href="#view-'.$supplier->id.'" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
+                        $edit = '<a href="#edit-'.$supplier->id.'" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
+                        $delete = '<a href="#delete-'.$supplier->id.'" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
+                        return '<div class="btn-group" role="group" aria-label="Basic example">' . $view . $edit . $delete . '</div>';
+                    })->toJson();
     }
 
     /**

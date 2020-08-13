@@ -1,17 +1,18 @@
 <template>
-<div class="table-responsive-lg">
-        <table class="table" id="sp-tb">
-            <thead>
+    <div class="table-responsive-lg">
+        <table class="table table-striped position-relative" id="dataTable">
+            <thead class="bg-success text-white">
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Tel</th>
-                    <th>E-mail</th>
-                    <th>Address</th>
+                    <th v-for="(title, index) in columnsTitle" :key="index">{{ title }}</th>
                 </tr>
             </thead>
+            <tfoot class="bg-success text-white">
+                <tr>
+                    <th v-for="(title, index) in columnsTitle" :key="index">{{ title }}</th>
+                </tr>
+            </tfoot>
         </table>
-</div>
+    </div>
 </template>
 
 <script>
@@ -19,29 +20,27 @@
     import 'datatables.net-bs4'
 
     export default {
-         props: {
-            url: {
-                type: String,
-                default: null
+        props: {
+            columnsTitle: {
+                type: Array,
+                default: null,
+                required: true
             },
+            tableConfig: {
+                type: Object,
+                default: null,
+                required: true
+            }
         },
         mounted() {
-            $('#sp-tb').DataTable({
-                "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-12 col-md-5 d-inline-flex'i><'col-sm-12 col-md-7'p>>",
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                ajax: this.url,
-                columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
-                    {data: 'tel', name: 'tel'},
-                    {data: 'email', name: 'email'},
-                    {data: 'address', name: 'address'}
-                ]
-            });
+            $('#dataTable').DataTable(this.tableConfig)
         }
     };
+
 </script>
+
+<style scoped>
+.table {
+    font-size: 10pt;
+}
+</style>

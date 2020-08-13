@@ -1,6 +1,7 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Niramit');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 // Variables
 @import 'variables';
@@ -77,4 +78,12 @@ main {
     .dataTables_filter, .dataTables_paginate {
         float: left;
     }
+}
+
+.text-warning-dark {
+    color: $warning-dark;
+ }
+
+.text-warning-dark:hover {
+    color: $warning-dark-hover;
  }

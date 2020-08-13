@@ -26,6 +26,13 @@
     "Last month": "เดือนที่แล้ว",
     "This month": "เดือนนี้",
 
+    "_comment_3": "supplier",
+    "Name": "ชื่อ",
+    "Tel": "เบอร์โทรศัพท์",
+    "E-mail": "อีเมลล์",
+    "Address": "ที่อยู่",
+    "Edit": "แก้ไข",
+    "Delete": "ลบ",
 
     "_comment_": "End of file"
 }
