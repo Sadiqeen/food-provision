@@ -7,14 +7,13 @@
     <!-- CSRF Token -->
     <meta content="{{ csrf_token() }}" name="csrf-token">
     <title>
-        {{ config('app.name', 'Laravel') }}
+        @yield( 'title', __('Welcome') ) | Food Provision Systems
     </title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <div id="app">
         {{-- Top bar --}}
         <nav class="navbar navbar-expand-sm navbar-light bg-white shadow @auth d-none d-sm-none d-md-block @endauth">
             <div class="container">
@@ -159,7 +158,6 @@
         <main class="py-4" id="app">
             @yield('content')
         </main>
-    </div>
 
     <footer class="footer mt-auto bg-white border-top py-3 shadow">
         <div class="container d-flex">
