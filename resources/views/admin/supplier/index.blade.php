@@ -27,18 +27,14 @@
     ]
 
     const tableConfig = {
-        dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-12 col-md-5 d-inline-flex'i><'col-sm-12 col-md-7'p>>",
-        processing: true,
         serverSide: true,
         responsive: true,
         ajax: '{{ route('admin.supplier.api') }}',
+        order: [[ 0, "DESC" ]],
         columns: [{
             data: 'id',
             name: 'id',
             visible: false,
-            orderable: false,
             searchable: false
         },
         {

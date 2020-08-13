@@ -1,5 +1,10 @@
 <template>
-    <div class="table-responsive-lg">
+    <div class="table-responsive-lg position-relative">
+        <div class="loading">
+            <div class="spinner-grow text-danger" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">Loading...</span>
+            </div>
+        </div>
         <table class="table table-striped position-relative" id="dataTable">
             <thead class="bg-success text-white">
                 <tr>
@@ -33,7 +38,15 @@
             }
         },
         mounted() {
-            $('#dataTable').DataTable(this.tableConfig)
+            // $('#dataTable').DataTable()
+            $('#dataTable').on( 'processing.dt', function ( e, settings, processing ) {
+                if (processing) {
+                    $('.loading').css( 'display', 'flex' );
+                } else {
+                    $('.loading').css( 'display', 'none' );
+                }
+            } )
+            .dataTable(this.tableConfig);
         }
     };
 
@@ -42,5 +55,15 @@
 <style scoped>
 .table {
     font-size: 10pt;
+}
+.loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 10;
 }
 </style>

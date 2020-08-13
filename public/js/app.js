@@ -1960,6 +1960,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1976,7 +1981,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#dataTable').DataTable(this.tableConfig);
+    // $('#dataTable').DataTable()
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#dataTable').on('processing.dt', function (e, settings, processing) {
+      if (processing) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.loading').css('display', 'flex');
+      } else {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.loading').css('display', 'none');
+      }
+    }).dataTable(this.tableConfig);
   }
 });
 
@@ -22575,7 +22587,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table[data-v-6dff89ee] {\n    font-size: 10pt;\n}\n", ""]);
+exports.push([module.i, "\n.table[data-v-6dff89ee] {\n    font-size: 10pt;\n}\n.loading[data-v-6dff89ee] {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    background-color: rgba(255, 255, 255, 0.2);\n    z-index: 10;\n}\n", ""]);
 
 // exports
 
@@ -91367,7 +91379,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "table-responsive-lg" }, [
+  return _c("div", { staticClass: "table-responsive-lg position-relative" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c(
       "table",
       {
@@ -91398,7 +91412,24 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loading" }, [
+      _c(
+        "div",
+        {
+          staticClass: "spinner-grow text-danger",
+          staticStyle: { width: "5rem", height: "5rem" },
+          attrs: { role: "status" }
+        },
+        [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
