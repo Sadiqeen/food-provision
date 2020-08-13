@@ -26,7 +26,9 @@ Auth::routes([
     'verify' => false, // Email Verification Routes...
 ]);
 
-Route::group(['prefix'=>'admin','middleware'=>'auth'], function(){
-	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], function(){
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+    Route::resource('photos', 'PhotoController')->name('supplier');
 });
 
