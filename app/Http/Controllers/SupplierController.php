@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Supplier;
 
 class SupplierController extends Controller
 {
@@ -14,6 +15,17 @@ class SupplierController extends Controller
     public function index()
     {
         return view('admin.supplier.index');
+    }
+
+    /**
+     * Send data of index through API.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index_api()
+    {
+        $supplier = Supplier::all();
+        return datatables()->of($supplier)->toJson();
     }
 
     /**

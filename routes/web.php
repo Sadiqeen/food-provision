@@ -32,6 +32,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], functio
     // Supplier controll
 
     Route::get('supplier', 'SupplierController@index')->name('supplier.index');         // Get data
+    Route::get('supplier/api', 'SupplierController@index_api')->name('supplier.api');         // Get data
     Route::get('supplier/{id}', 'SupplierController@show')->name('supplier.show');      // Get specific data
 
     Route::get('supplier/create', 'SupplierController@create')->name('supplier.create');    // Create data

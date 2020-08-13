@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 import saleGraph from "./components/dashboard/saleGraph.vue";
+import suppierIndex from "./components/supplier/supplierIndex.vue";
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -29,7 +30,8 @@ import saleGraph from "./components/dashboard/saleGraph.vue";
 const app = new Vue({
     el: '#app',
     components: {
-        'sale-graph' : saleGraph
+        'sale-graph' : saleGraph,
+        'suppier-index' : suppierIndex
     },
     data: () => ({
         props: props,

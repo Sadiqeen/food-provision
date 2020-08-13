@@ -45,3 +45,36 @@ main {
         }
     }
 }
+
+// Data table
+
+.dataTables_length > label, .dataTables_filter > label {
+    display: inline-flex;
+    align-items: center;
+}
+
+.dataTables_length > label > .custom-select {
+    margin: 0px 0.5rem;
+}
+
+.dataTables_filter, .dataTables_paginate {
+    float: right;
+}
+
+.dataTables_filter > label > input {
+    margin: 0px 0.5rem;
+}
+
+.dataTables_paginate > .pagination {
+    margin: auto;
+}
+
+.dataTables_info {
+    margin: auto 0;
+}
+
+@include media-breakpoint-down(sm) {
+    .dataTables_filter, .dataTables_paginate {
+        float: left;
+    }
+ }
