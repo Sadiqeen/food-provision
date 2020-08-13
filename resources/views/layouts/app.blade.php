@@ -74,8 +74,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="menuArea">
                     <ul class="navbar-nav m-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                        <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">
                                 {{ __('Dashboard') }}
                             </a>
                         </li>
@@ -103,8 +103,8 @@
                                 {{ __('Customer') }}
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
+                        <li class="nav-item {{ request()->routeIs('admin.supplier.*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.supplier.index') }}">
                                 {{ __('Supplier') }}
                             </a>
                         </li>
