@@ -25,6 +25,7 @@
     import 'datatables.net-bs4'
 
     export default {
+        name:"suppierIndex",
         props: {
             columnsTitle: {
                 type: Array,
