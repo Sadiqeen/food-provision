@@ -55,7 +55,6 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
-            "@composer install",
             "@php artisan migrate:fresh --seed"
         ],
         "post-root-package-install": [
