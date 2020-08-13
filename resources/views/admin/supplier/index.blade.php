@@ -8,8 +8,8 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-            <suppier-index :columns-title="props.columnsTitle" :table-config="props.tableConfig"
-                url="{{ route('admin.supplier.api') }}"></suppier-index>
+            <supplier-index :columns-title="props.columnsTitle" :table-config="props.tableConfig"
+                url="{{ route('admin.supplier.api') }}"></supplier-index>
         </div>
     </div>
 </div>

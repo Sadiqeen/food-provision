@@ -31,7 +31,7 @@ const app = new Vue({
     el: '#app',
     components: {
         'sale-graph' : saleGraph,
-        'suppier-index' : suppierIndex
+        'supplier-index' : suppierIndex
     },
     data: () => ({
         props: props,

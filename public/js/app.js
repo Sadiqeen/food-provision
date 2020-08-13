@@ -103640,7 +103640,7 @@ var app = new Vue({
   el: '#app',
   components: {
     'sale-graph': _components_dashboard_saleGraph_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    'suppier-index': _components_supplier_supplierIndex_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    'supplier-index': _components_supplier_supplierIndex_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
