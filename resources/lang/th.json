@@ -1,6 +1,7 @@
 {
     "_comment_0": "layouts/app",
 
+    "Welcome": "ยินดีต้อนรับ",
     "Login": "เข้าสู่ระบบ",
     "Logout": "ออกจากระบบ",
     "System by": "ระบบโดย",
