@@ -26,7 +26,7 @@ Auth::routes([
     'verify' => false, // Email Verification Routes...
 ]);
 
-Route::middleware('auth')->group(function () {
+Route::group(['prefix'=>'admin','middleware'=>'auth'], function(){
 	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 });
 
