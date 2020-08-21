@@ -11,6 +11,7 @@
     </title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('style')
 </head>
 
 <body>
@@ -171,7 +172,9 @@
     </footer>
 
     <!-- Scripts -->
-    <script defer="" src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plugins/jquery-3.5.1/jquery-3.5.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plugins/popper.js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap-4.5.2/js/bootstrap.min.js') }}"></script>
     @stack('script')
 
 </body>
