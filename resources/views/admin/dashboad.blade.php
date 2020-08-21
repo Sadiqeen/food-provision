@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ __('Dashboard') }}
+{{ __('Dashboard') }}
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
             <div class="card">
                 <h5 class="card-header">{{ __('Sales summary') }}</h5>
                 <div class="card-body">
-                    <sale-graph :chartdata="props.chart1.data" :options="props.chart1.options" />
+                    <canvas id="chart1" width="400" height="300"></canvas>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <div class="card">
                 <h5 class="card-header">{{ __('Supplier summary') }}</h5>
                 <div class="card-body">
-                    <sale-graph :chartdata="props.chart2.data" :options="props.chart2.options" />
+                    <canvas id="chart2" width="400" height="300"></canvas>
                 </div>
             </div>
         </div>
@@ -30,38 +30,34 @@
 </div>
 @endsection
 
+@push('style')
+<link rel="stylesheet" href="{{ asset('plugins/Chart.js-2.9.3/dist/Chart.min.css') }}">
+@endpush
+
 @push('script')
+<script type="text/javascript" src="{{ asset('plugins/moment.js/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('plugins/Chart.js-2.9.3/dist/Chart.min.js') }}"></script>
 <script>
-    const chartColors = {
-        red: 'rgb(255, 99, 132)',
-        orange: 'rgb(255, 159, 64)',
-        yellow: 'rgb(255, 205, 86)',
-        green: 'rgb(75, 192, 192)',
-        blue: 'rgb(54, 162, 235)',
-        purple: 'rgb(153, 102, 255)',
-        grey: 'rgb(201, 203, 207)'
-    }
-
-    const chart1 = {
+    var chart1 = document.getElementById('chart1');
+    var myChart1 = new Chart(chart1, {
+        type: 'line',
         data: {
-            labels: ['1st Week', '2nd Week', '3rd Week', '4th Week', '5th Week'],
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
-                label: '{{ __('Last month') }}',
-                data: [40, 20, 23, 15, 10],
-                backgroundColor: chartColors.red,
-				borderColor: chartColors.red,
-                fill: false
-            },{
-                label: '{{ __('This month') }}',
-                data: [13, 25, 12, 15],
-                backgroundColor: chartColors.green,
-				borderColor: chartColors.green,
-                fill: false
+                label: '# of Votes',
+                fill: false,
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: 'rgb(153, 102, 255)',
+                borderColor: 'rgb(153, 102, 255)',
+            }, {
+                label: '# of Votes',
+                fill: false,
+                data: [4, 2, 13, 11, 25, 30],
+                backgroundColor: 'rgba(255, 159, 64, 1)',
+                borderColor: 'rgba(255, 159, 64, 1)',
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
             scales: {
                 yAxes: [{
                     ticks: {
@@ -70,20 +66,27 @@
                 }]
             }
         }
-    }
-
-    const chart2 = {
+    });
+    var chart2 = document.getElementById('chart2');
+    var myChart2 = new Chart(chart2, {
+        type: 'line',
         data: {
-            labels: ['Makro', 'BigC', 'CP', 'K\'Nah'],
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
-                label: 'Supplier',
-                backgroundColor: '#f87979',
-                data: [5, 10, 15, 20, 25]
+                label: '# of Votes',
+                fill: false,
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(54, 162, 235)',
+            }, {
+                label: '# of Votes',
+                fill: false,
+                data: [4, 2, 13, 11, 25, 30],
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
             scales: {
                 yAxes: [{
                     ticks: {
@@ -92,12 +95,6 @@
                 }]
             }
         }
-    }
-
-    const props = {
-        chart1: chart1,
-        chart2: chart2,
-    }
-
+    });
 </script>
 @endpush
