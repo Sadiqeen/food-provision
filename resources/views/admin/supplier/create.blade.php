@@ -29,10 +29,10 @@
                         </div>
                         <div class="form-group">
                             <label for="address">{{ __('Address') }}</label>
-                            <input type="email" name="address" id="address" class="form-control" placeholder="">
+                            <textarea class="form-control" name="address" id="address" cols="30" rows="3"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-Danger">{{ __('Cancel') }}</button>
+                            <a type="button" href="{{ route('admin.supplier.index') }}" class="btn btn-Danger">{{ __('Cancel') }}</a>
                             <button type="button" class="btn btn-success float-right">{{ __('Save') }}</button>
                         </div>
                     </div>
