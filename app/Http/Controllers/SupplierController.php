@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Supplier;
+use App\Http\Requests\StoreSupplier;
+use Alert;
 
 class SupplierController extends Controller
 {
@@ -50,9 +52,11 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSupplier $request)
     {
-        //
+        Supplier::create($request->all());
+        Alert::success(__('Success'), __('New supplier added to the system'));
+        return redirect()->route('admin.supplier.index');
     }
 
     /**

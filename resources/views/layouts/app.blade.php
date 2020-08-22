@@ -169,7 +169,8 @@
     <script type="text/javascript" src="{{ asset('plugins/popper.js/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('plugins/bootstrap-4.5.2/js/bootstrap.min.js') }}"></script>
     @stack('script')
-
+    {{-- sweet alert --}}
+    @include('sweetalert::alert')
 </body>
 
 </html>
