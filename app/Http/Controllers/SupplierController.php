@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Supplier;
 use App\Http\Requests\StoreSupplier;
 use App\Http\Requests\UpdateSupplier;
+use View;
 
 class SupplierController extends Controller
 {
@@ -29,7 +30,7 @@ class SupplierController extends Controller
         $supplier = Supplier::query();
         return datatables()->of($supplier)
                     ->addColumn('action', function ($supplier) {
-                        $view = '<a href="javascript:void(0)" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
+                        $view = '<a href="' . route('admin.supplier.show', $supplier->id) . '" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
                         $edit = '<a href="' . route('admin.supplier.edit', $supplier->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
                         $delete = '<a href="javascript:void(0)" onclick="delSupplier(\'' . route('admin.supplier.destroy', $supplier->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
                         return '<div class="btn-group" role="group" aria-label="Basic example">' . $view . $edit . $delete . '</div>';
@@ -67,18 +68,15 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        // $supplier = Supplier::find($id);
+        $supplier = Supplier::find($id);
 
-        // if($supplier) {
-        //     return response()->json([
-        //         "status" => "success",
-        //         "data" => $supplier
-        //     ]);
-        // }
+        if (!$supplier) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.supplier.index');
+        }
 
-        return response()->json([
-            "status" => "error",
-        ]);
+        return view('admin.supplier.show', ["supplier" => $supplier]);
+
     }
 
     /**
