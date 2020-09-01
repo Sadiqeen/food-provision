@@ -83,14 +83,14 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="productDropdown" role="button">
-                            {{ __('Product') }}
+                            {{ __('Catalog') }}
                         </a>
                         <div aria-labelledby="productDropdown" class="dropdown-menu mb-3">
                             <a class="dropdown-item" href="#">
-                                Action
+                                {{ __('Product') }}
                             </a>
                             <a class="dropdown-item" href="#">
-                                Category
+                                {{ __('Category') }}
                             </a>
                         </div>
                     </li>
@@ -168,9 +168,10 @@
     <script type="text/javascript" src="{{ asset('plugins/jquery-3.5.1/jquery-3.5.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('plugins/popper.js/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('plugins/bootstrap-4.5.2/js/bootstrap.min.js') }}"></script>
-    @stack('script')
     {{-- sweet alert --}}
     @include('sweetalert::alert')
+    @stack('script')
+
 </body>
 
 </html>

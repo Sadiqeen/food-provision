@@ -1,24 +1,18 @@
 {
-    "_comment_0": "layouts/app",
-
     "Welcome": "ยินดีต้อนรับ",
     "System by": "ระบบโดย",
     "Version": "เวอร์ชั่น",
     "Success": "สำเร็จ",
     "Error": "มีข้อผิดพลาด",
-
-    "_comment_0_1": "Menu",
+    "Save": "บันทึก",
+    "Cancel": "ยกเลิก",
     "Orders": "คำสั่งซื้อ",
     "Product": "สินค้า",
     "Customer": "ลูกค้า",
     "Supplier": "ผู้ผลิต",
     "Setting": "ตั้งค่า",
-
-    "_comment_2": "dashboard",
     "Last month": "เดือนที่แล้ว",
     "This month": "เดือนนี้",
-
-    "_comment_3": "supplier",
     "Tel": "เบอร์โทรศัพท์",
     "E-mail": "อีเมลล์",
     "Address": "ที่อยู่",
@@ -28,6 +22,15 @@
     "Add Supplier": "เพิ่มผู้ผลิต",
     "Manage Supplier": "จัดการผู้ผลิต",
     "New supplier added to the system": "ข้อมูลผู้ผลิตใหม่ได้เพิ่มเข้าสู่ระบบ",
+    "Edit Supplier Data": "แก้ไขข้อมูลผู้ผลิต",
+    "No data that you request": "ไม่มีข้อมูลที่คุณร้องขอ",
+    "Supplier data edited": "แก้ไขข้อมูลผู้ผลิตสำเร็จ",
+    "Are you sure?": "โปรดยืนยันอีกครั้ง",
+    "You won't be able to revert this!": "การกระทำนี้ไม่สามารถย้อนกลับได้",
+    "Confirm": "ยืนยัน",
+    "Supplier deleted": "ลบข้อมูลผู้ผลิตสำเร็จ",
+    "Catalog": "แคตตาล็อก",
+    "Category": "ประเภทสินค้า",
 
     "_comment_": "End of file",
 

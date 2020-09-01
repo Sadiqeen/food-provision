@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Supplier;
 use App\Http\Requests\StoreSupplier;
-use Alert;
+use App\Http\Requests\UpdateSupplier;
 
 class SupplierController extends Controller
 {
@@ -29,9 +29,9 @@ class SupplierController extends Controller
         $supplier = Supplier::query();
         return datatables()->of($supplier)
                     ->addColumn('action', function ($supplier) {
-                        $view = '<a href="#view-'.$supplier->id.'" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
-                        $edit = '<a href="#edit-'.$supplier->id.'" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
-                        $delete = '<a href="#delete-'.$supplier->id.'" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
+                        $view = '<a href="javascript:void(0)" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
+                        $edit = '<a href="' . route('admin.supplier.edit', $supplier->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
+                        $delete = '<a href="javascript:void(0)" onclick="delSupplier(\'' . route('admin.supplier.destroy', $supplier->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
                         return '<div class="btn-group" role="group" aria-label="Basic example">' . $view . $edit . $delete . '</div>';
                     })->toJson();
     }
@@ -55,7 +55,7 @@ class SupplierController extends Controller
     public function store(StoreSupplier $request)
     {
         Supplier::create($request->all());
-        Alert::success(__('Success'), __('New supplier added to the system'));
+        alert()->success(__('Success'), __('New supplier added to the system'));
         return redirect()->route('admin.supplier.index');
     }
 
@@ -67,7 +67,18 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        //
+        // $supplier = Supplier::find($id);
+
+        // if($supplier) {
+        //     return response()->json([
+        //         "status" => "success",
+        //         "data" => $supplier
+        //     ]);
+        // }
+
+        return response()->json([
+            "status" => "error",
+        ]);
     }
 
     /**
@@ -78,7 +89,14 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        //
+        $supplier = Supplier::find($id);
+
+        if (!$supplier) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.supplier.index');
+        }
+
+        return view('admin.supplier.edit', ['supplier' => $supplier]);
     }
 
     /**
@@ -88,9 +106,23 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSupplier $request, $id)
     {
-        //
+        $supplier = Supplier::find($id);
+
+        if (!$supplier) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.supplier.index');
+        }
+
+        $supplier->name = $request->name;
+        $supplier->tel = $request->tel;
+        $supplier->email = $request->email;
+        $supplier->address = $request->address;
+        $supplier->save();
+
+        alert()->success(__('Success'), __('Supplier data edited'));
+        return redirect()->route('admin.supplier.index');
     }
 
     /**
@@ -101,6 +133,16 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $supplier = Supplier::find($id);
+
+        if (!$supplier) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.supplier.index');
+        }
+
+        $supplier->delete();
+
+        alert()->success(__('Success'), __('Supplier deleted'));
+        return redirect()->route('admin.supplier.index');
     }
 }
