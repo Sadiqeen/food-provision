@@ -31,4 +31,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], functio
 
     Route::get('supplier/api', 'SupplierController@index_api')->name('supplier.api');
     Route::resource('supplier', 'SupplierController');
+
+    Route::get('brand/api', 'BrandController@index_api')->name('brand.api');
+    Route::resource('brand', 'BrandController');
 });

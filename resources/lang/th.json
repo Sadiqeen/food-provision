@@ -34,6 +34,13 @@
     "Category": "ประเภทสินค้า",
     "in English language": "ในภาษาอังกฤษ",
     "in Thai language": "ในภาษาไทย",
+    "Brand": "เครื่องหมายการค้า",
+    "Manage Brand": "จัดการเครื่องหมายการค้า",
+    "Add Brand": "เพิ่มเครื่องหมายการค้า",
+    "Edit Brand": "แก้ไขเครื่องหมายการค้า",
+    "Brand deleted": "ลบข้อมูลเครื่องหมายการค้าสำเร็จ",
+    "New brand added to the system": "เครื่องหมายการค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
+    "Brand data edited": "แก้ไขข้อมูลเครื่องหมายการค้าสำเร็จ",
 
     "_comment_": "End of file",
 

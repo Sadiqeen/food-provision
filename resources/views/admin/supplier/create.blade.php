@@ -14,6 +14,7 @@
     <div class="card">
         <div class="card-body">
             <form action="{{ route('admin.supplier.store') }}" method="POST">
+                @csrf
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         @include('admin.supplier.form')

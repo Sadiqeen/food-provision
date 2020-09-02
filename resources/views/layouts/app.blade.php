@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta content="{{ csrf_token() }}" name="csrf-token">
     <title>
-        @yield( 'title', __('Welcome') ) | Food Provision Systems
+        @yield( 'title', __('Welcome') ) | {{ config('app.name', 'Laravel') }}
     </title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -81,7 +81,7 @@
                             {{ __('Orders') }}
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}">
                         <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="productDropdown" role="button">
                             {{ __('Catalog') }}
                         </a>
@@ -91,6 +91,9 @@
                             </a>
                             <a class="dropdown-item" href="#">
                                 {{ __('Category') }}
+                            </a>
+                            <a class="dropdown-item  {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}" href="{{ route('admin.brand.index') }}">
+                                {{ __('Brand') }}
                             </a>
                         </div>
                     </li>

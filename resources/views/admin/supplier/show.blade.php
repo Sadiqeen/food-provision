@@ -17,8 +17,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="">{{ __('Name') }}</label>
-                        <input type="text" name="" id="" value="{{ $supplier->name }}" class="form-control"
+                        <label for="">{{ __('Name') . ' ' . __('in English language') }}</label>
+                        <input type="text" name="" id="" value="{{ $supplier->name_en }}" class="form-control"
+                            placeholder="" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="">{{ __('Name') . ' ' . __('in Thai language') }}</label>
+                        <input type="text" name="" id="" value="{{ $supplier->name_th }}" class="form-control"
                             placeholder="" disabled>
                     </div>
                     <div class="form-group">
@@ -32,8 +37,16 @@
                             placeholder="" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ __('Address') }}</label>
-                        <textarea class="form-control" name="" id="" cols="30" rows="3" disabled>{{ $supplier->address }}</textarea>
+                        <label for="">{{ __('Address') . ' ' . __('in English language') }}</label>
+                        <textarea class="form-control" name="" id="" cols="30" rows="3" disabled>{{ $supplier->address_en }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="">{{ __('Address') . ' ' . __('in Thai language') }}</label>
+                        <textarea class="form-control" name="" id="" cols="30" rows="3" disabled>{{ $supplier->address_th }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <a type="button" href="{{ route('admin.supplier.index') }}" class="btn btn-secondary">{{ __('Manage Supplier') }}</a>
+                        <a type="submit" href="{{ route('admin.supplier.edit', $supplier->id) }}" class="btn btn-success float-right">{{ __('Edit') }}</a>
                     </div>
                 </div>
             </div>

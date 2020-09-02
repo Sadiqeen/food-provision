@@ -44,6 +44,7 @@
         </div>
     </div>
 </div>
+{{-- Delete Form --}}
 <form action="" method="post" class="d-none" id="delSupplier">
     @csrf
     @method('delete')
