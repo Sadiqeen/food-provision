@@ -81,7 +81,10 @@
                             {{ __('Orders') }}
                         </a>
                     </li>
-                    <li class="nav-item dropdown {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}">
+                    <li class="nav-item dropdown
+                                    {{ request()->routeIs('admin.brand.*')
+                                        || request()->routeIs('admin.category.*')
+                                        ? 'active' : '' }}">
                         <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="productDropdown" role="button">
                             {{ __('Catalog') }}
                         </a>
@@ -89,10 +92,10 @@
                             <a class="dropdown-item" href="#">
                                 {{ __('Product') }}
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item {{ request()->routeIs('admin.category.*') ? 'active' : '' }}" href="{{ route('admin.category.index') }}">
                                 {{ __('Category') }}
                             </a>
-                            <a class="dropdown-item  {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}" href="{{ route('admin.brand.index') }}">
+                            <a class="dropdown-item {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}" href="{{ route('admin.brand.index') }}">
                                 {{ __('Brand') }}
                             </a>
                         </div>

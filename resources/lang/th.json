@@ -41,6 +41,12 @@
     "Brand deleted": "ลบข้อมูลเครื่องหมายการค้าสำเร็จ",
     "New brand added to the system": "เครื่องหมายการค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
     "Brand data edited": "แก้ไขข้อมูลเครื่องหมายการค้าสำเร็จ",
+    "Manage Category": "จัดการประเภทสินค้า",
+    "Add Category": "เพิ่มประเภทสินค้า",
+    "Edit Category": "แก้ไขประเภทสินค้า",
+    "New category added to the system": "ประเภทสินค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
+    "Category deleted": "ลบข้อมูลประเภทสินค้าสำเร็จ",
+    "Category data edited": "แก้ไขข้อมูลประเภทสินค้าสำเร็จ",
 
     "_comment_": "End of file",
 

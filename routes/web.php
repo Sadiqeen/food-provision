@@ -34,4 +34,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], functio
 
     Route::get('brand/api', 'BrandController@index_api')->name('brand.api');
     Route::resource('brand', 'BrandController');
+
+    Route::get('category/api', 'CategoyController@index_api')->name('category.api');
+    Route::resource('category', 'CategoyController');
 });
