@@ -34,6 +34,7 @@
     "Category": "ประเภทสินค้า",
     "in English language": "ในภาษาอังกฤษ",
     "in Thai language": "ในภาษาไทย",
+
     "Brand": "เครื่องหมายการค้า",
     "Manage Brand": "จัดการเครื่องหมายการค้า",
     "Add Brand": "เพิ่มเครื่องหมายการค้า",
@@ -41,12 +42,21 @@
     "Brand deleted": "ลบข้อมูลเครื่องหมายการค้าสำเร็จ",
     "New brand added to the system": "เครื่องหมายการค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
     "Brand data edited": "แก้ไขข้อมูลเครื่องหมายการค้าสำเร็จ",
+
     "Manage Category": "จัดการประเภทสินค้า",
     "Add Category": "เพิ่มประเภทสินค้า",
     "Edit Category": "แก้ไขประเภทสินค้า",
     "New category added to the system": "ประเภทสินค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
     "Category deleted": "ลบข้อมูลประเภทสินค้าสำเร็จ",
     "Category data edited": "แก้ไขข้อมูลประเภทสินค้าสำเร็จ",
+
+    "Unit": "หน่วยสินค้า",
+    "Manage Unit": "จัดการหน่วยสินค้า",
+    "Add Unit": "เพิ่มหน่วยสินค้า",
+    "Edit Unit": "แก้ไขหน่วยสินค้า",
+    "New unit added to the system": "หน่วยสินค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
+    "Unit data edited": "แก้ไขข้อมูลหน่วยสินค้าสำเร็จ",
+    "Unit deleted": "ลบข้อมูลหน่วยสินค้าสำเร็จ",
 
     "_comment_": "End of file",
 

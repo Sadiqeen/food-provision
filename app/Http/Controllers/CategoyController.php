@@ -19,6 +19,11 @@ class CategoyController extends Controller
         return view('admin.category.index');
     }
 
+    /**
+     * Send data of index through API.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index_api()
     {
         $brands = Category::query();

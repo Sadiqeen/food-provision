@@ -98,6 +98,9 @@
                             <a class="dropdown-item {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}" href="{{ route('admin.brand.index') }}">
                                 {{ __('Brand') }}
                             </a>
+                            <a class="dropdown-item {{ request()->routeIs('admin.unit.*') ? 'active' : '' }}" href="{{ route('admin.unit.index') }}">
+                                {{ __('Unit') }}
+                            </a>
                         </div>
                     </li>
                     <li class="nav-item">

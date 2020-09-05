@@ -37,4 +37,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], functio
 
     Route::get('category/api', 'CategoyController@index_api')->name('category.api');
     Route::resource('category', 'CategoyController');
+
+    Route::get('unit/api', 'UnitController@index_api')->name('unit.api');
+    Route::resource('unit', 'UnitController');
 });
