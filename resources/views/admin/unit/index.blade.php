@@ -11,7 +11,7 @@
     </h3>
     <div class="row">
         <div class="col-md-4">
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-body">
                     <h4>{{ __('Add Unit') }}</h4>
                     <hr/>
