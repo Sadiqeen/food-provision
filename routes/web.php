@@ -29,6 +29,9 @@ Auth::routes([
 Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+    // import form exel
+    // Route::get('product/upload', 'ProductController@upload')->name('product.upload');
+    // Route::post('product/import', 'ProductController@import')->name('product.import');
     Route::get('product/api', 'ProductController@index_api')->name('product.api');
     Route::resource('product', 'ProductController');
 
@@ -43,4 +46,5 @@ Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], functio
 
     Route::get('unit/api', 'UnitController@index_api')->name('unit.api');
     Route::resource('unit', 'UnitController');
+
 });

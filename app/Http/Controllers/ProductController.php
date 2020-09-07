@@ -4,21 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use App\Category;
-use Illuminate\Http\Request;
 use App\Product;
 use App\Unit;
 use App\Supplier;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreProduct;
 use App\Http\Requests\UpdateProduct;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
+use App\Imports\ProductImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
+
     public function index()
     {
         return view('admin.product.index');
@@ -27,7 +35,8 @@ class ProductController extends Controller
     /**
      * Send data of index through API.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
+     * @throws
      */
     public function index_api()
     {
@@ -56,7 +65,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
@@ -75,8 +84,8 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreProduct $request
+     * @return RedirectResponse
      */
     public function store(StoreProduct $request)
     {
@@ -115,7 +124,7 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -138,7 +147,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return View|RedirectResponse
      */
     public function edit($id)
     {
@@ -165,9 +174,9 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param UpdateProduct $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(UpdateProduct $request, $id)
     {
@@ -212,10 +221,39 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Show the form for upload exel.
+     *
+     * @return View
+     */
+    public function upload()
+    {
+        return view('admin.product.upload');
+    }
+
+    /**
+     * import file exel and save to DB.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException
+     */
+    public function import(Request $request)
+    {
+        $this->validate($request, [
+            'excel'  => 'required|mimes:xls,xlsx'
+        ]);
+
+        Excel::import(new ProductImport, $request->excel);
+
+        alert()->success(__('Success'), __('New product added to the system'));
+        return redirect()->route('admin.product.index');
     }
 }

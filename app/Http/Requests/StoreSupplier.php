@@ -25,7 +25,7 @@ class StoreSupplier extends FormRequest
     {
         $rules = [
             "name_en" => 'required|max:255|unique:suppliers,name_en',
-            "tel" => 'required|min:10|max:15|regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/|unique:suppliers,tel',
+            "tel" => 'required|min:10|max:15|regex:/\(?([0-9]{2,3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/|unique:suppliers,tel',
             "email" => 'required|email|unique:suppliers,email',
             "address_en" => 'required|max:255',
             "address_th" => 'max:255',

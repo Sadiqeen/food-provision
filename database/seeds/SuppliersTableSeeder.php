@@ -12,9 +12,12 @@ class SuppliersTableSeeder extends Seeder
      */
     public function run()
     {
+        
 
+        \DB::table('suppliers')->delete();
+        
         \DB::table('suppliers')->insert(array (
-            0 =>
+            0 => 
             array (
                 'id' => 1,
                 'name_en' => 'Gibson, Wehner and Krajcik',
@@ -28,7 +31,7 @@ Matteoburgh, NM 56723-7409',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            1 =>
+            1 => 
             array (
                 'id' => 2,
                 'name_en' => 'O\'Conner, Smitham and Pacocha',
@@ -42,7 +45,7 @@ Champlinbury, UT 23486-2282',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            2 =>
+            2 => 
             array (
                 'id' => 3,
                 'name_en' => 'Cremin, Gulgowski and Balistreri',
@@ -56,7 +59,7 @@ Port Miller, IN 12403',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            3 =>
+            3 => 
             array (
                 'id' => 4,
                 'name_en' => 'Harvey, Cremin and Murray',
@@ -70,7 +73,7 @@ Port Annabelle, DE 59343',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            4 =>
+            4 => 
             array (
                 'id' => 5,
                 'name_en' => 'Gerlach, Hand and Kassulke',
@@ -84,7 +87,7 @@ Murielberg, NY 56501',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            5 =>
+            5 => 
             array (
                 'id' => 6,
                 'name_en' => 'Ebert, Cassin and King',
@@ -98,7 +101,7 @@ South Abbigail, KY 18004-5313',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            6 =>
+            6 => 
             array (
                 'id' => 7,
                 'name_en' => 'Yundt, Jakubowski and Schumm',
@@ -112,7 +115,7 @@ New Elishaland, SD 72502',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            7 =>
+            7 => 
             array (
                 'id' => 8,
                 'name_en' => 'Buckridge and Sons',
@@ -126,7 +129,7 @@ New Kolbybury, VT 35772',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            8 =>
+            8 => 
             array (
                 'id' => 9,
                 'name_en' => 'Daugherty Ltd',
@@ -140,7 +143,7 @@ Casperside, AL 20998',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            9 =>
+            9 => 
             array (
                 'id' => 10,
                 'name_en' => 'Casper-Nolan',
@@ -154,7 +157,7 @@ Yostton, NC 00936',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            10 =>
+            10 => 
             array (
                 'id' => 11,
                 'name_en' => 'Jast LLC',
@@ -168,7 +171,7 @@ Beahanborough, OK 75219',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            11 =>
+            11 => 
             array (
                 'id' => 12,
                 'name_en' => 'Conroy Group',
@@ -182,7 +185,7 @@ North Victorville, ME 22445',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            12 =>
+            12 => 
             array (
                 'id' => 13,
                 'name_en' => 'Shields-Lang',
@@ -196,7 +199,7 @@ East Milesshire, DE 27893-0470',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            13 =>
+            13 => 
             array (
                 'id' => 14,
                 'name_en' => 'Orn-Jacobson',
@@ -210,7 +213,7 @@ Abernathyborough, MA 47431-8499',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            14 =>
+            14 => 
             array (
                 'id' => 15,
                 'name_en' => 'Rogahn, Wunsch and Jaskolski',
@@ -224,7 +227,7 @@ Trantowville, OR 53536',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            15 =>
+            15 => 
             array (
                 'id' => 16,
                 'name_en' => 'Lynch-Cole',
@@ -238,7 +241,7 @@ Breitenbergton, CT 36714-6953',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            16 =>
+            16 => 
             array (
                 'id' => 17,
                 'name_en' => 'Bruen, Pfannerstill and Fisher',
@@ -252,7 +255,7 @@ Lake Shyannestad, CT 25823',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            17 =>
+            17 => 
             array (
                 'id' => 18,
                 'name_en' => 'Bayer, Koss and Johnson',
@@ -266,7 +269,7 @@ Abdulville, NJ 09593',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            18 =>
+            18 => 
             array (
                 'id' => 19,
                 'name_en' => 'Powlowski-Barrows',
@@ -280,7 +283,7 @@ Columbuschester, IA 98940',
                 'created_at' => '2020-09-02 17:20:23',
                 'updated_at' => '2020-09-02 17:20:23',
             ),
-            19 =>
+            19 => 
             array (
                 'id' => 20,
                 'name_en' => 'Grimes-Boyer',
@@ -294,7 +297,7 @@ West Ewell, CA 50049',
                 'updated_at' => '2020-09-02 17:23:15',
             ),
         ));
-
-
+        
+        
     }
 }

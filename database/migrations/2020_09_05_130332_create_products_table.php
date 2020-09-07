@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name_en');
             $table->string('name_th')->nullable();
-            $table->integer('price')->nullable();
+            $table->integer('price');
             $table->string('image')->nullable();
             $table->text('desc_en')->nullable();
             $table->text('desc_th')->nullable();

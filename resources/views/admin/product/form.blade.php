@@ -90,7 +90,7 @@
             $description_en = $product->desc_en;
         }
     @endphp
-    <label for="description_en">{{ __('Descrip') . ' ' . __('Product') . ' ' . __('in English language') }}</label>
+    <label for="description_en">{{ __('Describe') . ' ' . __('Product') . ' ' . __('in English language') }}</label>
     <textarea class="form-control @error('description_en') is-invalid @enderror" name="description_en" id="description_en" rows="3">{{ $description_en ?? '' }}</textarea>
     @error('description_en')
     <span class="invalid-feedback" role="alert">
@@ -109,7 +109,7 @@
             $description_th = $product->desc_th;
         }
     @endphp
-    <label for="description_th">{{ __('Descrip') . ' ' . __('Product') . ' ' . __('in Thai language') }}</label>
+    <label for="description_th">{{ __('Describe') . ' ' . __('Product') . ' ' . __('in Thai language') }}</label>
     <textarea class="form-control @error('description_th') is-invalid @enderror" name="description_th" id="description_th" rows="3">{{ $description_th ?? '' }}</textarea>
     @error('description_th')
     <span class="invalid-feedback" role="alert">
@@ -272,7 +272,7 @@
 
         function readURL(input) {
             if (input.files && input.files[0]) {
-                var reader = new FileReader()
+                let reader = new FileReader()
 
                 reader.onload = function (e) {
                     $('#img-upload').attr('src', e.target.result)
@@ -283,9 +283,7 @@
         }
 
         function removeImage() {
-            $( '#imgInp' ).val( null )
-            $( '#imgInp' ).next('.custom-file-label').text('{{ __('Choose file') }}')
-            $( '#img-upload' ).attr( 'src' , null )
+            $( '#imgInp' ).val( null ).next('.custom-file-label').text('{{ __('Choose file') }}')
             $( '#del-img-btn' ).addClass( 'd-none' )
             $( '#img-upload' ).attr('src', '{{ isset($product->image) ? asset($product->image) : asset('imgs/placeholder.jpg') }}')
         }

@@ -65,11 +65,13 @@
     "Manage Product": "จัดการสินค้า",
     "Edit Product Data": "แก้ไขข้อมูลสินค้า",
     "Upload Image": "อัพโหลดรูปภาพ",
-    "Choose file": "เลือกรูปภาพ",
-    "Descrip": "อธิบาย",
+    "Choose file": "เลือกไฟล์",
+    "Describe": "อธิบาย",
     "New product added to the system": "สินค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
     "Product data edited": "แก้ไขข้อมูลสินค้าสำเร็จ",
     "View Product": "ดูข้อมูลสินค้า",
+    "Upload Excel File": "อัพโหลดไฟล์ Excel",
+    "Upload": "อัพโหลด",
 
     "_comment_": "End of file",
 
