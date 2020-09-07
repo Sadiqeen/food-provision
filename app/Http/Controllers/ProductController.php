@@ -128,7 +128,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
+        $product = Product::with(['supplier', 'brand', 'category', 'unit'])->find($id);
 
         if (!$product) {
             return response()->json([

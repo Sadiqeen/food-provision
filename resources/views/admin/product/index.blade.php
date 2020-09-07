@@ -63,7 +63,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="table-responsive">
+                <div class="row my-5 py-5" id="view-product-loading">
+                    <div class="m-auto">
+                        <div class="spinner-grow text-danger" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive d-none" id="view-product-data">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -77,37 +85,37 @@
                                 <th scope="row">
                                     <strong>{{ __('Product') }}</strong>
                                 </th>
-                                <td>Oranges Sunkist</td>
-                                <td>ส้มซันคิสท์</td>
+                                <td><span id="name_en"></span></td>
+                                <td><span id="name_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Price') }}</th>
-                                <td colspan="2">800</td>
+                                <td colspan="2"><span id="price"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ __('Descrip') }}</th>
-                                <td>Oranges Sunkist</td>
-                                <td>ส้มซันคิสท์</td>
+                                <th scope="row">{{ __('Describe') }}</th>
+                                <td><span id="desc_en"></span></td>
+                                <td><span id="desc_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Unit') }}</th>
-                                <td>Case</td>
-                                <td>กล่อง</td>
+                                <td><span id="unit_en"></span></td>
+                                <td><span id="unit_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Category') }}</th>
-                                <td>Case</td>
-                                <td>กล่อง</td>
+                                <td><span id="category_en"></span></td>
+                                <td><span id="category_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Brand') }}</th>
-                                <td>Case</td>
-                                <td>กล่อง</td>
+                                <td><span id="brand_en"></span></td>
+                                <td><span id="brand_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Supplier') }}</th>
-                                <td>Case</td>
-                                <td>กล่อง</td>
+                                <td><span id="supplier_en"></span></td>
+                                <td><span id="supplier_th"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -176,10 +184,35 @@
                 }
             @endif
         })
+
+        $('#view').on('hidden.bs.modal', function (e) {
+            $( '#view-product-loading' ).removeClass( 'd-none' )
+            $( '#view-product-data' ).addClass( 'd-none' )
+        })
     })
 
     const viewProduct = function(url) {
         $( "#view" ).modal( "show" )
+        $.get(url , function(data, status){
+            let res = data.data
+            console.log(res)
+            $( '#price' ).text( res.price )
+            $( '#name_en' ).text( res.name_en )
+            $( '#name_th' ).text( res.name_th )
+            $( '#desc_en' ).text( res.desc_en )
+            $( '#desc_th' ).text( res.desc_th )
+            $( '#unit_en' ).text( res.unit.name_en )
+            $( '#unit_th' ).text( res.unit.name_th )
+            $( '#category_en' ).text( res.category.name_en )
+            $( '#category_th' ).text( res.category.name_th )
+            $( '#brand_en' ).text( res.brand.name_en )
+            $( '#brand_th' ).text( res.brand.name_th )
+            $( '#supplier_en' ).text( res.supplier.name_en )
+            $( '#supplier_th' ).text( res.supplier.name_th )
+
+            $( '#view-product-loading' ).addClass( 'd-none' )
+            $( '#view-product-data' ).removeClass( 'd-none' )
+        });
     }
 
     const delSupplier = function(url) {
