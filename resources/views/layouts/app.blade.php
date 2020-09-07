@@ -84,6 +84,8 @@
                     <li class="nav-item dropdown
                                     {{ request()->routeIs('admin.brand.*')
                                         || request()->routeIs('admin.category.*')
+                                        || request()->routeIs('admin.product.*')
+                                        || request()->routeIs('admin.unit.*')
                                         ? 'active' : '' }}">
                         <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="productDropdown" role="button">
                             {{ __('Catalog') }}

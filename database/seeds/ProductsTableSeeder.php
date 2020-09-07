@@ -12,12 +12,8 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        
-
-        \DB::table('products')->delete();
-        
         \DB::table('products')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name_en' => 'Apple,Fuji',
@@ -33,7 +29,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name_en' => 'Apple,Washington Red',
@@ -49,7 +45,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name_en' => 'Apple,Green',
@@ -65,7 +61,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name_en' => 'Pisang emas ',
@@ -81,7 +77,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name_en' => 'Small Banana ,Pisang Awak',
@@ -97,7 +93,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
             'name_en' => 'Large Banana (Bunch)',
@@ -113,7 +109,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name_en' => 'Grapes  Red  seedless',
@@ -129,7 +125,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name_en' => 'Grapes  Red  ',
@@ -145,7 +141,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name_en' => 'Grapes  Green seedless',
@@ -161,7 +157,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name_en' => 'Grapes  Black seedless',
@@ -177,7 +173,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'name_en' => 'Water Melon',
@@ -193,7 +189,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'name_en' => 'Yellow Water Melon',
@@ -209,7 +205,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'name_en' => 'Rock Melon',
@@ -225,7 +221,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'name_en' => 'Oranges,Sai Nam Pung',
@@ -241,7 +237,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'name_en' => 'Oranges Sunkist',
@@ -257,7 +253,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'name_en' => 'Orange, Mandarin',
@@ -273,7 +269,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
             'name_en' => 'Oranges (SuGun)',
@@ -289,7 +285,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'name_en' => 'Sapodila',
@@ -305,7 +301,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 19,
                 'name_en' => 'Pear china',
@@ -321,7 +317,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 20,
                 'name_en' => 'Dragon Fruit',
@@ -337,7 +333,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 21,
                 'name_en' => ' Jack Fruit Rip',
@@ -353,7 +349,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 22,
                 'name_en' => ' Young Jack Fruit',
@@ -369,7 +365,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 23,
                 'name_en' => 'Kiwi Fruit',
@@ -385,7 +381,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 24,
                 'name_en' => 'Avocado',
@@ -401,7 +397,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 25,
                 'name_en' => 'Yang Mango ',
@@ -417,7 +413,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 26,
                 'name_en' => 'Green Sweet Mango ',
@@ -433,7 +429,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 27,
                 'name_en' => 'Mangoes,Ripe',
@@ -449,7 +445,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 28,
                 'name_en' => 'Papaya',
@@ -465,7 +461,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 29,
                 'name_en' => 'Papaya For Cooking',
@@ -481,7 +477,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 30,
                 'name_en' => 'Young Coconut',
@@ -497,7 +493,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 31,
                 'name_en' => 'Pomeloes ',
@@ -513,7 +509,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            31 => 
+            31 =>
             array (
                 'id' => 32,
                 'name_en' => 'Pineapple ',
@@ -529,7 +525,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            32 => 
+            32 =>
             array (
                 'id' => 33,
                 'name_en' => 'Cantalupe',
@@ -545,7 +541,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            33 => 
+            33 =>
             array (
                 'id' => 34,
                 'name_en' => 'Guava ',
@@ -561,7 +557,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            34 => 
+            34 =>
             array (
                 'id' => 35,
                 'name_en' => 'Longan',
@@ -577,7 +573,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            35 => 
+            35 =>
             array (
                 'id' => 36,
                 'name_en' => 'Rambutan',
@@ -593,7 +589,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            36 => 
+            36 =>
             array (
                 'id' => 37,
                 'name_en' => 'Red Ross Apple',
@@ -609,7 +605,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            37 => 
+            37 =>
             array (
                 'id' => 38,
                 'name_en' => 'Zalacca',
@@ -625,7 +621,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            38 => 
+            38 =>
             array (
                 'id' => 39,
                 'name_en' => 'Long gonk',
@@ -641,7 +637,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            39 => 
+            39 =>
             array (
                 'id' => 40,
                 'name_en' => 'Mangosteen',
@@ -657,7 +653,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            40 => 
+            40 =>
             array (
                 'id' => 41,
                 'name_en' => 'Lychee',
@@ -673,7 +669,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            41 => 
+            41 =>
             array (
                 'id' => 42,
                 'name_en' => 'Sweet Tamarind',
@@ -689,7 +685,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            42 => 
+            42 =>
             array (
                 'id' => 43,
                 'name_en' => 'Lime',
@@ -705,7 +701,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            43 => 
+            43 =>
             array (
                 'id' => 44,
                 'name_en' => 'Lemon',
@@ -721,7 +717,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            44 => 
+            44 =>
             array (
                 'id' => 45,
                 'name_en' => 'Tapioka/Uaikayu',
@@ -737,7 +733,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            45 => 
+            45 =>
             array (
                 'id' => 46,
                 'name_en' => 'Potatoes ,Sweet',
@@ -753,7 +749,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            46 => 
+            46 =>
             array (
                 'id' => 47,
                 'name_en' => 'Potato ',
@@ -769,7 +765,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            47 => 
+            47 =>
             array (
                 'id' => 48,
                 'name_en' => 'Yam Bean',
@@ -785,7 +781,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            48 => 
+            48 =>
             array (
                 'id' => 49,
                 'name_en' => 'Turnip',
@@ -801,7 +797,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            49 => 
+            49 =>
             array (
                 'id' => 50,
                 'name_en' => 'Okra',
@@ -817,7 +813,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            50 => 
+            50 =>
             array (
                 'id' => 51,
                 'name_en' => 'Garlice pellless',
@@ -833,7 +829,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            51 => 
+            51 =>
             array (
                 'id' => 52,
                 'name_en' => 'Garlice ',
@@ -849,7 +845,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            52 => 
+            52 =>
             array (
                 'id' => 53,
                 'name_en' => 'Yellow Ginger / Kunyit',
@@ -865,7 +861,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            53 => 
+            53 =>
             array (
                 'id' => 54,
                 'name_en' => 'Galanga Roots / Lengkuas',
@@ -881,7 +877,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            54 => 
+            54 =>
             array (
                 'id' => 55,
                 'name_en' => 'Sliced Ginger',
@@ -897,7 +893,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            55 => 
+            55 =>
             array (
                 'id' => 56,
                 'name_en' => 'Ginger,Old',
@@ -913,7 +909,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            56 => 
+            56 =>
             array (
                 'id' => 57,
                 'name_en' => 'Young Corn',
@@ -929,7 +925,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            57 => 
+            57 =>
             array (
                 'id' => 58,
                 'name_en' => 'Corn On Cob',
@@ -945,7 +941,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            58 => 
+            58 =>
             array (
                 'id' => 59,
                 'name_en' => 'Kale/Kailan',
@@ -961,7 +957,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            59 => 
+            59 =>
             array (
                 'id' => 60,
                 'name_en' => 'Baby Kailan',
@@ -977,7 +973,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            60 => 
+            60 =>
             array (
                 'id' => 61,
             'name_en' => 'Celery (local)',
@@ -993,7 +989,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            61 => 
+            61 =>
             array (
                 'id' => 62,
                 'name_en' => 'Carrot ',
@@ -1009,7 +1005,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            62 => 
+            62 =>
             array (
                 'id' => 63,
                 'name_en' => 'Acacia',
@@ -1025,7 +1021,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            63 => 
+            63 =>
             array (
                 'id' => 64,
             'name_en' => 'Cauliflower (Trimmed)',
@@ -1041,7 +1037,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            64 => 
+            64 =>
             array (
                 'id' => 65,
                 'name_en' => 'Spring Onion',
@@ -1057,7 +1053,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            65 => 
+            65 =>
             array (
                 'id' => 66,
                 'name_en' => 'Lemon glass',
@@ -1073,7 +1069,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            66 => 
+            66 =>
             array (
                 'id' => 67,
                 'name_en' => 'Cucumber large',
@@ -1089,7 +1085,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            67 => 
+            67 =>
             array (
                 'id' => 68,
                 'name_en' => 'Bean French',
@@ -1105,7 +1101,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            68 => 
+            68 =>
             array (
                 'id' => 69,
                 'name_en' => 'Bean sprouts',
@@ -1121,7 +1117,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            69 => 
+            69 =>
             array (
                 'id' => 70,
                 'name_en' => 'Bean Long/String beans',
@@ -1137,7 +1133,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            70 => 
+            70 =>
             array (
                 'id' => 71,
                 'name_en' => 'Snow beans',
@@ -1153,7 +1149,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            71 => 
+            71 =>
             array (
                 'id' => 72,
                 'name_en' => 'Wing Bean',
@@ -1169,7 +1165,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            72 => 
+            72 =>
             array (
                 'id' => 73,
                 'name_en' => 'Leek',
@@ -1185,7 +1181,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            73 => 
+            73 =>
             array (
                 'id' => 74,
                 'name_en' => 'Broccoli',
@@ -1201,7 +1197,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            74 => 
+            74 =>
             array (
                 'id' => 75,
                 'name_en' => 'Green gourd',
@@ -1217,7 +1213,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            75 => 
+            75 =>
             array (
                 'id' => 76,
                 'name_en' => 'Basil leaf',
@@ -1233,7 +1229,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            76 => 
+            76 =>
             array (
                 'id' => 77,
             'name_en' => 'Boiled wild leaves (Kee-Lek)',
@@ -1249,7 +1245,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            77 => 
+            77 =>
             array (
                 'id' => 78,
                 'name_en' => 'Kaffir leaves',
@@ -1265,7 +1261,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            78 => 
+            78 =>
             array (
                 'id' => 79,
                 'name_en' => 'Kaffir Whole',
@@ -1281,7 +1277,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            79 => 
+            79 =>
             array (
                 'id' => 80,
                 'name_en' => 'Pandan Leaf',
@@ -1297,7 +1293,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            80 => 
+            80 =>
             array (
                 'id' => 81,
                 'name_en' => 'Banan Leaf',
@@ -1313,7 +1309,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            81 => 
+            81 =>
             array (
                 'id' => 82,
                 'name_en' => 'Mint leaves',
@@ -1329,7 +1325,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            82 => 
+            82 =>
             array (
                 'id' => 83,
                 'name_en' => 'Sweet Basil Leaf',
@@ -1345,7 +1341,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            83 => 
+            83 =>
             array (
                 'id' => 84,
                 'name_en' => 'Cha Muang Leaf',
@@ -1361,7 +1357,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            84 => 
+            84 =>
             array (
                 'id' => 85,
                 'name_en' => 'Yee Ra Leaf',
@@ -1377,7 +1373,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            85 => 
+            85 =>
             array (
                 'id' => 86,
                 'name_en' => 'Green Lettuce',
@@ -1393,7 +1389,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            86 => 
+            86 =>
             array (
                 'id' => 87,
                 'name_en' => 'Mustard Green / Chye Sim',
@@ -1409,7 +1405,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            87 => 
+            87 =>
             array (
                 'id' => 88,
                 'name_en' => 'Lettuce Iceberg Green',
@@ -1425,7 +1421,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            88 => 
+            88 =>
             array (
                 'id' => 89,
             'name_en' => 'Cabbage Long/Chinese (Lui)',
@@ -1441,7 +1437,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            89 => 
+            89 =>
             array (
                 'id' => 90,
                 'name_en' => 'Pickle Lettuce',
@@ -1457,7 +1453,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            90 => 
+            90 =>
             array (
                 'id' => 91,
             'name_en' => 'Spinach (local)',
@@ -1473,7 +1469,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            91 => 
+            91 =>
             array (
                 'id' => 92,
                 'name_en' => 'Parsley Chinese',
@@ -1489,7 +1485,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            92 => 
+            92 =>
             array (
                 'id' => 93,
                 'name_en' => 'Grass Water',
@@ -1505,7 +1501,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            93 => 
+            93 =>
             array (
                 'id' => 94,
             'name_en' => 'Bokchoy (Sophon)',
@@ -1521,7 +1517,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            94 => 
+            94 =>
             array (
                 'id' => 95,
                 'name_en' => 'Cabbages White / Dremhead',
@@ -1537,7 +1533,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            95 => 
+            95 =>
             array (
                 'id' => 96,
                 'name_en' => 'Green Chilli Padi',
@@ -1553,7 +1549,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            96 => 
+            96 =>
             array (
                 'id' => 97,
                 'name_en' => 'Red Chilli Padi',
@@ -1569,7 +1565,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            97 => 
+            97 =>
             array (
                 'id' => 98,
                 'name_en' => 'Pepper Chilies Green',
@@ -1585,7 +1581,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            98 => 
+            98 =>
             array (
                 'id' => 99,
                 'name_en' => 'Pepper Chilies Red',
@@ -1601,7 +1597,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            99 => 
+            99 =>
             array (
                 'id' => 100,
                 'name_en' => 'Young pepper corn',
@@ -1617,7 +1613,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            100 => 
+            100 =>
             array (
                 'id' => 101,
                 'name_en' => 'Capsicum,Green',
@@ -1633,7 +1629,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            101 => 
+            101 =>
             array (
                 'id' => 102,
                 'name_en' => 'Capsicum,Red',
@@ -1649,7 +1645,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            102 => 
+            102 =>
             array (
                 'id' => 103,
                 'name_en' => 'Capsicum,Yellow',
@@ -1665,7 +1661,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            103 => 
+            103 =>
             array (
                 'id' => 104,
                 'name_en' => 'Marrow',
@@ -1681,7 +1677,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            104 => 
+            104 =>
             array (
                 'id' => 105,
             'name_en' => 'Pumpkin (whole)',
@@ -1697,7 +1693,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            105 => 
+            105 =>
             array (
                 'id' => 106,
             'name_en' => 'Taro (whole)',
@@ -1713,7 +1709,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            106 => 
+            106 =>
             array (
                 'id' => 107,
                 'name_en' => 'Tomato',
@@ -1729,7 +1725,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            107 => 
+            107 =>
             array (
                 'id' => 108,
                 'name_en' => 'Cherry tomatoes',
@@ -1745,7 +1741,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            108 => 
+            108 =>
             array (
                 'id' => 109,
                 'name_en' => 'Green egg plant',
@@ -1761,7 +1757,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            109 => 
+            109 =>
             array (
                 'id' => 110,
             'name_en' => 'Cherry egg plant (trimmed)',
@@ -1777,7 +1773,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            110 => 
+            110 =>
             array (
                 'id' => 111,
                 'name_en' => 'Purple egg plant',
@@ -1793,7 +1789,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            111 => 
+            111 =>
             array (
                 'id' => 112,
                 'name_en' => 'Long Egg plant/Brinjal',
@@ -1809,7 +1805,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            112 => 
+            112 =>
             array (
                 'id' => 113,
                 'name_en' => 'Bitter  Gourd/Cavilla',
@@ -1825,7 +1821,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            113 => 
+            113 =>
             array (
                 'id' => 114,
                 'name_en' => 'Chayote',
@@ -1841,7 +1837,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            114 => 
+            114 =>
             array (
                 'id' => 115,
                 'name_en' => 'Coconut heart',
@@ -1857,7 +1853,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            115 => 
+            115 =>
             array (
                 'id' => 116,
             'name_en' => 'Local southern fruit (Sa-Taw)nut',
@@ -1873,7 +1869,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            116 => 
+            116 =>
             array (
                 'id' => 117,
             'name_en' => 'Local southern fruit (Sa-Taw)w/shell',
@@ -1889,7 +1885,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            117 => 
+            117 =>
             array (
                 'id' => 118,
                 'name_en' => 'Look Nieng',
@@ -1905,7 +1901,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            118 => 
+            118 =>
             array (
                 'id' => 119,
             'name_en' => 'Preserved bamboo shoot (whole)',
@@ -1921,7 +1917,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            119 => 
+            119 =>
             array (
                 'id' => 120,
                 'name_en' => 'Preserved bamboo shoot',
@@ -1937,7 +1933,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            120 => 
+            120 =>
             array (
                 'id' => 121,
                 'name_en' => 'Fresh bamboo shoot',
@@ -1953,7 +1949,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            121 => 
+            121 =>
             array (
                 'id' => 122,
                 'name_en' => 'Asparagus',
@@ -1969,7 +1965,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            122 => 
+            122 =>
             array (
                 'id' => 123,
             'name_en' => 'Shallots (whole big) /Bawan Bombay',
@@ -1985,7 +1981,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            123 => 
+            123 =>
             array (
                 'id' => 124,
             'name_en' => 'Shallots (whole Small) /Bawan merah',
@@ -2001,7 +1997,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            124 => 
+            124 =>
             array (
                 'id' => 125,
                 'name_en' => 'Onion Large',
@@ -2017,7 +2013,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            125 => 
+            125 =>
             array (
                 'id' => 126,
                 'name_en' => 'Whole mushroom',
@@ -2033,7 +2029,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            126 => 
+            126 =>
             array (
                 'id' => 127,
                 'name_en' => 'Black Jelly Mushroom',
@@ -2049,7 +2045,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            127 => 
+            127 =>
             array (
                 'id' => 128,
                 'name_en' => 'King Oyster Mushroom',
@@ -2065,7 +2061,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            128 => 
+            128 =>
             array (
                 'id' => 129,
                 'name_en' => 'Angle mushroom',
@@ -2081,7 +2077,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            129 => 
+            129 =>
             array (
                 'id' => 130,
                 'name_en' => 'Shitakae mushroom',
@@ -2097,7 +2093,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            130 => 
+            130 =>
             array (
                 'id' => 131,
                 'name_en' => 'Enokin mushroom',
@@ -2113,7 +2109,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            131 => 
+            131 =>
             array (
                 'id' => 132,
                 'name_en' => 'Banana spourts',
@@ -2129,7 +2125,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            132 => 
+            132 =>
             array (
                 'id' => 133,
                 'name_en' => 'Bunga kantan',
@@ -2145,7 +2141,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            133 => 
+            133 =>
             array (
                 'id' => 134,
                 'name_en' => 'Daun kesom/kesom leaf',
@@ -2161,7 +2157,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            134 => 
+            134 =>
             array (
                 'id' => 135,
                 'name_en' => 'Daun kari/kari leaf',
@@ -2177,7 +2173,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            135 => 
+            135 =>
             array (
                 'id' => 136,
                 'name_en' => 'Leaf soup',
@@ -2193,7 +2189,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            136 => 
+            136 =>
             array (
                 'id' => 137,
                 'name_en' => 'Fresh Old coconut',
@@ -2209,7 +2205,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            137 => 
+            137 =>
             array (
                 'id' => 138,
                 'name_en' => 'Fresh coconut whole',
@@ -2225,7 +2221,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            138 => 
+            138 =>
             array (
                 'id' => 139,
                 'name_en' => 'Yellow ginger leaf',
@@ -2241,7 +2237,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            139 => 
+            139 =>
             array (
                 'id' => 140,
                 'name_en' => 'Cashew leaves',
@@ -2257,7 +2253,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            140 => 
+            140 =>
             array (
                 'id' => 141,
                 'name_en' => 'Olive leaf',
@@ -2273,7 +2269,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            141 => 
+            141 =>
             array (
                 'id' => 142,
                 'name_en' => 'Leaf Asiatic',
@@ -2289,7 +2285,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            142 => 
+            142 =>
             array (
                 'id' => 143,
                 'name_en' => 'Ulam Pucuk Raja',
@@ -2305,7 +2301,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            143 => 
+            143 =>
             array (
                 'id' => 144,
                 'name_en' => 'Tamarine/Asam Jawa',
@@ -2321,7 +2317,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            144 => 
+            144 =>
             array (
                 'id' => 145,
                 'name_en' => 'Coriender Leaf',
@@ -2337,7 +2333,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            145 => 
+            145 =>
             array (
                 'id' => 146,
                 'name_en' => 'Vegetable Drill',
@@ -2353,7 +2349,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            146 => 
+            146 =>
             array (
                 'id' => 147,
                 'name_en' => 'Vegetable Chives',
@@ -2369,7 +2365,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            147 => 
+            147 =>
             array (
                 'id' => 148,
             'name_en' => 'Tapioka Leaf (yong leaf)',
@@ -2385,7 +2381,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            148 => 
+            148 =>
             array (
                 'id' => 149,
                 'name_en' => 'Daun Kadok',
@@ -2401,7 +2397,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            149 => 
+            149 =>
             array (
                 'id' => 150,
                 'name_en' => 'Parsley - English',
@@ -2417,7 +2413,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            150 => 
+            150 =>
             array (
                 'id' => 151,
                 'name_en' => 'Zuchini',
@@ -2433,7 +2429,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            151 => 
+            151 =>
             array (
                 'id' => 152,
                 'name_en' => 'Wet Tamarine',
@@ -2449,7 +2445,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            152 => 
+            152 =>
             array (
                 'id' => 153,
                 'name_en' => 'Tube Bean Curd',
@@ -2465,7 +2461,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            153 => 
+            153 =>
             array (
                 'id' => 154,
                 'name_en' => 'Hard Bean Curd',
@@ -2481,7 +2477,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            154 => 
+            154 =>
             array (
                 'id' => 155,
                 'name_en' => 'Young Bean Curd',
@@ -2497,7 +2493,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            155 => 
+            155 =>
             array (
                 'id' => 156,
                 'name_en' => 'Fresh Yellow Noodle',
@@ -2513,7 +2509,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            156 => 
+            156 =>
             array (
                 'id' => 157,
                 'name_en' => 'Fresh L. Noodle',
@@ -2529,7 +2525,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            157 => 
+            157 =>
             array (
                 'id' => 158,
                 'name_en' => 'Rice Chinese Noodle',
@@ -2545,7 +2541,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            158 => 
+            158 =>
             array (
                 'id' => 159,
                 'name_en' => 'Fresh Chan Noodle',
@@ -2561,7 +2557,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            159 => 
+            159 =>
             array (
                 'id' => 160,
                 'name_en' => 'Thai Curry Spice red curry paste',
@@ -2577,7 +2573,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            160 => 
+            160 =>
             array (
                 'id' => 161,
                 'name_en' => 'Massaman cerry past',
@@ -2593,7 +2589,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            161 => 
+            161 =>
             array (
                 'id' => 162,
                 'name_en' => 'Chili fresh-sour yellow curry',
@@ -2609,7 +2605,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            162 => 
+            162 =>
             array (
                 'id' => 163,
                 'name_en' => 'Sour yellow curry paste',
@@ -2625,7 +2621,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            163 => 
+            163 =>
             array (
                 'id' => 164,
                 'name_en' => 'Yellow curry paste',
@@ -2641,7 +2637,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            164 => 
+            164 =>
             array (
                 'id' => 165,
                 'name_en' => 'Green curry paste',
@@ -2657,7 +2653,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            165 => 
+            165 =>
             array (
                 'id' => 166,
                 'name_en' => 'Cendol',
@@ -2673,7 +2669,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            166 => 
+            166 =>
             array (
                 'id' => 167,
                 'name_en' => 'Black Jelly',
@@ -2689,7 +2685,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            167 => 
+            167 =>
             array (
                 'id' => 168,
                 'name_en' => 'Yoghurt',
@@ -2705,7 +2701,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            168 => 
+            168 =>
             array (
                 'id' => 169,
                 'name_en' => 'Sweet shrimp',
@@ -2721,7 +2717,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            169 => 
+            169 =>
             array (
                 'id' => 170,
                 'name_en' => 'Chicken Chinese Sausage',
@@ -2737,7 +2733,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            170 => 
+            170 =>
             array (
                 'id' => 171,
                 'name_en' => 'Fresh Egg No1',
@@ -2753,7 +2749,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            171 => 
+            171 =>
             array (
                 'id' => 172,
                 'name_en' => 'Duck salted eggs',
@@ -2769,7 +2765,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            172 => 
+            172 =>
             array (
                 'id' => 173,
                 'name_en' => 'Quail egg peeler',
@@ -2785,7 +2781,7 @@ class ProductsTableSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
             ),
-            173 => 
+            173 =>
             array (
                 'id' => 174,
                 'name_en' => 'Preserved egg',
@@ -2802,7 +2798,7 @@ class ProductsTableSeeder extends Seeder
                 'unit_id' => 1,
             ),
         ));
-        
-        
+
+
     }
 }
