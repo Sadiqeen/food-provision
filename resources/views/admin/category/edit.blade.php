@@ -14,9 +14,6 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 mx-auto">
-
-                    <h4>{{ __('Edit Brand') }}</h4>
-                    <hr />
                     <form action="{{ route('admin.category.update', $category->id) }}" method="post">
                         @method('PUT')
                         @csrf

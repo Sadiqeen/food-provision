@@ -7,7 +7,6 @@
     "Save": "บันทึก",
     "Cancel": "ยกเลิก",
     "Orders": "คำสั่งซื้อ",
-    "Product": "สินค้า",
     "Customer": "ลูกค้า",
     "Supplier": "ผู้ผลิต",
     "Setting": "ตั้งค่า",
@@ -19,6 +18,7 @@
     "Edit": "แก้ไข",
     "Delete": "ลบ",
     "Action": "ดำเนินการ",
+
     "Add Supplier": "เพิ่มผู้ผลิต",
     "View Supplier Data": "ดูข้อมูลผู้ผลิต",
     "Manage Supplier": "จัดการผู้ผลิต",
@@ -31,7 +31,6 @@
     "Confirm": "ยืนยัน",
     "Supplier deleted": "ลบข้อมูลผู้ผลิตสำเร็จ",
     "Catalog": "แคตตาล็อก",
-    "Category": "ประเภทสินค้า",
     "in English language": "ในภาษาอังกฤษ",
     "in Thai language": "ในภาษาไทย",
 
@@ -43,6 +42,7 @@
     "New brand added to the system": "เครื่องหมายการค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
     "Brand data edited": "แก้ไขข้อมูลเครื่องหมายการค้าสำเร็จ",
 
+    "Category": "ประเภทสินค้า",
     "Manage Category": "จัดการประเภทสินค้า",
     "Add Category": "เพิ่มประเภทสินค้า",
     "Edit Category": "แก้ไขประเภทสินค้า",
@@ -57,6 +57,19 @@
     "New unit added to the system": "หน่วยสินค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
     "Unit data edited": "แก้ไขข้อมูลหน่วยสินค้าสำเร็จ",
     "Unit deleted": "ลบข้อมูลหน่วยสินค้าสำเร็จ",
+
+    "Product": "สินค้า",
+    "Price": "ราคา",
+    "Description": "อธิบายเพิ่มเติม",
+    "Add Product": "เพิ่มสินค้า",
+    "Manage Product": "จัดการสินค้า",
+    "Edit Product Data": "แก้ไขข้อมูลสินค้า",
+    "Upload Image": "อัพโหลดรูปภาพ",
+    "Choose file": "เลือกรูปภาพ",
+    "Descrip": "อธิบาย",
+    "New product added to the system": "สินค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
+    "Product data edited": "แก้ไขข้อมูลสินค้าสำเร็จ",
+    "View Product": "ดูข้อมูลสินค้า",
 
     "_comment_": "End of file",
 

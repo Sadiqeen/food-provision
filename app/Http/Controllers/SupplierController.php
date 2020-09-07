@@ -29,18 +29,6 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::query();
         return datatables()->of($supplier)
-                    ->addColumn('name', function ($supplier) {
-                        if (app()->getLocale() == "th") {
-                            return $supplier->name_th ? $supplier->name_th : $supplier->name_en;
-                        }
-                        return $supplier->name_en;
-                    })
-                    ->addColumn('address', function ($supplier) {
-                        if (app()->getLocale() == "th") {
-                            return $supplier->address_th ? $supplier->address_th : $supplier->address_en;
-                        }
-                        return $supplier->address_en;
-                    })
                     ->addColumn('action', function ($supplier) {
                         $view = '<a href="' . route('admin.supplier.show', $supplier->id) . '" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
                         $edit = '<a href="' . route('admin.supplier.edit', $supplier->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';

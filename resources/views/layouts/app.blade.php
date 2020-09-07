@@ -89,7 +89,7 @@
                             {{ __('Catalog') }}
                         </a>
                         <div aria-labelledby="productDropdown" class="dropdown-menu mb-3">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item {{ request()->routeIs('admin.product.*') ? 'active' : '' }}" href="{{ route('admin.product.index') }}">
                                 {{ __('Product') }}
                             </a>
                             <a class="dropdown-item {{ request()->routeIs('admin.category.*') ? 'active' : '' }}" href="{{ route('admin.category.index') }}">

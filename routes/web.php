@@ -29,6 +29,9 @@ Auth::routes([
 Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+    Route::get('product/api', 'ProductController@index_api')->name('product.api');
+    Route::resource('product', 'ProductController');
+
     Route::get('supplier/api', 'SupplierController@index_api')->name('supplier.api');
     Route::resource('supplier', 'SupplierController');
 

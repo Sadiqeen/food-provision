@@ -28,12 +28,6 @@ class UnitController extends Controller
     {
         $unit = Unit::query();
         return datatables()->of($unit)
-                    ->addColumn('name', function ($unit) {
-                        if (app()->getLocale() == "th") {
-                            return $unit->name_th ? $unit->name_th : $unit->name_en;
-                        }
-                        return $unit->name_en;
-                    })
                     ->addColumn('action', function ($unit) {
                         $edit = '<a href="' . route('admin.unit.edit', $unit->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
                         $delete = '<a href="javascript:void(0)" onclick="delBrand(\'' . route('admin.unit.destroy', $unit->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';

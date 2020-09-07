@@ -8,16 +8,16 @@
         <thead class="bg-success text-white">
             <tr>
                 <th>#</th>
-                <th>{{ __('Name') . ' ' . __('in English language') }}</th>
-                <th>{{ __('Name') . ' ' . __('in Thai language') }}</th>
+                <th>{{ __('Unit') . ' ' . __('in English language') }}</th>
+                <th>{{ __('Unit') . ' ' . __('in Thai language') }}</th>
                 <th>{{ __('Action') }}</th>
             </tr>
         </thead>
         <tfoot class="bg-success text-white">
             <tr>
                 <th>#</th>
-                <th>{{ __('Name') . ' ' . __('in English language') }}</th>
-                <th>{{ __('Name') . ' ' . __('in Thai language') }}</th>
+                <th>{{ __('Unit') . ' ' . __('in English language') }}</th>
+                <th>{{ __('Unit') . ' ' . __('in Thai language') }}</th>
                 <th>{{ __('Action') }}</th>
             </tr>
         </tfoot>

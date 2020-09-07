@@ -28,12 +28,6 @@ class BrandController extends Controller
     {
         $brands = Brand::query();
         return datatables()->of($brands)
-                    ->addColumn('name', function ($brands) {
-                        if (app()->getLocale() == "th") {
-                            return $brands->name_th ? $brands->name_th : $brands->name_en;
-                        }
-                        return $brands->name_en;
-                    })
                     ->addColumn('action', function ($brands) {
                         $edit = '<a href="' . route('admin.brand.edit', $brands->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
                         $delete = '<a href="javascript:void(0)" onclick="delBrand(\'' . route('admin.brand.destroy', $brands->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
