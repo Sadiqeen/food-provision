@@ -220,12 +220,22 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @param int $id
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        if (!$product) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.product.index');
+        }
+
+        $product->delete();
+
+        alert()->success(__('Success'), __('Product deleted'));
+        return redirect()->route('admin.product.index');
     }
 
     /**

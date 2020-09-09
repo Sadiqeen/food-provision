@@ -1,15 +1,14 @@
 @extends('layouts.app')
 
 @section('title')
-{{ __('Product') }}
+{{ __('Customer') }}
 @endsection
 
 @section('content')
 <div class="container">
     <h3 class="my-3 text-uppercase font-weight-bold d-flex">
-        <span class="mr-auto"><i class="fa fa-archive fa-lg mr-2"></i> {{ __('Manage Product') }}</span>
-        {{--<a type="button" href="{{ route('admin.product.upload') }}"  class="btn btn-success mr-2">{{ __('Import') }}</a>--}}
-        <a type="button" href="{{ route('admin.product.create') }}"  class="btn btn-secondary">{{ __('Add Product') }}</a>
+        <span class="mr-auto"><i class="fa fa-user fa-lg mr-2" aria-hidden="true"></i> {{ __('Manage Customer') }}</span>
+        <a type="button" href="{{ route('admin.customer.create') }}"  class="btn btn-secondary">{{ __('Add Customer') }}</a>
     </h3>
     <div class="card">
         <div class="card-body">
@@ -23,20 +22,20 @@
                     <thead class="bg-success text-white">
                         <tr>
                             <th>#</th>
-                            <th>{{ __('Product') }}</th>
-                            <th>{{ __('Brand') }}</th>
-                            <th>{{ __('Category') }}</th>
-                            <th>{{ __('Price') }}</th>
+                            <th>{{ __('Customer') }}</th>
+                            <th>{{ __('Coordinator') }}</th>
+                            <th>{{ __('Tel') }}</th>
+                            <th>{{ __('E-mail') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tfoot class="bg-success text-white">
                         <tr>
                             <th>#</th>
-                            <th>{{ __('Product') }}</th>
-                            <th>{{ __('Brand') }}</th>
-                            <th>{{ __('Category') }}</th>
-                            <th>{{ __('Price') }}</th>
+                            <th>{{ __('Customer') }}</th>
+                            <th>{{ __('Coordinator') }}</th>
+                            <th>{{ __('Tel') }}</th>
+                            <th>{{ __('E-mail') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
                     </tfoot>
@@ -57,13 +56,13 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-archive fa-lg mr-2"></i> {{ __('View Product') }}</h5>
+                <h5 class="modal-title"><i class="fa fa-archive fa-lg mr-2"></i> {{ __('View Customer') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row my-5 py-5" id="view-product-loading">
+                <div class="row my-5 py-5" id="view-customer-loading">
                     <div class="m-auto">
                         <div class="spinner-grow text-danger" role="status">
                             <span class="sr-only">Loading...</span>
@@ -71,7 +70,7 @@
                     </div>
                 </div>
 
-                <div class="table-responsive d-none" id="view-product-data">
+                <div class="table-responsive d-none" id="view-customer-data">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -83,7 +82,7 @@
                         <tbody>
                             <tr>
                                 <th scope="row">
-                                    <strong>{{ __('Product') }}</strong>
+                                    <strong>{{ __('customer') }}</strong>
                                 </th>
                                 <td><span id="name_en"></span></td>
                                 <td><span id="name_th"></span></td>
@@ -147,7 +146,7 @@
         }).dataTable({
             serverSide: true,
             responsive: true,
-            ajax: '{{ route('admin.product.api') }}',
+            ajax: '{{ route('admin.customer.api') }}',
             order: [
                 [0, "DESC"]
             ],
@@ -162,16 +161,16 @@
                     name: 'name'
                 },
                 {
-                    data: 'brand',
-                    name: 'brand'
+                    data: 'coordinator',
+                    name: 'coordinator'
                 },
                 {
-                    data: 'category',
-                    name: 'category'
+                    data: 'tel',
+                    name: 'tel'
                 },
                 {
-                    data: 'price',
-                    name: 'price'
+                    data: 'email',
+                    name: 'email'
                 },
                 {
                     data: 'action',
@@ -186,12 +185,12 @@
         })
 
         $('#view').on('hidden.bs.modal', function (e) {
-            $( '#view-product-loading' ).removeClass( 'd-none' )
-            $( '#view-product-data' ).addClass( 'd-none' )
+            $( '#view-customer-loading' ).removeClass( 'd-none' )
+            $( '#view-customer-data' ).addClass( 'd-none' )
         })
     })
 
-    const viewProduct = function(url) {
+    const viewCustomer = function(url) {
         $( "#view" ).modal( "show" )
         $.get(url , function(data, status){
             let res = data.data
@@ -210,12 +209,12 @@
             $( '#supplier_en' ).text( res.supplier.name_en )
             $( '#supplier_th' ).text( res.supplier.name_th )
 
-            $( '#view-product-loading' ).addClass( 'd-none' )
-            $( '#view-product-data' ).removeClass( 'd-none' )
+            $( '#view-customer-loading' ).addClass( 'd-none' )
+            $( '#view-customer-data' ).removeClass( 'd-none' )
         });
     }
 
-    const delSupplier = function(url) {
+    const delCustomer = function(url) {
         Swal.fire({
             title: "{{ __('Are you sure?') }}",
             text: "{{ __('You won\'t be able to revert this!') }}",

@@ -18,6 +18,7 @@
     "Edit": "แก้ไข",
     "Delete": "ลบ",
     "Action": "ดำเนินการ",
+    "Thai Field": "กล่องข้อมูลภาษาไทย",
 
     "Add Supplier": "เพิ่มผู้ผลิต",
     "View Supplier Data": "ดูข้อมูลผู้ผลิต",
@@ -69,9 +70,19 @@
     "Describe": "อธิบาย",
     "New product added to the system": "สินค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
     "Product data edited": "แก้ไขข้อมูลสินค้าสำเร็จ",
+    "Product deleted": "ลบข้อมูลค้าสำเร็จ",
     "View Product": "ดูข้อมูลสินค้า",
     "Upload Excel File": "อัพโหลดไฟล์ Excel",
     "Upload": "อัพโหลด",
+
+    "Manage Customer" : "จัดการลูกค้า",
+    "Add Customer" : "เพิ่มลูกค้า",
+    "Coordinator" : "ชื่อผู้ประสานงาน",
+    "Note": "บันทึกเพิ่มเติม",
+    "New customer added to the system": "ลูกค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
+    "Customer data edited": "แก้ไขข้อมูลลูกค้าสำเร็จ",
+    "Edit Customer Data": "แก้ไขข้อมูลลูกค้า",
+    "Customer deleted": "ลบข้อมูลลูกค้าสำเร็จ",
 
     "_comment_": "End of file",
 

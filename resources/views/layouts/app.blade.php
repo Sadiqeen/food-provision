@@ -105,8 +105,8 @@
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                    <li class="nav-item {{ request()->routeIs('admin.customer.*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.customer.index') }}">
                             {{ __('Customer') }}
                         </a>
                     </li>
