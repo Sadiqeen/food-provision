@@ -10,6 +10,7 @@
                 <th>#</th>
                 <th>{{ __('Unit') . ' ' . __('in English language') }}</th>
                 <th>{{ __('Unit') . ' ' . __('in Thai language') }}</th>
+                <th>{{ __('Product') }}</th>
                 <th>{{ __('Action') }}</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
                 <th>#</th>
                 <th>{{ __('Unit') . ' ' . __('in English language') }}</th>
                 <th>{{ __('Unit') . ' ' . __('in Thai language') }}</th>
+                <th>{{ __('Product') }}</th>
                 <th>{{ __('Action') }}</th>
             </tr>
         </tfoot>
@@ -65,6 +67,10 @@
                 {
                     data: 'name_th',
                     name: 'name_th'
+                },
+                {
+                    data: 'product_count',
+                    name: 'product_count'
                 },
                 {
                     data: 'action',

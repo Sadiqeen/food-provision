@@ -26,7 +26,7 @@ class UnitController extends Controller
      */
     public function index_api()
     {
-        $unit = Unit::query();
+        $unit = Unit::withCount('product')->get();
         return datatables()->of($unit)
                     ->addColumn('action', function ($unit) {
                         $edit = '<a href="' . route('admin.unit.edit', $unit->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';

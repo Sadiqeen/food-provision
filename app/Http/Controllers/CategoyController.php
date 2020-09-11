@@ -26,7 +26,7 @@ class CategoyController extends Controller
      */
     public function index_api()
     {
-        $brands = Category::query();
+        $brands = Category::withCount('product')->get();
         return datatables()->of($brands)
                     ->addColumn('action', function ($brands) {
                         $edit = '<a href="' . route('admin.category.edit', $brands->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';

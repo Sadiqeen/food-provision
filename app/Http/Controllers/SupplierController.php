@@ -27,7 +27,7 @@ class SupplierController extends Controller
      */
     public function index_api()
     {
-        $supplier = Supplier::query();
+        $supplier = Supplier::get();
         return datatables()->of($supplier)
                     ->addColumn('action', function ($supplier) {
                         $view = '<a href="' . route('admin.supplier.show', $supplier->id) . '" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';

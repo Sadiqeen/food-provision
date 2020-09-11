@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Http\Requests\StoreCustomer;
 use App\Http\Requests\UpdateCustomer;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -30,7 +31,7 @@ class CustomerController extends Controller
      */
     public function index_api()
     {
-        $customer = Customer::query();
+        $customer = Customer::get();
         return datatables()->of($customer)
             ->addColumn('action', function ($customer) {
                 $view = '<a href="javascript:void(0)" onclick="viewCustomer(\'' . route('admin.customer.show', $customer->id) . '\')" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
@@ -67,11 +68,23 @@ class CustomerController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function show($id)
     {
+        $customer = Customer::find($id);
 
+        if (!$customer) {
+            return response()->json([
+                'status' => 'error',
+                'message' => __('No data that you request'),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $customer,
+        ]);
     }
 
     /**
