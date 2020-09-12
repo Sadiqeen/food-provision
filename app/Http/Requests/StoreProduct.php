@@ -25,9 +25,9 @@ class StoreProduct extends FormRequest
     {
         $rules = [
             "name_en" => 'required|max:255|unique:products,name_en',
+            "name_th" => 'required|max:255|unique:products,name_th',
             "price" => 'required|min:0|numeric',
-            "description_en" => 'max:500',
-            "description_th" => 'max:500',
+            "description" => 'max:500',
             "supplier" => 'required|exists:suppliers,id',
             "brand" => 'required|exists:brands,id',
             "category" => 'required|exists:categories,id',
@@ -36,10 +36,6 @@ class StoreProduct extends FormRequest
 
         if ($this->image) {
             $rules["image"] = 'image|max:500000';
-        }
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:products,name_th';
         }
 
         return $rules;

@@ -75,46 +75,37 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">{{ __('English') }}</th>
-                                <th scope="col">{{ __('Thai') }}</th>
+                                <th scope="col" class="text-center" style="width: 35%">{{ __('English') }}</th>
+                                <th scope="col" class="text-center" style="width: 35%">{{ __('Thai') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">
-                                    <strong>{{ __('customer') }}</strong>
-                                </th>
-                                <td><span id="name_en"></span></td>
-                                <td><span id="name_th"></span></td>
+                                <th scope="row"><strong>{{ __('Customer') }}</strong></th>
+                                <td class="text-center"><span id="name_en"></span></td>
+                                <td class="text-center"><span id="name_th"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ __('Price') }}</th>
-                                <td colspan="2"><span id="price"></span></td>
+                                <th scope="row">{{ __('Coordinator') }}</th>
+                                <td class="text-center"><span id="coordinator_en"></span></td>
+                                <td class="text-center"><span id="coordinator_th"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ __('Describe') }}</th>
-                                <td><span id="desc_en"></span></td>
-                                <td><span id="desc_th"></span></td>
+                                <th scope="row">{{ __('Tel') }}</th>
+                                <td colspan="2" class="text-center"><a id="tel" href=""></a></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ __('Unit') }}</th>
-                                <td><span id="unit_en"></span></td>
-                                <td><span id="unit_th"></span></td>
+                                <th scope="row">{{ __('E-mail') }}</th>
+                                <td colspan="2" class="text-center"><a id="email" href=""></a></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ __('Category') }}</th>
-                                <td><span id="category_en"></span></td>
-                                <td><span id="category_th"></span></td>
+                                <th scope="row">{{ __('Address') }}</th>
+                                <td class="text-center"><span id="address_en"></span></td>
+                                <td class="text-center"><span id="address_th"></span></td>
                             </tr>
                             <tr>
-                                <th scope="row">{{ __('Brand') }}</th>
-                                <td><span id="brand_en"></span></td>
-                                <td><span id="brand_th"></span></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ __('Supplier') }}</th>
-                                <td><span id="supplier_en"></span></td>
-                                <td><span id="supplier_th"></span></td>
+                                <th scope="row">{{ __('Note') }}</th>
+                                <td colspan="2" class="text-center"><span id="note"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -174,7 +165,9 @@
                 },
                 {
                     data: 'action',
-                    name: 'action'
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
                 }
             ],
             @if(app()->getLocale() == "th")
@@ -194,24 +187,40 @@
         $( "#view" ).modal( "show" )
         $.get(url , function(data, status){
             let res = data.data
-            console.log(res)
-            $( '#price' ).text( res.price )
-            $( '#name_en' ).text( res.name_en )
-            $( '#name_th' ).text( res.name_th )
-            $( '#desc_en' ).text( res.desc_en )
-            $( '#desc_th' ).text( res.desc_th )
-            $( '#unit_en' ).text( res.unit.name_en )
-            $( '#unit_th' ).text( res.unit.name_th )
-            $( '#category_en' ).text( res.category.name_en )
-            $( '#category_th' ).text( res.category.name_th )
-            $( '#brand_en' ).text( res.brand.name_en )
-            $( '#brand_th' ).text( res.brand.name_th )
-            $( '#supplier_en' ).text( res.supplier.name_en )
-            $( '#supplier_th' ).text( res.supplier.name_th )
+            // name
+            fillData('name_en', res.name_en)
+            fillData('name_th', res.name_th)
+
+            // coordinator
+            fillData('coordinator_en', res.coordinator_en)
+            fillData('coordinator_th', res.coordinator_th)
+
+            // tel
+            fillData('tel', res.tel)
+            $( '#tel' ).attr( 'href', 'tel:' + res.tel )
+
+            // email
+            fillData('email', res.email)
+            $( '#email' ).attr( 'href', 'mailto:' + res.email )
+
+            // address
+            fillData('address_en', res.address_en)
+            fillData('address_th', res.address_th)
+
+            // address
+            fillData('note', res.note)
 
             $( '#view-customer-loading' ).addClass( 'd-none' )
             $( '#view-customer-data' ).removeClass( 'd-none' )
         });
+    }
+
+    const fillData = function (id, data) {
+        if (data) {
+            $( "#" + id ).text( data ).removeClass(" text-danger")
+        } else {
+            $( "#" + id ).text( '{{ __("No Data") }}' ).addClass(" text-danger")
+        }
     }
 
     const delCustomer = function(url) {

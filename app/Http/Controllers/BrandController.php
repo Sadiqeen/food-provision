@@ -28,11 +28,14 @@ class BrandController extends Controller
     {
         $brands = Brand::withCount('product')->get();
         return datatables()->of($brands)
+                    ->addColumn('product_count', function ($brands) {
+                        return '<a role="button" href="' . route('admin.product.index') . '?query='. $brands->name . '">' . $brands->product_count . '</a>';
+                    })
                     ->addColumn('action', function ($brands) {
                         $edit = '<a href="' . route('admin.brand.edit', $brands->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
                         $delete = '<a href="javascript:void(0)" onclick="delBrand(\'' . route('admin.brand.destroy', $brands->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
                         return '<div class="btn-group" role="group" aria-label="Basic example">' . $edit . $delete . '</div>';
-                    })->toJson();
+                    })->escapeColumns([])->toJson();
     }
 
     /**
@@ -103,8 +106,7 @@ class BrandController extends Controller
             return redirect()->route('admin.brand.index');
         }
 
-        $brand->name_en = $request->name_en;
-        $brand->name_th = $request->name_th;
+        $brand->name = $request->name;
         $brand->save();
 
         alert()->success(__('Success'), __('Brand data edited'));

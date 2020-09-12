@@ -23,24 +23,13 @@ class UpdateCustomer extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "name_en" => 'required|max:255|unique:customers,name_en,' .$this->route('customer'),
-            "coordinator_en" => 'required|max:255|unique:customers,coordinator_en,' .$this->route('customer'),
+        return [
+            "name" => 'required|max:255|unique:customers,name,' .$this->route('customer'),
+            "coordinator" => 'required|max:255|unique:customers,coordinator,' .$this->route('customer'),
             "tel" => 'required|min:10|max:15|regex:/\(?([0-9]{2,3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/|unique:customers,tel,' .$this->route('customer'),
             "email" => 'required|email|unique:customers,email,' .$this->route('customer'),
-            "address_en" => 'required|max:255',
-            "address_th" => 'max:255',
+            "address" => 'required|max:255',
             'note' => 'max:500',
         ];
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:customers,name_th,' .$this->route('customer');
-        }
-
-        if ($this->coordinator_th) {
-            $rules["coordinator_th"] = 'max:255|unique:customers,name_th,' .$this->route('customer');
-        }
-
-        return $rules;
     }
 }

@@ -40,7 +40,7 @@ class ProductController extends Controller
      */
     public function index_api()
     {
-        $product = Product::with(['brand', 'category', 'supplier'])->get();
+        $product = Product::with(['brand', 'category', 'supplier', 'unit'])->get();
         return datatables()->of($product)
                     ->addColumn('brand', function ($product) {
                         return $product->brand->name;
@@ -51,15 +51,18 @@ class ProductController extends Controller
                     ->addColumn('category', function ($product) {
                         return $product->category->name;
                     })
+                    ->addColumn('unit', function ($product) {
+                        return $product->unit->name;
+                    })
                     ->addColumn('price', function ($product) {
                         return number_format($product->price);
                     })
                     ->addColumn('action', function ($product) {
-                        $view = '<a href="javascript:void(0)" onclick="viewProduct(\'' . route('admin.product.show', $product->id) . '\')" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
                         $edit = '<a href="' . route('admin.product.edit', $product->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
                         $delete = '<a href="javascript:void(0)" onclick="delSupplier(\'' . route('admin.product.destroy', $product->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
-                        return '<div class="btn-group" role="group" aria-label="Basic example">' . $view . $edit . $delete . '</div>';
-                    })->toJson();
+                        return '<div class="btn-group" role="group" aria-label="Basic example">' . $edit . $delete . '</div>';
+                    })
+                    ->escapeColumns([])->toJson();
     }
 
     /**
@@ -91,27 +94,20 @@ class ProductController extends Controller
     {
         $product = new Product;
         $product->name_en = $request->name_en;
+        $product->name_th = $request->name_th;
         $product->price = $request->price;
         $product->supplier_id = $request->supplier;
         $product->brand_id = $request->brand;
         $product->category_id = $request->category;
         $product->unit_id = $request->unit;
 
-        if ($request->name_th) {
-            $product->name_th = $request->name_th;
-        }
-
         if ($request->image) {
             $url = Storage::disk('public')->put(null, $request->image);
             $product->image = 'uploads/' . $url;
         }
 
-        if ($request->description_en) {
-            $product->desc_en = $request->description_en;
-        }
-
-        if ($request->description_th) {
-            $product->desc_th = $request->description_th;
+        if ($request->description) {
+            $product->desc = $request->description;
         }
 
         $product->save();
@@ -188,27 +184,20 @@ class ProductController extends Controller
         }
 
         $product->name_en = $request->name_en;
+        $product->name_th = $request->name_th;
         $product->price = $request->price;
         $product->supplier_id = $request->supplier;
         $product->brand_id = $request->brand;
         $product->category_id = $request->category;
         $product->unit_id = $request->unit;
 
-        if ($request->name_th) {
-            $product->name_th = $request->name_th;
-        }
-
         if ($request->image) {
             $url = Storage::disk('public')->put(null, $request->image);
             $product->image = 'uploads/' . $url;
         }
 
-        if ($request->description_en) {
-            $product->desc_en = $request->description_en;
-        }
-
-        if ($request->description_th) {
-            $product->desc_th = $request->description_th;
+        if ($request->description) {
+            $product->desc = $request->description;
         }
 
         $product->save();

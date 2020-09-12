@@ -23,14 +23,8 @@ class UpdateBrand extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "name_en" => 'required|max:255|unique:brands,name_en,' .$this->route('brand'),
+        return [
+            "name" => 'required|max:255|unique:brands,name,' .$this->route('brand'),
         ];
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:brands,name_th,' .$this->route('brand');
-        }
-
-        return $rules;
     }
 }

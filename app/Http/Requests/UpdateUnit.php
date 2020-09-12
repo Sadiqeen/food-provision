@@ -23,14 +23,8 @@ class UpdateUnit extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "name_en" => 'required|max:255|unique:units,name_en,' .$this->route('unit'),
+        return [
+            "name" => 'required|max:255|unique:units,name,' .$this->route('unit'),
         ];
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:units,name_th,' .$this->route('unit');
-        }
-
-        return $rules;
     }
 }

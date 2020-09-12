@@ -24,8 +24,11 @@
                         <tr>
                             <th>#</th>
                             <th>{{ __('Product') }}</th>
+                            <th>{{ __('Product') }} TH</th>
                             <th>{{ __('Brand') }}</th>
                             <th>{{ __('Category') }}</th>
+                            <th>{{ __('Unit') }}</th>
+                            <th>{{ __('Supplier') }}</th>
                             <th>{{ __('Price') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
@@ -34,8 +37,11 @@
                         <tr>
                             <th>#</th>
                             <th>{{ __('Product') }}</th>
+                            <th>{{ __('Product') }} TH</th>
                             <th>{{ __('Brand') }}</th>
                             <th>{{ __('Category') }}</th>
+                            <th>{{ __('Unit') }}</th>
+                            <th>{{ __('Supplier') }}</th>
                             <th>{{ __('Price') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
@@ -72,12 +78,12 @@
                 </div>
 
                 <div class="table-responsive d-none" id="view-product-data">
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">{{ __('English') }}</th>
-                                <th scope="col">{{ __('Thai') }}</th>
+                                <th scope="col" class="text-center" style="width: 35%">{{ __('English') }}</th>
+                                <th scope="col" class="text-center" style="width: 35%">{{ __('Thai') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,37 +91,37 @@
                                 <th scope="row">
                                     <strong>{{ __('Product') }}</strong>
                                 </th>
-                                <td><span id="name_en"></span></td>
-                                <td><span id="name_th"></span></td>
+                                <td class="text-center"><span id="name_en"></span></td>
+                                <td class="text-center"><span id="name_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Price') }}</th>
-                                <td colspan="2"><span id="price"></span></td>
+                                <td colspan="2" class="text-center"><span id="price"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Describe') }}</th>
-                                <td><span id="desc_en"></span></td>
-                                <td><span id="desc_th"></span></td>
+                                <td class="text-center"><span id="desc_en"></span></td>
+                                <td class="text-center"><span id="desc_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Unit') }}</th>
-                                <td><span id="unit_en"></span></td>
-                                <td><span id="unit_th"></span></td>
+                                <td class="text-center"><span id="unit_en"></span></td>
+                                <td class="text-center"><span id="unit_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Category') }}</th>
-                                <td><span id="category_en"></span></td>
-                                <td><span id="category_th"></span></td>
+                                <td class="text-center"><span id="category_en"></span></td>
+                                <td class="text-center"><span id="category_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Brand') }}</th>
-                                <td><span id="brand_en"></span></td>
-                                <td><span id="brand_th"></span></td>
+                                <td class="text-center"><span id="brand_en"></span></td>
+                                <td class="text-center"><span id="brand_th"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Supplier') }}</th>
-                                <td><span id="supplier_en"></span></td>
-                                <td><span id="supplier_th"></span></td>
+                                <td class="text-center"><span id="supplier_en"></span></td>
+                                <td class="text-center"><span id="supplier_th"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -134,17 +140,18 @@
 <script type="text/javascript" src="{{ asset('plugins/DataTables/datatables.js') }}"></script>
 <script>
     $(document).ready(function () {
+
         @if ($errors->any())
             $('#create').modal('show')
         @endif
 
-        $('#dataTable').on('processing.dt', function (e, settings, processing) {
+        let table = $('#dataTable').on('processing.dt', function (e, settings, processing) {
             if (processing) {
                 $('.loading').css('display', 'flex');
             } else {
                 $('.loading').css('display', 'none');
             }
-        }).dataTable({
+        }).DataTable({
             serverSide: true,
             responsive: true,
             ajax: '{{ route('admin.product.api') }}',
@@ -158,8 +165,12 @@
                     searchable: false
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'name_en',
+                    name: 'name_en'
+                },
+                {
+                    data: 'name_th',
+                    name: 'name_th'
                 },
                 {
                     data: 'brand',
@@ -170,13 +181,23 @@
                     name: 'category'
                 },
                 {
+                    data: 'unit',
+                    name: 'unit'
+                },
+                {
+                    data: 'supplier',
+                    name: 'supplier'
+                },
+                {
                     data: 'price',
                     name: 'price'
                 },
                 {
                     data: 'action',
-                    name: 'action'
-                }
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                },
             ],
             @if(app()->getLocale() == "th")
                 language: {
@@ -184,6 +205,11 @@
                 }
             @endif
         })
+
+        const urlParams = new URLSearchParams(window.location.search)
+        if (urlParams.has('query')) {
+            table.search( urlParams.get('query') ).draw();
+        }
 
         $('#view').on('hidden.bs.modal', function (e) {
             $( '#view-product-loading' ).removeClass( 'd-none' )
@@ -195,24 +221,45 @@
         $( "#view" ).modal( "show" )
         $.get(url , function(data, status){
             let res = data.data
-            console.log(res)
-            $( '#price' ).text( res.price )
-            $( '#name_en' ).text( res.name_en )
-            $( '#name_th' ).text( res.name_th )
-            $( '#desc_en' ).text( res.desc_en )
-            $( '#desc_th' ).text( res.desc_th )
-            $( '#unit_en' ).text( res.unit.name_en )
-            $( '#unit_th' ).text( res.unit.name_th )
-            $( '#category_en' ).text( res.category.name_en )
-            $( '#category_th' ).text( res.category.name_th )
-            $( '#brand_en' ).text( res.brand.name_en )
-            $( '#brand_th' ).text( res.brand.name_th )
-            $( '#supplier_en' ).text( res.supplier.name_en )
-            $( '#supplier_th' ).text( res.supplier.name_th )
+
+            // name
+            fillData('name_en', res.name_en)
+            fillData('name_th', res.name_th)
+
+            // price
+            fillData('price', res.price)
+
+            // desc
+            fillData('desc_en', res.desc_en)
+            fillData('desc_th', res.desc_th)
+
+            // unit
+            fillData('unit_en', res.unit.name_en)
+            fillData('unit_th', res.unit.name_th)
+
+            // category
+            fillData('category_en', res.category.name_en)
+            fillData('category_th', res.category.name_th)
+
+            // brand
+            fillData('brand_en', res.brand.name_en)
+            fillData('brand_th', res.brand.name_th)
+
+            // supplier
+            fillData('supplier_en', res.supplier.name_en)
+            fillData('supplier_th', res.supplier.name_th)
 
             $( '#view-product-loading' ).addClass( 'd-none' )
             $( '#view-product-data' ).removeClass( 'd-none' )
         });
+    }
+
+    const fillData = function (id, data) {
+        if (data) {
+            $( "#" + id ).text( data ).removeClass(" text-danger")
+        } else {
+            $( "#" + id ).text( '{{ __("No Data") }}' ).addClass(" text-danger")
+        }
     }
 
     const delSupplier = function(url) {

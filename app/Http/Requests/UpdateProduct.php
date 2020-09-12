@@ -25,9 +25,9 @@ class UpdateProduct extends FormRequest
     {
         $rules = [
             "name_en" => 'required|max:255|unique:products,name_en,' . $this->route('product'),
+            "name_th" => 'required|max:255|unique:products,name_th,' . $this->route('product'),
             "price" => 'required|min:0|numeric',
-            "description_en" => 'max:500',
-            "description_th" => 'max:500',
+            "description" => 'max:500',
             "supplier" => 'required|exists:suppliers,id',
             "brand" => 'required|exists:brands,id',
             "category" => 'required|exists:categories,id',
@@ -36,10 +36,6 @@ class UpdateProduct extends FormRequest
 
         if ($this->image) {
             $rules["image"] = 'image|max:50000';
-        }
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:products,name_th,' . $this->route('product');
         }
 
         return $rules;

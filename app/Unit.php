@@ -12,18 +12,8 @@ class Unit extends Model
      * @var array
      */
     protected $fillable = [
-        'name_th', 'name_en',
+        'name',
     ];
-
-    protected $appends = ['name'];
-
-    public function getNameAttribute()
-    {
-        if (app()->getLocale() == "th") {
-            return $this->name_th ? $this->name_th : $this->name_en;
-        }
-        return $this->name_en;
-    }
 
     public function product()
     {

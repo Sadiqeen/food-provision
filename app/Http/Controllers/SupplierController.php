@@ -30,10 +30,9 @@ class SupplierController extends Controller
         $supplier = Supplier::get();
         return datatables()->of($supplier)
                     ->addColumn('action', function ($supplier) {
-                        $view = '<a href="' . route('admin.supplier.show', $supplier->id) . '" class="text-primary mr-3"><i class="fa fa-eye fa-lg"></i></a>';
                         $edit = '<a href="' . route('admin.supplier.edit', $supplier->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
                         $delete = '<a href="javascript:void(0)" onclick="delSupplier(\'' . route('admin.supplier.destroy', $supplier->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
-                        return '<div class="btn-group" role="group" aria-label="Basic example">' . $view . $edit . $delete . '</div>';
+                        return '<div class="btn-group" role="group" aria-label="Basic example">' . $edit . $delete . '</div>';
                     })->toJson();
     }
 
@@ -68,15 +67,7 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        $supplier = Supplier::find($id);
-
-        if (!$supplier) {
-            alert()->error(__('Error'), __('No data that you request'));
-            return redirect()->route('admin.supplier.index');
-        }
-
-        return view('admin.supplier.show', ["supplier" => $supplier]);
-
+        //
     }
 
     /**
@@ -113,12 +104,10 @@ class SupplierController extends Controller
             return redirect()->route('admin.supplier.index');
         }
 
-        $supplier->name_en = $request->name_en;
-        $supplier->name_th = $request->name_th;
+        $supplier->name = $request->name;
         $supplier->tel = $request->tel;
         $supplier->email = $request->email;
-        $supplier->address_en = $request->address_en;
-        $supplier->address_th = $request->address_th;
+        $supplier->address = $request->address;
         $supplier->save();
 
         alert()->success(__('Success'), __('Supplier data edited'));

@@ -50,7 +50,7 @@
             $name_th = $product->name_th;
         }
     @endphp
-    <label for="name_th">{{ __('Name') . ' ' . __('in Thai language') }}</label>
+    <label for="name_th">{{ __('Name') . ' ' . __('in Thai language') }} <span class="text-danger">*</span></label>
     <input type="text" name="name_th" id="name_th" value="{{ $name_th ?? '' }}"
         class="form-control @error('name_th') is-invalid @enderror" placeholder="">
     @error('name_th')
@@ -83,35 +83,16 @@
 {{-- ==================================== Desciption (en) field ========================================== --}}
 <div class="form-group">
     @php
-        $description_en = '';
-        if (old('description_en')) {
-            $description_en = old('description_en');
+        $description = '';
+        if (old('description')) {
+            $description = old('description');
         } elseif (isset($product)) {
-            $description_en = $product->desc_en;
+            $description = $product->desc_en;
         }
     @endphp
-    <label for="description_en">{{ __('Describe') . ' ' . __('Product') . ' ' . __('in English language') }}</label>
-    <textarea class="form-control @error('description_en') is-invalid @enderror" name="description_en" id="description_en" rows="3">{{ $description_en ?? '' }}</textarea>
-    @error('description_en')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-</div>
-
-{{-- ==================================== Desciption (th) field ========================================== --}}
-<div class="form-group">
-    @php
-        $description_th = '';
-        if (old('description_th')) {
-            $description_th = old('description_th');
-        } elseif (isset($product)) {
-            $description_th = $product->desc_th;
-        }
-    @endphp
-    <label for="description_th">{{ __('Describe') . ' ' . __('Product') . ' ' . __('in Thai language') }}</label>
-    <textarea class="form-control @error('description_th') is-invalid @enderror" name="description_th" id="description_th" rows="3">{{ $description_th ?? '' }}</textarea>
-    @error('description_th')
+    <label for="description">{{ __('Describe') . ' ' . __('Product') }}</label>
+    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" rows="3">{{ $description ?? '' }}</textarea>
+    @error('description')
     <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
     </span>

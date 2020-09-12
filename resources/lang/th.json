@@ -74,6 +74,7 @@
     "View Product": "ดูข้อมูลสินค้า",
     "Upload Excel File": "อัพโหลดไฟล์ Excel",
     "Upload": "อัพโหลด",
+    "No Data": "ไม่มีข้อมูล",
 
     "Manage Customer" : "จัดการลูกค้า",
     "Add Customer" : "เพิ่มลูกค้า",
@@ -83,6 +84,7 @@
     "Customer data edited": "แก้ไขข้อมูลลูกค้าสำเร็จ",
     "Edit Customer Data": "แก้ไขข้อมูลลูกค้า",
     "Customer deleted": "ลบข้อมูลลูกค้าสำเร็จ",
+    "View Customer": "ดูข้อมูลลูกค้า",
 
     "_comment_": "End of file",
 

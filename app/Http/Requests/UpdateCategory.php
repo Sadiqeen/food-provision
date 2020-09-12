@@ -23,14 +23,8 @@ class UpdateCategory extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "name_en" => 'required|max:255|unique:categories,name_en,' .$this->route('category'),
+        return [
+            "name" => 'required|max:255|unique:categories,name,' .$this->route('category'),
         ];
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:categories,name_th,' .$this->route('category');
-        }
-
-        return $rules;
     }
 }

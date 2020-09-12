@@ -28,11 +28,14 @@ class UnitController extends Controller
     {
         $unit = Unit::withCount('product')->get();
         return datatables()->of($unit)
+                    ->addColumn('product_count', function ($brands) {
+                        return '<a role="button" href="' . route('admin.product.index') . '?query='. $brands->name . '">' . $brands->product_count . '</a>';
+                    })
                     ->addColumn('action', function ($unit) {
                         $edit = '<a href="' . route('admin.unit.edit', $unit->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
                         $delete = '<a href="javascript:void(0)" onclick="delBrand(\'' . route('admin.unit.destroy', $unit->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
                         return '<div class="btn-group" role="group" aria-label="Basic example">' . $edit . $delete . '</div>';
-                    })->toJson();
+                    })->escapeColumns([])->toJson();
     }
     /**
      * Show the form for creating a new resource.
@@ -102,8 +105,7 @@ class UnitController extends Controller
             return redirect()->route('admin.unit.index');
         }
 
-        $unit->name_en = $request->name_en;
-        $unit->name_th = $request->name_th;
+        $unit->name = $request->name;
         $unit->save();
 
         alert()->success(__('Success'), __('Unit data edited'));

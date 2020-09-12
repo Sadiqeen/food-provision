@@ -23,18 +23,11 @@ class UpdateSupplier extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "name_en" => 'required|max:255|unique:suppliers,name_en,' .$this->route('supplier'),
+        return [
+            "name" => 'required|max:255|unique:suppliers,name,' .$this->route('supplier'),
             "tel" => 'required|min:10|max:15|unique:suppliers,tel,' . $this->route('supplier'),
             "email" => 'required|email|unique:suppliers,email,' . $this->route('supplier'),
-            "address_en" => 'required|max:255',
-            "address_th" => 'max:255',
+            "address" => 'required|max:255',
         ];
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:suppliers,name_th,' .$this->route('supplier');
-        }
-
-        return $rules;
     }
 }

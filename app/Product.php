@@ -13,35 +13,16 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name_th',
         'name_en',
+        'name_th',
         'price',
         'image',
-        'desc_en',
-        'desc_th',
+        'desc',
         'supplier_id',
         'brand_id',
         'category_id',
         'unit_id',
     ];
-
-    protected $appends = ['name', 'desc'];
-
-    public function getNameAttribute()
-    {
-        if (app()->getLocale() == "th") {
-            return $this->name_th ? $this->name_th : $this->name_en;
-        }
-        return $this->name_en;
-    }
-
-    public function getDescAttribute()
-    {
-        if (app()->getLocale() == "th") {
-            return $this->desc_th ? $this->desc_th : $this->desc_en;
-        }
-        return $this->desc_en;
-    }
 
     public function unit()
     {

@@ -23,18 +23,11 @@ class StoreSupplier extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "name_en" => 'required|max:255|unique:suppliers,name_en',
+        return [
+            "name" => 'required|max:255|unique:suppliers,name',
             "tel" => 'required|min:10|max:15|regex:/\(?([0-9]{2,3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/|unique:suppliers,tel',
             "email" => 'required|email|unique:suppliers,email',
-            "address_en" => 'required|max:255',
-            "address_th" => 'max:255',
+            "address" => 'required|max:255',
         ];
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:suppliers,name_th';
-        }
-
-        return $rules;
     }
 }

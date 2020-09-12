@@ -8,8 +8,6 @@
 <div class="container">
     <h3 class="my-3 text-uppercase font-weight-bold d-flex">
         <span class="mr-auto"><i class="fa fa-user fa-lg mr-2" aria-hidden="true"></i> {{ __('Add Customer') }}</span>
-        <a type="button" href="javascript:void(0)" onclick="toggleThaiField()"
-           class="btn btn-outline-success mr-2">{{ __('Thai Field') }}</a>
         <a type="button" href="{{ route('admin.customer.index') }}"
             class="btn btn-secondary">{{ __('Manage Customer') }}</a>
     </h3>

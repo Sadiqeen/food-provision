@@ -121,14 +121,11 @@ class CustomerController extends Controller
             return redirect()->route('admin.customer.index');
         }
 
-        $customer->name_en = $request->name_en;
-        $customer->name_th = $request->name_th;
-        $customer->coordinator_en = $request->coordinator_en;
-        $customer->coordinator_th = $request->coordinator_th;
+        $customer->name = $request->name;
+        $customer->coordinator = $request->coordinator;
         $customer->tel = $request->tel;
         $customer->email = $request->email;
-        $customer->address_en = $request->address_en;
-        $customer->address_th = $request->address_th;
+        $customer->address = $request->address;
         $customer->note = $request->note;
         $customer->save();
 

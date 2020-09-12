@@ -8,8 +8,7 @@
         <thead class="bg-success text-white">
             <tr>
                 <th>#</th>
-                <th>{{ __('Unit') . ' ' . __('in English language') }}</th>
-                <th>{{ __('Unit') . ' ' . __('in Thai language') }}</th>
+                <th>{{ __('Unit') }}</th>
                 <th>{{ __('Product') }}</th>
                 <th>{{ __('Action') }}</th>
             </tr>
@@ -17,8 +16,7 @@
         <tfoot class="bg-success text-white">
             <tr>
                 <th>#</th>
-                <th>{{ __('Unit') . ' ' . __('in English language') }}</th>
-                <th>{{ __('Unit') . ' ' . __('in Thai language') }}</th>
+                <th>{{ __('Unit') }}</th>
                 <th>{{ __('Product') }}</th>
                 <th>{{ __('Action') }}</th>
             </tr>
@@ -61,12 +59,8 @@
                     searchable: false
                 },
                 {
-                    data: 'name_en',
-                    name: 'name_en'
-                },
-                {
-                    data: 'name_th',
-                    name: 'name_th'
+                    data: 'name',
+                    name: 'name'
                 },
                 {
                     data: 'product_count',
@@ -74,7 +68,9 @@
                 },
                 {
                     data: 'action',
-                    name: 'action'
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
                 },
             ],
             @if(app()->getLocale() == "th")

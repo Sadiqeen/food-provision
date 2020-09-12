@@ -23,14 +23,8 @@ class StoreCategory extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "name_en" => 'required|max:255|unique:categories,name_en',
+        return [
+            "name" => 'required|max:255|unique:categories,name',
         ];
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:categories,name_th';
-        }
-
-        return $rules;
     }
 }

@@ -23,14 +23,8 @@ class StoreUnit extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "name_en" => 'required|max:255|unique:units,name_en',
+        return [
+            "name" => 'required|max:255|unique:units,name',
         ];
-
-        if ($this->name_th) {
-            $rules["name_th"] = 'max:255|unique:units,name_th';
-        }
-
-        return $rules;
     }
 }
