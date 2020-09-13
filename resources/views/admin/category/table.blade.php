@@ -81,11 +81,7 @@
         })
     })
 
-    const editBrand = function (url) {
-        $('#editBrand').modal('show')
-    }
-
-    const delBrand = function(url) {
+    const delCategory = function(url) {
         Swal.fire({
             title: "{{ __('Are you sure?') }}",
             text: "{{ __('You won\'t be able to revert this!') }}",

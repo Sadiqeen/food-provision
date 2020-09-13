@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Brand;
-use App\Http\Requests\StoreBrand;
-use App\Http\Requests\UpdateBrand;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
+use phpDocumentor\Reflection\Types\Void_;
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
@@ -22,7 +26,8 @@ class BrandController extends Controller
     /**
      * Send data of index through API.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
+     * @throws Exception
      */
     public function index_api()
     {
@@ -32,7 +37,7 @@ class BrandController extends Controller
                         return '<a role="button" href="' . route('admin.product.index') . '?query='. $brands->name . '">' . $brands->product_count . '</a>';
                     })
                     ->addColumn('action', function ($brands) {
-                        $edit = '<a href="' . route('admin.brand.edit', $brands->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
+                        $edit = '<a href="javascript:void(0)" onclick="editBrand(\'' . route('admin.brand.update', $brands->id) . '\', \'' . $brands->name . '\')"  class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
                         $delete = '<a href="javascript:void(0)" onclick="delBrand(\'' . route('admin.brand.destroy', $brands->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
                         return '<div class="btn-group" role="group" aria-label="Basic example">' . $edit . $delete . '</div>';
                     })->escapeColumns([])->toJson();
@@ -41,7 +46,7 @@ class BrandController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -51,12 +56,19 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(StoreBrand $request)
+    public function store(Request $request)
     {
-        Brand::create($request->all());
+        $request->validate([
+            "brand" => 'required|max:255|unique:brands,name',
+        ]);
+
+        $brand = new Brand;
+        $brand->name = $request->brand;
+        $brand->save();
+
         alert()->success(__('Success'), __('New brand added to the system'));
         return redirect()->route('admin.brand.index');
     }
@@ -65,7 +77,7 @@ class BrandController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Void
      */
     public function show($id)
     {
@@ -76,28 +88,21 @@ class BrandController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function edit($id)
     {
-        $brand = Brand::find($id);
-
-        if (!$brand) {
-            alert()->error(__('Error'), __('No data that you request'));
-            return redirect()->route('admin.brand.index');
-        }
-
-        return view('admin.brand.edit', ['brand' => $brand]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response | RedirectResponse
      */
-    public function update(UpdateBrand $request, $id)
+    public function update(Request $request, $id)
     {
         $brand = Brand::find($id);
 
@@ -106,7 +111,19 @@ class BrandController extends Controller
             return redirect()->route('admin.brand.index');
         }
 
-        $brand->name = $request->name;
+        $validator = Validator::make($request->all(), [
+            "brand_edit" => 'required|max:255|unique:brands,name,' . $id,
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.brand.index')
+                ->withErrors($validator)
+                ->with('update_id',  $id)
+                ->with('old_brand',  $brand->name)
+                ->withInput();
+        }
+
+        $brand->name = $request->brand_edit;
         $brand->save();
 
         alert()->success(__('Success'), __('Brand data edited'));
@@ -116,8 +133,9 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy($id)
     {

@@ -57,83 +57,10 @@
     @csrf
     @method('delete')
 </form>
-
-<!-- View Modal -->
-<div class="modal fade" id="view" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-archive fa-lg mr-2"></i> {{ __('View Product') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row my-5 py-5" id="view-product-loading">
-                    <div class="m-auto">
-                        <div class="spinner-grow text-danger" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="table-responsive d-none" id="view-product-data">
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col" class="text-center" style="width: 35%">{{ __('English') }}</th>
-                                <th scope="col" class="text-center" style="width: 35%">{{ __('Thai') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <strong>{{ __('Product') }}</strong>
-                                </th>
-                                <td class="text-center"><span id="name_en"></span></td>
-                                <td class="text-center"><span id="name_th"></span></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ __('Price') }}</th>
-                                <td colspan="2" class="text-center"><span id="price"></span></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ __('Describe') }}</th>
-                                <td class="text-center"><span id="desc_en"></span></td>
-                                <td class="text-center"><span id="desc_th"></span></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ __('Unit') }}</th>
-                                <td class="text-center"><span id="unit_en"></span></td>
-                                <td class="text-center"><span id="unit_th"></span></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ __('Category') }}</th>
-                                <td class="text-center"><span id="category_en"></span></td>
-                                <td class="text-center"><span id="category_th"></span></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ __('Brand') }}</th>
-                                <td class="text-center"><span id="brand_en"></span></td>
-                                <td class="text-center"><span id="brand_th"></span></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{ __('Supplier') }}</th>
-                                <td class="text-center"><span id="supplier_en"></span></td>
-                                <td class="text-center"><span id="supplier_th"></span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @push('style')
-<link rel="stylesheet" type="text/css" href="{{ asset('plugins/DataTables/datatables.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/DataTables/datatables.css') }}" />
 @endpush
 
 @push('script')
@@ -158,7 +85,8 @@
             order: [
                 [0, "DESC"]
             ],
-            columns: [{
+            columns: [
+                {
                     data: 'id',
                     name: 'id',
                     visible: false,
@@ -211,10 +139,6 @@
             table.search( urlParams.get('query') ).draw();
         }
 
-        $('#view').on('hidden.bs.modal', function (e) {
-            $( '#view-product-loading' ).removeClass( 'd-none' )
-            $( '#view-product-data' ).addClass( 'd-none' )
-        })
     })
 
     const viewProduct = function(url) {

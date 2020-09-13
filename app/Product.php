@@ -5,6 +5,42 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * App\Product
+ *
+ * @property int $id
+ * @property string $name_en
+ * @property string $name_th
+ * @property int $price
+ * @property string|null $image
+ * @property string|null $desc
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $supplier_id
+ * @property int $brand_id
+ * @property int $category_id
+ * @property int $unit_id
+ * @property-read \App\Brand $brand
+ * @property-read \App\Category $category
+ * @property-read \App\Supplier $supplier
+ * @property-read \App\Unit $unit
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereBrandId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereNameEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereNameTh($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSupplierId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereUnitId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Product extends Model
 {
      /**
