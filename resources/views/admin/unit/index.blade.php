@@ -39,7 +39,7 @@
             <div class="card mb-4 @if(!$errors->has('unit_edit')) d-none @endif" id="editCard">
                 <div class="card-body">
                     <h4>
-                        {{ __('Edit Unit') }}(<span id="editValue"> {{ Session::has('old_unit') ? Session::get('old_unit') : '' }}</span>)
+                        {{ __('Edit Unit') }} (<span id="editValue"> {{ Session::has('old_unit') ? Session::get('old_unit') : '' }}</span>)
                     </h4>
                     <hr/>
                     <form action="{{ Session::has('update_id') ? route('admin.unit.update', Session::get('update_id')) : '' }}" method="post">

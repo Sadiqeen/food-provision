@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
+use App\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use App\Product;
 
 class DashboardController extends Controller
 {
@@ -19,10 +23,18 @@ class DashboardController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return View
      */
     public function index()
     {
-        return view('admin.dashboad');
+        $product = Product::count();
+        $supplier = Supplier::count();
+        $customer = Customer::count();
+
+        return view('admin.dashboad', [
+            'product' => $product,
+            'supplier' => $supplier,
+            'customer' => $customer,
+        ]);
     }
 }
