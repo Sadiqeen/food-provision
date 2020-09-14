@@ -29,6 +29,8 @@ Auth::routes([
 Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+    Route::get('order', 'OrderController@index')->name('order.index');
+
     // import form exel
     // Route::get('product/upload', 'ProductController@upload')->name('product.upload');
     // Route::post('product/import', 'ProductController@import')->name('product.import');

@@ -40,8 +40,6 @@
                     <li class="nav-item dropdown">
                         <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button" v-pre="">
                             {{ Auth::user()->name }}
-                            <span class="caret">
-                            </span>
                         </a>
                         <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right mb-3">
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -76,8 +74,8 @@
                             {{ __('Dashboard') }}
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                    <li class="nav-item {{ request()->routeIs('admin.order.*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.order.index') }}">
                             {{ __('Orders') }}
                         </a>
                     </li>
