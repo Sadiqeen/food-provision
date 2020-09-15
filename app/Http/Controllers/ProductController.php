@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use App\Category;
+use App\Imports\ExcelImport;
 use App\Product;
 use App\Unit;
 use App\Supplier;
@@ -16,7 +17,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use App\Imports\ProductImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
@@ -250,7 +250,7 @@ class ProductController extends Controller
             'excel'  => 'required|mimes:xls,xlsx'
         ]);
 
-        Excel::import(new ProductImport, $request->excel);
+        Excel::import(new ExcelImport, $request->excel);
 
         alert()->success(__('Success'), __('New product added to the system'));
         return redirect()->route('admin.product.index');

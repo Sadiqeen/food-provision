@@ -11,6 +11,15 @@
             <a type="button" href="{{ route('admin.product.index') }}"
                class="btn btn-secondary">{{ __('Manage Product') }}</a>
         </h3>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="card">
             <div class="card-body">
                 <form action="{{ route('admin.product.import') }}" method="post" enctype="multipart/form-data">
