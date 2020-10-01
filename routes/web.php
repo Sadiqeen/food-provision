@@ -59,6 +59,8 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::get('unit/api', 'UnitController@index_api')->name('unit.api');
     Route::resource('unit', 'UnitController');
 
+    Route::get('report', 'ReportController@index')->name('report.index');
+
 });
 
 Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' => 'customer.'], function () {
