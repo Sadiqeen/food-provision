@@ -30,7 +30,7 @@
                 <div class="inner text-white">
                     <h2>{{ $product ?? 0 }}</h2>
 
-                    <p class="h4">{{ __('Product') }}</p>
+                    <p class="h4">{{ __('Quotation') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-envelope-o"></i>
@@ -45,7 +45,7 @@
                 <div class="inner text-white">
                     <h2>{{ $customer ?? 0 }}</h2>
 
-                    <p class="h4">{{ __('Customer') }}</p>
+                    <p class="h4">{{ __('Success Order') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-users"></i>
@@ -60,7 +60,7 @@
                 <div class="inner text-white">
                     <h2>{{ $supplier ?? 0 }}</h2>
 
-                    <p class="h4">{{ __('Supplier') }}</p>
+                    <p class="h4">{{ __('Cancel Order') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-truck"></i>
