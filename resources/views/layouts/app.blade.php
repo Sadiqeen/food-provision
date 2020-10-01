@@ -68,6 +68,7 @@
                 </span>
             </button>
             <div class="collapse navbar-collapse" id="menuArea">
+
                 <ul class="navbar-nav m-auto">
                     <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard') }}">
@@ -75,69 +76,15 @@
                         </a>
                     </li>
 
-{{-- ================================================  Admin Menu =================================================== --}}
-                    <li class="nav-item {{ request()->routeIs( 'admin.order.*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route( 'admin.order.index') }}">
-                            {{ __('Orders') }}
-                        </a>
-                    </li>
+                    {{-- Admin menu --}}
                     @if (auth()->user()->position == 'admin')
-                    <li class="nav-item dropdown
-                                    {{ request()->routeIs('admin.brand.*')
-                                        || request()->routeIs('admin.category.*')
-                                        || request()->routeIs('admin.product.*')
-                                        || request()->routeIs('admin.unit.*')
-                                        ? 'active' : '' }}">
-                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="productDropdown" role="button">
-                            {{ __('Catalog') }}
-                        </a>
-                        <div aria-labelledby="productDropdown" class="dropdown-menu mb-3">
-                            <a class="dropdown-item {{ request()->routeIs('admin.product.*') ? 'active' : '' }}" href="{{ route('admin.product.index') }}">
-                                {{ __('Product') }}
-                            </a>
-                            <a class="dropdown-item {{ request()->routeIs('admin.category.*') ? 'active' : '' }}" href="{{ route('admin.category.index') }}">
-                                {{ __('Category') }}
-                            </a>
-                            <a class="dropdown-item {{ request()->routeIs('admin.brand.*') ? 'active' : '' }}" href="{{ route('admin.brand.index') }}">
-                                {{ __('Brand') }}
-                            </a>
-                            <a class="dropdown-item {{ request()->routeIs('admin.unit.*') ? 'active' : '' }}" href="{{ route('admin.unit.index') }}">
-                                {{ __('Unit') }}
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item {{ request()->routeIs('admin.customer.*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.customer.index') }}">
-                            {{ __('Customer') }}
-                        </a>
-                    </li>
-                    <li class="nav-item {{ request()->routeIs('admin.supplier.*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.supplier.index') }}">
-                            {{ __('Supplier') }}
-                        </a>
-                    </li>
+                        @include('layouts.menus.admin')
                     @endif
 
-{{-- ================================================  End Admin Menu =================================================== --}}
-
-                    <li class="nav-item dropdown">
-                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="settingDropdown" role="button">
-                            {{ __('Setting') }}
-                        </a>
-                        <div aria-labelledby="settingDropdown" class="dropdown-menu mb-3">
-                            <a class="dropdown-item" href="#">
-                                Action
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                Another action
-                            </a>
-                            <div class="dropdown-divider">
-                            </div>
-                            <a class="dropdown-item" href="#">
-                                Something else here
-                            </a>
-                        </div>
-                    </li>
+                    {{-- Customer menu --}}
+                    @if (auth()->user()->position == 'customer')
+                        @include('layouts.menus.customer')
+                    @endif
 
                     @guest
                     <li class="nav-item d-sm-block d-md-none">
