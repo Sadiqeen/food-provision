@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Customer;
 use App\Http\Requests\StoreCustomer;
 use App\Http\Requests\UpdateCustomer;
