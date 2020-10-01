@@ -23,8 +23,8 @@
                     <thead class="bg-success text-white">
                         <tr>
                             <th>#</th>
-                            <th>{{ __('Product') }}</th>
-                            <th>{{ __('Product') }} TH</th>
+                            <th style="width: 20%">{{ __('Product') }}</th>
+                            <th>{{ __('Product') }} {{ __('in Thai language') }}</th>
                             <th>{{ __('Brand') }}</th>
                             <th>{{ __('Category') }}</th>
                             <th>{{ __('Unit') }}</th>
@@ -37,7 +37,7 @@
                         <tr>
                             <th>#</th>
                             <th>{{ __('Product') }}</th>
-                            <th>{{ __('Product') }} TH</th>
+                            <th>{{ __('Product') }} {{ __('in Thai language') }}</th>
                             <th>{{ __('Brand') }}</th>
                             <th>{{ __('Category') }}</th>
                             <th>{{ __('Unit') }}</th>
@@ -53,7 +53,7 @@
 </div>
 
 {{-- Delete Form --}}
-<form action="" method="post" class="d-none" id="delSupplier">
+<form action="" method="post" class="d-none" id="delProduct">
     @csrf
     @method('delete')
 </form>
@@ -186,10 +186,10 @@
         }
     }
 
-    const delSupplier = function(url) {
+    const delProduct = function(url) {
         Swal.fire({
             title: "{{ __('Are you sure?') }}",
-            text: "{{ __('You won\'t be able to revert this!') }}",
+            text: "{{ __('You will not be able to revert this!') }}",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -199,7 +199,7 @@
             reverseButtons: true
         }).then((result) => {
             if (result.value) {
-                $('#delSupplier').attr('action', url).submit()
+                $('#delProduct').attr('action', url).submit()
             }
         })
     }

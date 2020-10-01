@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Order;
 use App\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -27,14 +28,30 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $product = Product::count();
-        $supplier = Supplier::count();
-        $customer = Customer::count();
+        //Admin
 
-        return view('admin.dashboad', [
-            'product' => $product,
-            'supplier' => $supplier,
-            'customer' => $customer,
-        ]);
+        if (auth()->user()->position == 'admin') {
+            $order = Order::where('status', 1)->count();
+            $product = Product::count();
+            $supplier = Supplier::count();
+            $customer = Customer::count();
+
+            return view('admin.dashboad', [
+                'order' => $order,
+                'product' => $product,
+                'supplier' => $supplier,
+                'customer' => $customer,
+            ]);
+        }
+
+        // Customer
+
+        if (auth()->user()->position == 'customer') {
+            $order = Order::where('status', 1)->where('customer_id', auth()->user()->id)->count();
+
+            return view('customer.dashboad', [
+                'order' => $order,
+            ]);
+        }
     }
 }

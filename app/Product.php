@@ -60,6 +60,16 @@ class Product extends Model
         'unit_id',
     ];
 
+    protected $appends = ['name'];
+
+    public function getNameAttribute()
+    {
+        if (app()->getLocale() == "th") {
+            return $this->name_th ? $this->name_th : $this->name_en;
+        }
+        return $this->name_en;
+    }
+
     public function unit()
     {
         return $this->belongsTo('App\Unit');
@@ -79,4 +89,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Category');
     }
+
+    public function order() {
+        return $this->belongsToMany('App\Order', 'order_has_product')->withPivot('quantity');
+    }
+
 }

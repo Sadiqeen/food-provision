@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
+    return redirect()->route('dashboard');
 });
 
 // Change Language
@@ -25,14 +25,22 @@ Auth::routes([
     'verify' => false, // Email Verification Routes...
 ]);
 
-Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], function () {
-    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('dashboard', 'DashboardController@index')->middleware('auth')->name('dashboard');
+
+Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'admin.'], function () {
 
     Route::get('order', 'OrderController@index')->name('order.index');
+    Route::get('order/api', 'OrderController@index_api')->name('order.api');
+    Route::get('order/create/new', 'OrderController@create')->name('order.create');
+    Route::get('order/create/new/api', 'OrderController@create_api')->name('order.create.api');
+    Route::post('order/update/{id}', 'OrderController@update')->name('order.update');
+    Route::get('order/clear', 'OrderController@clear')->name('order.clear');
+    Route::get('order/confirm', 'OrderController@order_confirm')->name('order.confirm');
+    Route::post('order/save', 'OrderController@order_save')->name('order.save');
 
     // import form exel
-    // Route::get('product/upload', 'ProductController@upload')->name('product.upload');
-    // Route::post('product/import', 'ProductController@import')->name('product.import');
+    Route::get('product/upload', 'ProductController@upload')->name('product.upload');
+    Route::post('product/import', 'ProductController@import')->name('product.import');
     Route::get('product/api', 'ProductController@index_api')->name('product.api');
     Route::resource('product', 'ProductController');
 
@@ -45,10 +53,22 @@ Route::group(['prefix'=>'admin','middleware'=>'auth', 'as' => 'admin.'], functio
     Route::get('brand/api', 'BrandController@index_api')->name('brand.api');
     Route::resource('brand', 'BrandController');
 
-    Route::get('category/api', 'CategoyController@index_api')->name('category.api');
-    Route::resource('category', 'CategoyController');
+    Route::get('category/api', 'CategoryController@index_api')->name('category.api');
+    Route::resource('category', 'CategoryController');
 
     Route::get('unit/api', 'UnitController@index_api')->name('unit.api');
     Route::resource('unit', 'UnitController');
 
+});
+
+Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' => 'customer.'], function () {
+
+    Route::get('order', 'OrderController@index')->name('order.index');
+    Route::get('order/api', 'OrderController@index_api')->name('order.api');
+    Route::get('order/create/new', 'OrderController@create')->name('order.create');
+    Route::get('order/create/new/api', 'OrderController@create_api')->name('order.create.api');
+    Route::post('order/update/{id}', 'OrderController@update')->name('order.update');
+    Route::get('order/clear', 'OrderController@clear')->name('order.clear');
+    Route::get('order/confirm', 'OrderController@order_confirm')->name('order.confirm');
+    Route::post('order/save', 'OrderController@order_save')->name('order.save');
 });

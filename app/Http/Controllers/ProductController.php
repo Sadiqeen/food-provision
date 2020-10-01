@@ -59,7 +59,7 @@ class ProductController extends Controller
                     })
                     ->addColumn('action', function ($product) {
                         $edit = '<a href="' . route('admin.product.edit', $product->id) . '" class="text-warning-dark mr-3"><i class="fa fa-pencil fa-lg"></i></a>';
-                        $delete = '<a href="javascript:void(0)" onclick="delSupplier(\'' . route('admin.product.destroy', $product->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
+                        $delete = '<a href="javascript:void(0)" onclick="delProduct(\'' . route('admin.product.destroy', $product->id) . '\')" class="text-danger"><i class="fa fa-trash fa-lg"></i></a>';
                         return '<div class="btn-group" role="group" aria-label="Basic example">' . $edit . $delete . '</div>';
                     })
                     ->escapeColumns([])->toJson();

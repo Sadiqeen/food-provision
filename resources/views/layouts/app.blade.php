@@ -69,16 +69,19 @@
             </button>
             <div class="collapse navbar-collapse" id="menuArea">
                 <ul class="navbar-nav m-auto">
-                    <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                    <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dashboard') }}">
                             {{ __('Dashboard') }}
                         </a>
                     </li>
-                    <li class="nav-item {{ request()->routeIs('admin.order.*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.order.index') }}">
+
+{{-- ================================================  Admin Menu =================================================== --}}
+                    <li class="nav-item {{ request()->routeIs( 'admin.order.*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route( 'admin.order.index') }}">
                             {{ __('Orders') }}
                         </a>
                     </li>
+                    @if (auth()->user()->position == 'admin')
                     <li class="nav-item dropdown
                                     {{ request()->routeIs('admin.brand.*')
                                         || request()->routeIs('admin.category.*')
@@ -113,6 +116,10 @@
                             {{ __('Supplier') }}
                         </a>
                     </li>
+                    @endif
+
+{{-- ================================================  End Admin Menu =================================================== --}}
+
                     <li class="nav-item dropdown">
                         <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="settingDropdown" role="button">
                             {{ __('Setting') }}
@@ -180,7 +187,6 @@
     {{-- sweet alert --}}
     @include('sweetalert::alert')
     @stack('script')
-
 </body>
 
 </html>

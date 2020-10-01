@@ -25,11 +25,12 @@ class StoreCustomer extends FormRequest
     {
         return [
             "name" => 'required|max:255|unique:customers,name',
-            "coordinator" => 'required|max:255|unique:customers,coordinator',
+            "coordinator" => 'required|max:255|unique:users,name',
             "tel" => 'required|min:10|max:15|regex:/\(?([0-9]{2,3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/|unique:customers,tel',
-            "email" => 'required|email|unique:customers,email',
+            "email" => 'required|email|unique:users,email',
             "address" => 'required|max:255',
             'note' => 'max:500',
+            'password' => 'required|string|min:8|confirmed'
         ];
     }
 }

@@ -75,33 +75,29 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col" class="text-center" style="width: 35%">{{ __('English') }}</th>
-                                <th scope="col" class="text-center" style="width: 35%">{{ __('Thai') }}</th>
+                                <th scope="col" class="text-center" style="width: 70%">{{ __('Detail') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th scope="row"><strong>{{ __('Customer') }}</strong></th>
-                                <td class="text-center"><span id="name_en"></span></td>
-                                <td class="text-center"><span id="name_th"></span></td>
+                                <td class="text-center"><span id="name"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Coordinator') }}</th>
-                                <td class="text-center"><span id="coordinator_en"></span></td>
-                                <td class="text-center"><span id="coordinator_th"></span></td>
+                                <td class="text-center"><span id="coordinator"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Tel') }}</th>
-                                <td colspan="2" class="text-center"><a id="tel" href=""></a></td>
+                                <td class="text-center"><a id="tel" href=""></a></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('E-mail') }}</th>
-                                <td colspan="2" class="text-center"><a id="email" href=""></a></td>
+                                <td class="text-center"><a id="email" href=""></a></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Address') }}</th>
-                                <td class="text-center"><span id="address_en"></span></td>
-                                <td class="text-center"><span id="address_th"></span></td>
+                                <td class="text-center"><span id="address"></span></td>
                             </tr>
                             <tr>
                                 <th scope="row">{{ __('Note') }}</th>
@@ -188,12 +184,10 @@
         $.get(url , function(data, status){
             let res = data.data
             // name
-            fillData('name_en', res.name_en)
-            fillData('name_th', res.name_th)
+            fillData('name', res.name)
 
             // coordinator
-            fillData('coordinator_en', res.coordinator_en)
-            fillData('coordinator_th', res.coordinator_th)
+            fillData('coordinator', res.coordinator)
 
             // tel
             fillData('tel', res.tel)
@@ -204,8 +198,7 @@
             $( '#email' ).attr( 'href', 'mailto:' + res.email )
 
             // address
-            fillData('address_en', res.address_en)
-            fillData('address_th', res.address_th)
+            fillData('address', res.address)
 
             // address
             fillData('note', res.note)
@@ -226,7 +219,7 @@
     const delCustomer = function(url) {
         Swal.fire({
             title: "{{ __('Are you sure?') }}",
-            text: "{{ __('You won\'t be able to revert this!') }}",
+            text: "{{ __('You will not be able to revert this!') }}",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

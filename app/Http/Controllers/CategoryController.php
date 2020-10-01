@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
-class CategoyController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.

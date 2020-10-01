@@ -12,6 +12,6 @@ class BrandsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Brand::class, 5)->create();
+        \DB::table('brands')->delete();
     }
 }

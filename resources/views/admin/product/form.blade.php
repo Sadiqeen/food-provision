@@ -90,7 +90,7 @@
             $description = $product->desc_en;
         }
     @endphp
-    <label for="description">{{ __('Describe') . ' ' . __('Product') }}</label>
+    <label for="description">{{ __('Pack Describe') }}</label>
     <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" rows="3">{{ $description ?? '' }}</textarea>
     @error('description')
     <span class="invalid-feedback" role="alert">
@@ -215,8 +215,6 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
 @endpush
-
-
 
 @push('script')
     <!-- Latest compiled and minified JavaScript -->

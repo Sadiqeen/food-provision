@@ -78,6 +78,26 @@
     @enderror
 </div>
 
+{{-- ==================================== Password field ========================================== --}}
+<div class="form-group">
+    <label for="password">{{ __('Password') }} <span class="text-danger">*</span></label>
+
+    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
+
+    @error('password')
+    <span class="invalid-feedback" role="alert">
+        <strong>{{ $message }}</strong>
+    </span>
+    @enderror
+</div>
+
+{{-- ==================================== Confirmation Password field ========================================== --}}
+<div class="form-group">
+    <label for="password-confirm" >{{ __('Confirm Password') }} <span class="text-danger">*</span></label>
+
+    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+</div>
+
 {{-- ==================================== Address field (Eng) ========================================== --}}
 <div class="form-group">
     @php

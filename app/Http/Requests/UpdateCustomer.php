@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\User;
 
 class UpdateCustomer extends FormRequest
 {
@@ -23,13 +24,21 @@ class UpdateCustomer extends FormRequest
      */
     public function rules()
     {
-        return [
+        $user = User::where('customer_id', $this->route('customer'))->first();
+
+        $rules = [
             "name" => 'required|max:255|unique:customers,name,' .$this->route('customer'),
-            "coordinator" => 'required|max:255|unique:customers,coordinator,' .$this->route('customer'),
+            "coordinator" => 'required|max:255|unique:users,name,' .$user->id,
             "tel" => 'required|min:10|max:15|regex:/\(?([0-9]{2,3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/|unique:customers,tel,' .$this->route('customer'),
-            "email" => 'required|email|unique:customers,email,' .$this->route('customer'),
+            "email" => 'required|email|unique:users,email,' .$user->id,
             "address" => 'required|max:255',
             'note' => 'max:500',
         ];
+
+        if ($this->password) {
+            $rules['password'] = 'required|string|min:8|confirmed';
+        }
+
+        return $rules;
     }
 }

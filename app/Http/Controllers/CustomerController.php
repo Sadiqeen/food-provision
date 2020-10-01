@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Http\Requests\StoreCustomer;
 use App\Http\Requests\UpdateCustomer;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -59,7 +61,13 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomer $request)
     {
-        Customer::create($request->all());
+        $customer = Customer::create($request->all());
+        User::create([
+            'name' => $request->coordinator,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'customer_id' => $customer->id,
+        ]);
         alert()->success(__('Success'), __('New customer added to the system'));
         return redirect()->route('admin.customer.index');
     }
@@ -122,12 +130,18 @@ class CustomerController extends Controller
         }
 
         $customer->name = $request->name;
-        $customer->coordinator = $request->coordinator;
         $customer->tel = $request->tel;
-        $customer->email = $request->email;
         $customer->address = $request->address;
         $customer->note = $request->note;
         $customer->save();
+
+        $user = User::where('customer_id', $id)->where('position', 2)->first();
+        $user->name = $request->coordinator;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
 
         alert()->success(__('Success'), __('Customer data edited'));
         return redirect()->route('admin.customer.index');
@@ -148,6 +162,7 @@ class CustomerController extends Controller
             return redirect()->route('admin.customer.index');
         }
 
+        User::where('customer_id', $id)->delete();
         $customer->delete();
 
         alert()->success(__('Success'), __('Customer deleted'));

@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Customer extends Model
 {
+
     /**
      * The attributes that are mass assignable.
      *
@@ -39,10 +40,26 @@ class Customer extends Model
      */
     protected $fillable = [
         'name',
-        'coordinator',
         'tel',
-        'email',
         'address',
         'note',
     ];
+
+    protected $appends = ['coordinator','email'];
+
+    public function getCoordinatorAttribute()
+    {
+        return $this->user[0]->name;
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->user[0]->email;
+    }
+
+    public function user()
+    {
+        return $this->hasMany('App\User')->where('position', 2);
+    }
+
 }
