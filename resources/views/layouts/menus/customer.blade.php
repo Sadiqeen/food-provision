@@ -13,9 +13,9 @@
 </li>
 
 
-<li class="nav-item">
-    <a class="nav-link" href="javascript:void(0)">
-        {{ __('Report') }}
+<li class="nav-item {{ request()->routeIs('customer.employee.*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('customer.employee.index') }}">
+        {{ __('Employee') }}
     </a>
 </li>
 

@@ -74,4 +74,7 @@ Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' =
     Route::get('order/delete/{id}', 'Customer\OrderController@delete_item')->name('order.delete');
     Route::get('order/cart', 'Customer\OrderController@cart')->name('order.cart');
     Route::post('order/save', 'Customer\OrderController@order_save')->name('order.save');
+
+    Route::get('employee/api', 'Customer\EmployeeController@index_api')->name('employee.api');
+    Route::resource('employee', 'Customer\EmployeeController');
 });

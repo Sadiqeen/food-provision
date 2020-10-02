@@ -23,6 +23,7 @@
     "New Order" : "ออเดอร์ใหม่",
     "Report" : "รายงาน",
     "Profile" : "โปรไฟล์",
+    "Employee" : "พนักงาน",
 
     "Add Supplier": "เพิ่มผู้ผลิต",
     "View Supplier Data": "ดูข้อมูลผู้ผลิต",
@@ -74,7 +75,7 @@
     "Describe": "อธิบาย",
     "New product added to the system": "สินค้าใหม่ได้เพิ่มเข้าสู่ระบบ",
     "Product data edited": "แก้ไขข้อมูลสินค้าสำเร็จ",
-    "Product deleted": "ลบข้อมูลค้าสำเร็จ",
+    "Product deleted": "ลบข้อมูลสินค้าสำเร็จ",
     "View Product": "ดูข้อมูลสินค้า",
     "Upload Excel File": "อัพโหลดไฟล์ Excel",
     "Upload": "อัพโหลด",
@@ -114,6 +115,13 @@
     "Back" : "ย้อนกลับ",
     "Order Detail" : "รายละเอียดคำสั่งซื้อ",
     "Order for" : "คำสั่งซื้อสำหรับ",
+
+    "Manage Employee" : "จัดการพนักงาน",
+    "Add Employee" : "เพิ่มพนักงาน",
+    "New employee added to the system": "พนักงานใหม่ได้เพิ่มเข้าสู่ระบบ",
+    "Employee data edited": "แก้ไขข้อมูลพนักงานสำเร็จ",
+    "Employee deleted": "ลบข้อมูลพนักงานสำเร็จ",
+    "Leave blank if you don't want to change it" : "ปล่อยให้รหัสผ่านว่าง หากไม่ต้องการเปลี่ยน",
 
     "_comment_": "End of file",
 
