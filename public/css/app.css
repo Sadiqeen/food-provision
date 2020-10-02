@@ -10990,3 +10990,23 @@ main {
   z-index: 10;
 }
 
+.cart {
+  position: fixed;
+  bottom: 70px;
+  right: 70px;
+  height: 80px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 767.98px) {
+  .cart {
+    bottom: 50px;
+    right: 10px;
+    height: 60px;
+    width: 60px;
+  }
+}
+

@@ -186,9 +186,7 @@ class OrderController extends Controller
             if ($this->is_in_order($product)) {
                 if ($request->quantity > 0) {
                     // update quantity
-                    $order = $request->session()->get('order');
-                    $order[$product->category_id]['products'][$product->id]['quantity'] = $request->quantity;
-                    $request->session()->put('order', $order);
+                    $this->update_product_quantity($product, $request->quantity);
                     $this->update_price();
                     return $this->responseSuccess(__('Update quantity of :product', ['product' => $product->name]));
                 } else {
@@ -220,7 +218,7 @@ class OrderController extends Controller
      * @param object $product
      * @return boolean
      */
-    private function is_in_order($product)
+    protected function is_in_order($product)
     {
         $order = \Session::get('order');
         if (isset($order[$product->category_id]['products'][$product->id])) {
@@ -235,7 +233,7 @@ class OrderController extends Controller
      * @param object $product
      * @param int $quantity
      */
-    private function add_product_to_order($product, $quantity)
+    protected function add_product_to_order($product, $quantity)
     {
         $order = \Session::get('order');
 
@@ -252,6 +250,25 @@ class OrderController extends Controller
         \Session::put('order', $order);
     }
 
+    /**
+     * Update Product quantity
+     *
+     * @param object $product
+     * @param int $quantity
+     */
+    protected function update_product_quantity($product, $quantity)
+    {
+        $order = \Session::get('order');
+        $order[$product->category_id]['products'][$product->id]['quantity'] = $quantity;
+
+        \Session::put('order', $order);
+    }
+
+    /**
+     * Delete product from order
+     *
+     * @param object $product
+     */
     protected function del_product_from_order($product)
     {
         $order = \Session::get('order');
@@ -263,7 +280,7 @@ class OrderController extends Controller
     /**
      * Update price
      */
-    private function update_price()
+    protected function update_price()
     {
         $order = \Session::get('order');
 
@@ -334,16 +351,7 @@ class OrderController extends Controller
             "vessel_name" => 'required|min:2|max:255',
         ]);
 
-        $new_order = $request->session()->get('order');
-        foreach ($new_order as $cat_key => $category) {
-            foreach ($category['products'] as $product_key => $product) {
-                $product_list[] = [
-                    'product_id' => $product_key,
-                    'quantity' => $product['quantity']
-                ];
-            }
-        }
-
+        $product_list = $this->order_to_array();
 
         $order = new Order();
         $order->total_price = $request->session()->get('total');
@@ -362,16 +370,24 @@ class OrderController extends Controller
     }
 
     /**
-     * Order detail store
+     * Convert order list from Category->product to Product_id list to friendly with eloquence
      *
-     * @param Request $request
+     * @return array
      */
-    public function order_detail_store(Request $request)
+    protected function order_to_array()
     {
-        $request->validate([
-            'customer' => 'required|exists:customers,id',
-            'vessel_name' => 'required|min:2|max:255',
-        ]);
+        $new_order = \Session::get('order');
+        $product_list = [];
+        foreach ($new_order as $cat_key => $category) {
+            foreach ($category['products'] as $product_key => $product) {
+                $product_list[] = [
+                    'product_id' => $product_key,
+                    'quantity' => $product['quantity']
+                ];
+            }
+        }
+
+        return $product_list;
     }
 
     /**

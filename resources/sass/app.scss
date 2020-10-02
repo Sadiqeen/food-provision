@@ -101,3 +101,23 @@ main {
      background-color: rgba(255, 255, 255, 0.2);
      z-index: 10;
  }
+
+ .cart {
+     position: fixed;
+     bottom: 70px;
+     right: 70px;
+     height: 80px;
+     width: 80px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+@include media-breakpoint-down(sm) {
+    .cart {
+        bottom: 50px;
+        right: 10px;
+        height: 60px;
+        width: 60px;
+    }
+}

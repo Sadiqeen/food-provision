@@ -8,7 +8,7 @@
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
             <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Manage Order') }}</span>
-            <a type="button" href="{{ route('admin.order.create') }}"  class="btn btn-secondary">{{ __('Add Order') }}</a>
+            <a type="button" href="{{ route('customer.order.create') }}"  class="btn btn-secondary">{{ __('Add Order') }}</a>
         </h3>
         <div class="card">
             <div class="card-body">
@@ -23,7 +23,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>{{ __('Order No.') }}</th>
-                                <th>{{ __('Order By') }}</th>
                                 <th>{{ __('Vessel Name') }}</th>
                                 <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Status') }}</th>
@@ -34,7 +33,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>{{ __('Order No.') }}</th>
-                                <th>{{ __('Order By') }}</th>
                                 <th>{{ __('Vessel Name') }}</th>
                                 <th>{{ __('Total Price') }}</th>
                                 <th>{{ __('Status') }}</th>
@@ -66,7 +64,7 @@
             }).DataTable({
                 serverSide: true,
                 responsive: true,
-                ajax: '{{ route('admin.order.api') }}',
+                ajax: '{{ route('customer.order.api') }}',
                 order: [
                     [0, "DESC"]
                 ],
@@ -80,10 +78,6 @@
                     {
                         data: 'order_number',
                         name: 'order_number'
-                    },
-                    {
-                        data: 'customer',
-                        name: 'customer'
                     },
                     {
                         data: 'vessel_name',

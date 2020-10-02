@@ -1,0 +1,262 @@
+<?php
+
+namespace App\Http\Controllers\Customer;
+
+use App\Category;
+use App\Http\Controllers\Controller;
+use App\Order;
+use App\Product;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
+use App\Http\Controllers\Admin\OrderController as MainOrder;
+
+class OrderController extends MainOrder
+{
+    /**
+     * Show all order
+     *
+     * @returns View
+     */
+    public function index()
+    {
+        return view('customer.order.index');
+    }
+
+    /**
+     * Send data of index through API.
+     *
+     * @return Response
+     * @throws
+     */
+    public function index_api()
+    {
+        $orders = Order::where('customer_id', auth()->user()->customer_id)->get();
+        return datatables()->of($orders)
+            ->addColumn('order_number', function ($orders) {
+                return 'OD-' . str_pad($orders->id, 3, '0', STR_PAD_LEFT) . '-' . str_pad($orders->customer_id, 3, '0', STR_PAD_LEFT);
+            })
+            ->addColumn('status', function ($orders) {
+                return '<span class="bg-warning px-1 rounded">New Order</span>';
+            })
+            ->addColumn('total_price', function ($orders) {
+                return '<span class="bg-danger text-white px-1 rounded">' . number_format($orders->total_price) . '</span>';
+            })
+            ->addColumn('action', function ($orders) {
+                return '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <button type="button" class="btn btn-primary btn-sm">' . __('View') . '</button>
+                  <button type="button" class="btn btn-primary btn-sm">' . __('Edit') . '</button>
+
+                  <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      ' . __('Status') . '
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                      <a class="dropdown-item" href="javascript:void(0)">Receive Order</a>
+                      <a class="dropdown-item" href="javascript:void(0)">Gather Food</a>
+                      <a class="dropdown-item" href="javascript:void(0)">Ready for delivery</a>
+                      <a class="dropdown-item" href="javascript:void(0)">Complete</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="javascript:void(0)">Cancel</a>
+                    </div>
+                  </div>
+                </div>';
+            })
+            ->escapeColumns([])->toJson();
+    }
+
+    /**
+     * Show product list to customer
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function create(Request $request)
+    {
+        $categories = Category::all();
+        $productClass = Product::with('category', 'unit');
+
+        if ($request->input('category') && $request->input('category') != 'All') {
+            $productClass->whereHas('category', function($query) use($request) {
+                $query->where('name', 'like', '%' . $request->input('category') . '%');
+            });
+        }
+
+        if ($request->input('sort')) {
+            switch ($request->input('sort')) {
+                case "Z-A":
+                    if (app()->getLocale() == "th") {
+                        $productClass->orderBy('name_th', 'DESC');
+                    } else {
+                        $productClass->orderBy('name_en', 'DESC');
+                    }
+                    break;
+                case "Price Min to Max":
+                    $productClass->orderBy('price', 'ASC');
+                    break;
+                case "Price Max to Min":
+                    $productClass->orderBy('price', 'DESC');
+                    break;
+                default:
+                    if (app()->getLocale() == "th") {
+                        $productClass->orderBy('name_th', 'ASC');
+                    } else {
+                        $productClass->orderBy('name_en', 'ASC');
+                    }
+            }
+        }
+
+        if ($request->input('search')) {
+            if (app()->getLocale() == "th") {
+                $productClass->where('name_th', 'like', '%' . $request->input('search') . '%');
+            } else {
+                $productClass->where('name_en', 'like', '%' . $request->input('search') . '%');
+            }
+        }
+
+        $products = $productClass->paginate(12);
+
+        if (!$products) {
+            alert()->error(__('Error'), __('No product fount'));
+        }
+
+        return view('customer.order.create', [
+            'categories' => $categories,
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * Add new item to cart
+     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function add_item(Request $request, $id)
+    {
+        $request->validate([
+            "quantity" => 'required|min:1|numeric',
+        ]);
+
+        $product = Product::with('category', 'unit')->find($id);
+        if (!$product) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.product.index');
+        }
+
+        $this->add_product_to_order($product, $request->quantity);
+        $this->update_price();
+
+        alert()->success(__('Success'), __('Add :product to order', ['product' => $product->name]));
+        return redirect()->back();
+    }
+
+    /**
+     * Update item in cart
+     *
+     * @param $id
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function update_item(Request $request, $id)
+    {
+        $request->validate([
+            "quantity" => 'required|min:0|numeric',
+        ]);
+
+        $product = Product::with('category', 'unit')->find($id);
+        if (!$product) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->back();
+        }
+
+        if ($this->is_in_order($product) && ($request->quantity > 0)) {
+            // update quantity
+            $this->update_product_quantity($product, $request->quantity);
+            $this->update_price();
+            alert()->success(__('Success'), __('Update quantity of :product', ['product' => $product->name]));
+            return redirect()->back();
+        } elseif ($this->is_in_order($product) && ($request->quantity == 0)) {
+            // Delete item from order
+            $this->del_product_from_order($product);
+            $this->update_price();
+            alert()->success(__('Success'),__('Remove :product from order', ['product' => $product->name]));
+            return redirect()->back();
+        } else {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Delete item from cart
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function delete_item($id)
+    {
+        $product = Product::with('category', 'unit')->find($id);
+        if (!$product) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->back();
+        }
+
+        $this->del_product_from_order($product);
+        $this->update_price();
+        alert()->success(__('Success'),__('Remove :product from order', ['product' => $product->name]));
+        return redirect()->back();
+    }
+
+    /**
+     * Show cart
+     */
+    public function cart()
+    {
+        if (!(\Session::has('total') && (\Session::get('total') > 0)))
+        {
+            alert()->error(__('Error'), __('No item in order'));
+            return redirect()->route('admin.order.create');
+        }
+
+        return view('customer.order.confirm');
+    }
+
+    /**
+     * Save new order to DB
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function order_save(Request $request)
+    {
+        if (!(\Session::has('total') && (\Session::get('total') > 0)))
+        {
+            alert()->error(__('Error'), __('No item in order'));
+            return redirect()->route('admin.order.create');
+        }
+
+        $request->validate([
+            "vessel_name" => 'required|min:2|max:255',
+        ]);
+
+        $product_list = $this->order_to_array();
+
+        $order = new Order();
+        $order->total_price = $request->session()->get('total');
+        $order->vessel_name = $request->vessel_name;
+        $order->customer_id = auth()->user()->customer_id;
+        $order->status = 1;
+        $order->save();
+
+        $order->product()->attach($product_list);
+
+        \Session::forget('total');
+        \Session::forget('order');
+
+        alert()->success(__('Success'), __('Add new order success'));
+        return redirect()->route('customer.order.index');
+    }
+}

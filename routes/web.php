@@ -65,12 +65,13 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
 
 Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' => 'customer.'], function () {
 
-    Route::get('order', 'OrderController@index')->name('order.index');
-    Route::get('order/api', 'OrderController@index_api')->name('order.api');
-    Route::get('order/create/new', 'OrderController@create')->name('order.create');
-    Route::get('order/create/new/api', 'OrderController@create_api')->name('order.create.api');
-    Route::post('order/update/{id}', 'OrderController@update')->name('order.update');
-    Route::get('order/clear', 'OrderController@clear')->name('order.clear');
-    Route::get('order/confirm', 'OrderController@order_confirm')->name('order.confirm');
-    Route::post('order/save', 'OrderController@order_save')->name('order.save');
+    Route::get('order', 'Customer\OrderController@index')->name('order.index');
+    Route::get('order/api', 'Customer\OrderController@index_api')->name('order.api');
+    Route::get('order/create', 'Customer\OrderController@create')->name('order.create');
+    Route::post('order/add/{id}', 'Customer\OrderController@add_item')->name('order.add.item');
+    Route::post('order/update/{id}', 'Customer\OrderController@update_item')->name('order.update.item');
+    Route::post('order/update_api/{id}', 'Customer\OrderController@update')->name('order.update');
+    Route::get('order/delete/{id}', 'Customer\OrderController@delete_item')->name('order.delete');
+    Route::get('order/cart', 'Customer\OrderController@cart')->name('order.cart');
+    Route::post('order/save', 'Customer\OrderController@order_save')->name('order.save');
 });
