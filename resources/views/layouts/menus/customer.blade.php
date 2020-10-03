@@ -19,8 +19,8 @@
     </a>
 </li>
 
-<li class="nav-item">
-    <a class="nav-link" href="javascript:void(0)">
+<li class="nav-item {{ request()->routeIs('customer.profile.*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('customer.profile.edit') }}">
         {{ __('Profile') }}
     </a>
 </li>

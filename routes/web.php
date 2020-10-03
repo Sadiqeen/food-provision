@@ -77,4 +77,8 @@ Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' =
 
     Route::get('employee/api', 'Customer\EmployeeController@index_api')->name('employee.api');
     Route::resource('employee', 'Customer\EmployeeController');
+
+    Route::get('profile', 'Customer\ProfileController@edit')->name('profile.edit');
+    Route::put('profile', 'Customer\ProfileController@update')->name('profile.update');
 });
+
