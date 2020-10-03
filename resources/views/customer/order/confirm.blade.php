@@ -8,7 +8,7 @@
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
             <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Confirm Order') }}</span>
-            <a type="button" href="{{ route('customer.order.create') }}"  class="btn btn-secondary">{{ __('Back') }}</a>
+            <a type="button" href="{{ route( auth()->user()->position . '.order.create') }}"  class="btn btn-secondary">{{ __('Back') }}</a>
         </h3>
         <div class="card">
             <div class="card-body">
@@ -34,14 +34,14 @@
                                                     @endif
                                                 </div>
                                                 <div class="d-md-none col-6 text-right">
-                                                    <a href="{{ route('customer.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
+                                                    <a href="{{ route( auth()->user()->position . '.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
                                                 </div>
                                                 <div class="col-md-3 col-6">
                                                     <div class="input-group input-group-sm mb-3">
                                                         <input type="number" class="form-control" min="1"
                                                                data-id="{{ $product_key }}"
                                                                data-price="{{ $product['price'] }}"
-                                                               onchange="updateCart(this, '{{ route('customer.order.update', $product_key) }}')"
+                                                               onchange="updateCart(this, '{{ route( auth()->user()->position . '.order.update', $product_key) }}')"
                                                                value="{{ $product['quantity'] }}">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text" id="basic-addon2">{{ $product['unit'] }}</span>
@@ -52,7 +52,7 @@
                                                 <div class="col-md-3 col-6 text-right">
                                                     <span id="product-{{ $product_key }}">{{ number_format($product['quantity'] * $product['price']) }}</span>
                                                     <div class="d-none d-md-inline-block">
-                                                        <a href="{{ route('customer.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
+                                                        <a href="{{ route( auth()->user()->position . '.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -66,7 +66,7 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('customer.order.save') }}" method="post">
+                                <form action="{{ route( auth()->user()->position . '.order.save') }}" method="post">
                                     @csrf
                                     @foreach($order as $category_key => $category)
                                         @if (count($category['products'])  > 0)

@@ -82,3 +82,19 @@ Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' =
     Route::put('profile', 'Customer\ProfileController@update')->name('profile.update');
 });
 
+Route::group(['prefix' => 'employee' ,'middleware'=>['auth', 'employee'], 'as' => 'employee.'], function () {
+
+    Route::get('order', 'Employee\OrderController@index')->name('order.index');
+    Route::get('order/api', 'Employee\OrderController@index_api')->name('order.api');
+    Route::get('order/create', 'Employee\OrderController@create')->name('order.create');
+    Route::post('order/add/{id}', 'Employee\OrderController@add_item')->name('order.add.item');
+    Route::post('order/update/{id}', 'Employee\OrderController@update_item')->name('order.update.item');
+    Route::post('order/update_api/{id}', 'Employee\OrderController@update')->name('order.update');
+    Route::get('order/delete/{id}', 'Employee\OrderController@delete_item')->name('order.delete');
+    Route::get('order/cart', 'Employee\OrderController@cart')->name('order.cart');
+    Route::post('order/save', 'Employee\OrderController@order_save')->name('order.save');
+
+    Route::get('profile', 'Employee\ProfileController@edit')->name('profile.edit');
+    Route::put('profile', 'Employee\ProfileController@update')->name('profile.update');
+
+});

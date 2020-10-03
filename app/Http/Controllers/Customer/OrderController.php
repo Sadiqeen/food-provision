@@ -10,9 +10,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
-use App\Http\Controllers\Admin\OrderController as MainOrder;
+use App\Http\Controllers\Admin\OrderController as AdminOrder;
 
-class OrderController extends MainOrder
+class OrderController extends AdminOrder
 {
     /**
      * Show all order
@@ -143,7 +143,7 @@ class OrderController extends MainOrder
         $product = Product::with('category', 'unit')->find($id);
         if (!$product) {
             alert()->error(__('Error'), __('No data that you request'));
-            return redirect()->route('admin.product.index');
+            return redirect()->route(auth()->user()->position . '.order.create');
         }
 
         $this->add_product_to_order($product, $request->quantity);
@@ -218,7 +218,7 @@ class OrderController extends MainOrder
         if (!(\Session::has('total') && (\Session::get('total') > 0)))
         {
             alert()->error(__('Error'), __('No item in order'));
-            return redirect()->route('admin.order.create');
+            return redirect()->route(auth()->user()->position . '.order.create');
         }
 
         return view('customer.order.confirm');
@@ -235,7 +235,7 @@ class OrderController extends MainOrder
         if (!(\Session::has('total') && (\Session::get('total') > 0)))
         {
             alert()->error(__('Error'), __('No item in order'));
-            return redirect()->route('admin.order.create');
+            return redirect()->route(auth()->user()->position . '.order.create');
         }
 
         $request->validate([
@@ -257,6 +257,6 @@ class OrderController extends MainOrder
         \Session::forget('order');
 
         alert()->success(__('Success'), __('Add new order success'));
-        return redirect()->route('customer.order.index');
+        return redirect()->route(auth()->user()->position . '.order.index');
     }
 }

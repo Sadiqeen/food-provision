@@ -53,5 +53,13 @@ class DashboardController extends Controller
                 'order' => $order,
             ]);
         }
+
+        if (auth()->user()->position == 'employee') {
+            $order = Order::where('status', 1)->where('customer_id', auth()->user()->id)->count();
+
+            return view('employee.dashboad', [
+                'order' => $order,
+            ]);
+        }
     }
 }

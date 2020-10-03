@@ -4,7 +4,7 @@
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
             <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Add Order') }}</span>
-            <a type="button" href="{{ route('customer.order.cart') }}"  class="btn btn-success">{{ __('Confirm order') }}</a>
+            <a type="button" href="{{ route( auth()->user()->position . '.order.cart') }}"  class="btn btn-success">{{ __('Confirm order') }}</a>
         </h3>
         <div class="card">
             <div class="card-body">
@@ -25,7 +25,7 @@
                                 }
                             @endphp
                             <select class="form-control border selectpicker" data-size="10" name="category" id="category"
-                                    onchange="location = '{{ route('customer.order.create') }}?category=' + this.options[this.selectedIndex].value + '{{ $querySort ?? '' }}{{ $querySearch ?? '' }}'">
+                                    onchange="location = '{{ route( auth()->user()->position . '.order.create') }}?category=' + this.options[this.selectedIndex].value + '{{ $querySort ?? '' }}{{ $querySearch ?? '' }}'">
                                 <option value="All">{{ __('All') }}</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->name }}" {{ request()->get('category') == $category->name ? 'selected' : '' }}>{{ $category->name }}</option>
@@ -44,7 +44,7 @@
                             }
                             @endphp
                             <select class="form-control border selectpicker" data-size="10" name="sort" id="sort"
-                                    onchange="location = '{{ route('customer.order.create') }}?{{ $queryCategory ?? '' }}sort=' + this.options[this.selectedIndex].value + '{{ $querySearch ?? '' }}'">
+                                    onchange="location = '{{ route( auth()->user()->position . '.order.create') }}?{{ $queryCategory ?? '' }}sort=' + this.options[this.selectedIndex].value + '{{ $querySearch ?? '' }}'">
                                 <option value="A-Z"  {{ request()->get('sort') == 'A-Z' ? 'selected' : '' }}>A-Z</option>
                                 <option value="Z-A"  {{ request()->get('sort') == 'Z-A' ? 'selected' : '' }}>Z-A</option>
                                 <option value="Price Min to Max"  {{ request()->get('sort') == 'Price Min to Max' ? 'selected' : '' }}>Price Min to Max</option>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <form method="get" action="{{ route('customer.order.create', request()->query()) }}">
+                        <form method="get" action="{{ route( auth()->user()->position . '.order.create', request()->query()) }}">
                             <label for="search">{{ __('Search') }}</label>
                             <div class="input-group mb-3">
                                 @if (request()->query('category'))
@@ -90,7 +90,7 @@
                                     <h6 class="text-danger">{{ $product->price }} ฿</h6>
                                     {{-- If product in cart --}}
                                     @if ( isset( Session::get('order')[$product->category_id]['products'][$product->id] ) )
-                                    <form method="post" action="{{ route('customer.order.update.item', $product->id) }}">
+                                    <form method="post" action="{{ route( auth()->user()->position . '.order.update.item', $product->id) }}">
                                         @csrf
                                         <div class="row mt-3">
                                             <div class="col-12 mb-3">
@@ -107,7 +107,7 @@
                                         </div>
                                     </form>
                                     @else
-                                    <form method="post" action="{{ route('customer.order.add.item', $product->id) }}">
+                                    <form method="post" action="{{ route( auth()->user()->position . '.order.add.item', $product->id) }}">
                                         @csrf
                                         <div class="row mt-3">
                                             <div class="col-12 mb-3">
@@ -142,7 +142,7 @@
             </div>
         </div>
     </div>
-    <a href="{{ route('customer.order.cart') }}" class="cart bg-danger rounded-circle text-white text-decoration-none">
+    <a href="{{ route( auth()->user()->position . '.order.cart') }}" class="cart bg-danger rounded-circle text-white text-decoration-none">
         <i class="fa fa-shopping-bag fa-2x"></i>
     </a>
 @endsection

@@ -86,6 +86,11 @@
                         @include('layouts.menus.customer')
                     @endif
 
+                    {{-- Customer menu --}}
+                    @if (auth()->user()->position == 'employee')
+                        @include('layouts.menus.employee')
+                    @endif
+
                     @guest
                     <li class="nav-item d-sm-block d-md-none">
                         <a class="nav-link" href="{{ route('login') }}">

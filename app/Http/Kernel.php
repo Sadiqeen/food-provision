@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         // Position middleware
         'admin' => \App\Http\Middleware\AdminCheck::class,
         'customer' => \App\Http\Middleware\CustomerCheck::class,
+        'employee' => \App\Http\Middleware\EmployeeCheck::class,
     ];
 }
