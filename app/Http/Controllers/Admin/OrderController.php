@@ -7,6 +7,7 @@ use App\Category;
 use App\Customer;
 use App\Order;
 use App\Product;
+use App\Status;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -45,7 +46,10 @@ class OrderController extends Controller
      */
     public function index_api()
     {
-        $orders = Order::with('customer')->get();
+        $orders = Order::with('customer', 'status')
+                    ->where('status_id', '>', 1)
+                    ->where('status_id', '<', 7)
+                    ->get();
         return datatables()->of($orders)
             ->addColumn('order_number', function ($orders) {
                 return 'OD-' . str_pad($orders->id, 3, '0', STR_PAD_LEFT) . '-' . str_pad($orders->customer_id, 3, '0', STR_PAD_LEFT);
@@ -54,30 +58,13 @@ class OrderController extends Controller
                 return $orders->customer->name;
             })
             ->addColumn('status', function ($orders) {
-                return '<span class="bg-warning px-1 rounded">New Order</span>';
+                return $this->get_status_label($orders);
             })
             ->addColumn('total_price', function ($orders) {
                 return '<span class="bg-danger text-white px-1 rounded">' . number_format($orders->total_price) . '</span>';
             })
             ->addColumn('action', function ($orders) {
-                return '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                  <button type="button" class="btn btn-primary btn-sm">' . __('View') . '</button>
-                  <button type="button" class="btn btn-primary btn-sm">' . __('Edit') . '</button>
-
-                  <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      ' . __('Status') . '
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                      <a class="dropdown-item" href="javascript:void(0)">Receive Order</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Gather Food</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Ready for delivery</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Complete</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="javascript:void(0)">Cancel</a>
-                    </div>
-                  </div>
-                </div>';
+                return $this->get_action_on_table($orders);
             })
             ->escapeColumns([])->toJson();
     }
@@ -357,7 +344,8 @@ class OrderController extends Controller
         $order->total_price = $request->session()->get('total');
         $order->vessel_name = $request->vessel_name;
         $order->customer_id = $request->customer;
-        $order->status = 1;
+        $order->status_id = 2;
+        $order->user_id = auth()->user()->id;
         $order->save();
 
         $order->product()->attach($product_list);
@@ -367,6 +355,67 @@ class OrderController extends Controller
 
         alert()->success(__('Success'), __('Add new order success'));
         return redirect()->route('admin.order.index');
+    }
+
+    /**
+     * Update order status
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function order_update_status($id)
+    {
+        $order = Order::where('id', $id)
+                    ->where('status_id', '<', 7)
+                    ->first();
+
+        if (!$order) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.order.index');
+        }
+
+        if ($order->status_id == 2 || $order->status_id == 3) {
+            $order->status_id = 4;
+            $order->save();
+        } elseif ($order->status_id > 3 && $order->status_id < 7) {
+            $order->status_id++;
+            $order->save();
+        }
+
+        $order_id = 'OD-'
+            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
+            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
+        alert()->success(__('Success'), __('Update status for order :order success', ['order' => $order_id]));
+        return redirect()->back();
+    }
+
+    /**
+     * Cancel order
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function order_cancel($id)
+    {
+        $order = Order::where('id', $id)
+            ->where('status_id', '>', 2)
+            ->where('status_id', '<', 5)
+            ->first();
+
+        if (!$order) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.order.index');
+        }
+
+        $order->status_id = 8;
+        $order->save();
+
+        $order_id = 'OD-'
+            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
+            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
+        alert()->success(__('Success'), __('Cancel order :order success', ['order' => $order_id]));
+        return redirect()->back();
+
     }
 
     /**
@@ -413,4 +462,57 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * Get action button
+     *
+     * @param $order
+     * @return string
+     */
+    private function get_action_on_table($order)
+    {
+        $action = '';
+        $status = null;
+        $route = route('admin.order.update.status', $order->id);
+
+        if ($order->status_id == 2 || $order->status_id == 3) {
+            $status = Status::find(4);
+        } elseif ($order->status_id > 3 && $order->status_id < 7) {
+            $status = Status::find($order->status_id + 1);
+        }
+
+        if ($status) {
+            $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
+        }
+
+        if ($order->status_id > 2 && $order->status_id < 5)
+        {
+            $action .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('admin.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
+        }
+
+        return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <button type="button" class="btn btn-secondary btn-sm">' . __('View') . '</button>
+                 ' . $action . '
+                </div>';
+    }
+
+    /**
+     * Get status label
+     *
+     * @param $order
+     * @return string
+     */
+    protected function get_status_label($order)
+    {
+        $color = 'bg-warning';
+        if ($order->status->id > 3) {
+            $color = 'bg-primary text-white';
+        }
+        if ($order->status->id > 5) {
+            $color = 'bg-success text-white';
+        }
+        if ($order->status->id > 7) {
+            $color = 'bg-success text-white';
+        }
+        return '<span class="' . $color . ' px-1 rounded">' . $order->status->status . '</span>';
+    }
 }

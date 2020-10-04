@@ -31,7 +31,7 @@ class DashboardController extends Controller
         //Admin
 
         if (auth()->user()->position == 'admin') {
-            $order = Order::where('status', 1)->count();
+            $order = Order::where('status_id', 3)->count();
             $product = Product::count();
             $supplier = Supplier::count();
             $customer = Customer::count();
@@ -47,7 +47,7 @@ class DashboardController extends Controller
         // Customer
 
         if (auth()->user()->position == 'customer') {
-            $order = Order::where('status', 1)->where('customer_id', auth()->user()->id)->count();
+            $order = Order::where('status_id', 1)->where('customer_id', auth()->user()->id)->count();
 
             return view('customer.dashboad', [
                 'order' => $order,
@@ -55,7 +55,7 @@ class DashboardController extends Controller
         }
 
         if (auth()->user()->position == 'employee') {
-            $order = Order::where('status', 1)->where('customer_id', auth()->user()->id)->count();
+            $order = Order::where('status_id', 1)->where('customer_id', auth()->user()->id)->count();
 
             return view('employee.dashboad', [
                 'order' => $order,

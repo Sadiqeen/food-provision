@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Product;
+use App\Status;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -32,36 +33,22 @@ class OrderController extends AdminOrder
      */
     public function index_api()
     {
-        $orders = Order::where('customer_id', auth()->user()->customer_id)->get();
+        $orders = Order::with('status')
+                    ->where('customer_id', auth()->user()->customer_id)
+                    ->where('status_id', '<', 7)
+                    ->get();
         return datatables()->of($orders)
             ->addColumn('order_number', function ($orders) {
                 return 'OD-' . str_pad($orders->id, 3, '0', STR_PAD_LEFT) . '-' . str_pad($orders->customer_id, 3, '0', STR_PAD_LEFT);
             })
             ->addColumn('status', function ($orders) {
-                return '<span class="bg-warning px-1 rounded">New Order</span>';
+                return $this->get_status_label($orders);
             })
             ->addColumn('total_price', function ($orders) {
                 return '<span class="bg-danger text-white px-1 rounded">' . number_format($orders->total_price) . '</span>';
             })
             ->addColumn('action', function ($orders) {
-                return '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                  <button type="button" class="btn btn-primary btn-sm">' . __('View') . '</button>
-                  <button type="button" class="btn btn-primary btn-sm">' . __('Edit') . '</button>
-
-                  <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      ' . __('Status') . '
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                      <a class="dropdown-item" href="javascript:void(0)">Receive Order</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Gather Food</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Ready for delivery</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Complete</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="javascript:void(0)">Cancel</a>
-                    </div>
-                  </div>
-                </div>';
+                return $this->get_action_on_table($orders);
             })
             ->escapeColumns([])->toJson();
     }
@@ -248,7 +235,8 @@ class OrderController extends AdminOrder
         $order->total_price = $request->session()->get('total');
         $order->vessel_name = $request->vessel_name;
         $order->customer_id = auth()->user()->customer_id;
-        $order->status = 1;
+        $order->status_id = 3;
+        $order->user_id = auth()->user()->id;
         $order->save();
 
         $order->product()->attach($product_list);
@@ -258,5 +246,96 @@ class OrderController extends AdminOrder
 
         alert()->success(__('Success'), __('Add new order success'));
         return redirect()->route(auth()->user()->position . '.order.index');
+    }
+
+    /**
+     * Update order status
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function order_update_status($id)
+    {
+        $order = Order::where('id', $id)->where('customer_id', auth()->user()->customer_id)->first();
+        if (!$order) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('customer.order.index');
+        }
+
+        if ($order->status_id < 3) {
+            $order->status_id = 3;
+            $order->save();
+        } elseif ($order->status_id == 5) {
+            $order->status_id = 6;
+            $order->save();
+        }
+
+        $order_id = 'OD-'
+            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
+            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
+        alert()->success(__('Success'), __('Update status for order :order success', ['order' => $order_id]));
+        return redirect()->back();
+    }
+
+    /**
+     * Cancel order
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function order_cancel($id)
+    {
+        $order = Order::where('id', $id)
+            ->where('customer_id', auth()->user()->customer_id)
+            ->where('status_id', '<', 4)
+            ->first();
+
+        if (!$order) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('customer.order.index');
+        }
+
+        $order->status_id = 9;
+        $order->save();
+
+        $order_id = 'OD-'
+            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
+            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
+        alert()->success(__('Success'), __('Cancel order :order success', ['order' => $order_id]));
+        return redirect()->back();
+
+    }
+
+    /**
+     * Get action button
+     *
+     * @param $order
+     * @return string
+     */
+    private function get_action_on_table($order)
+    {
+        $route = route('customer.order.update.status', $order->id);
+        $action = '';
+        $status = null;
+
+        if ($order->status_id < 3) {
+            $status = Status::find(3);
+        } elseif ($order->status_id == 5) {
+            $status = Status::find(6);
+        }
+
+        if ($status) {
+            $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
+        }
+
+        if ($order->status_id < 4)
+        {
+            $action .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('customer.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
+        }
+
+        return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                  <button type="button" class="btn btn-secondary btn-sm">' . __('View') . '</button>
+                 ' . $action . '
+                </div>';
     }
 }
