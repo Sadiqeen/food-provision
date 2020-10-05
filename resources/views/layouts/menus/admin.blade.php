@@ -45,3 +45,9 @@
         {{ __('Report') }}
     </a>
 </li>
+
+<li class="nav-item {{ request()->routeIs('admin.setting.*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('admin.setting.edit') }}">
+        {{ __('Setting') }}
+    </a>
+</li>

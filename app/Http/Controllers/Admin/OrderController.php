@@ -368,7 +368,7 @@ class OrderController extends Controller
     public function order_view($id)
     {
         $order = Order::with('product.category', 'statusDate', 'user','customer.user')->find($id);
-        
+
         $statuses = Status::where('id', '>', 2)
             ->where('id', '<', 8)
             ->where('id', '>', $order->status_id)
@@ -547,4 +547,6 @@ class OrderController extends Controller
         }
         return '<span class="' . $color . ' px-1 rounded">' . $order->status->status . '</span>';
     }
+
+
 }

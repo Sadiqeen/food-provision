@@ -42,6 +42,10 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::get('order/{id}/cancel', 'Admin\OrderController@order_cancel')->name('order.cancel');
     Route::get('order/{id}/view', 'Admin\OrderController@order_view')->name('order.view');
 
+    Route::get('setting', 'Admin\SettingController@edit')->name('setting.edit');
+    Route::put('setting/company', 'Admin\SettingController@update_setting')->name('setting.update.setting');
+    Route::put('setting/profile', 'Admin\SettingController@update_profile')->name('setting.update.profile');
+
     // import form exel
     Route::get('product/upload', 'Admin\ProductController@upload')->name('product.upload');
     Route::post('product/import', 'Admin\ProductController@import')->name('product.import');

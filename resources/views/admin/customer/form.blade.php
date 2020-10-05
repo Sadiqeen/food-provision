@@ -78,26 +78,6 @@
     @enderror
 </div>
 
-{{-- ==================================== Password field ========================================== --}}
-<div class="form-group">
-    <label for="password">{{ __('Password') }} <span class="text-danger">*</span></label>
-
-    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
-
-    @error('password')
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-</div>
-
-{{-- ==================================== Confirmation Password field ========================================== --}}
-<div class="form-group">
-    <label for="password-confirm" >{{ __('Confirm Password') }} <span class="text-danger">*</span></label>
-
-    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
-</div>
-
 {{-- ==================================== Address field (Eng) ========================================== --}}
 <div class="form-group">
     @php
@@ -136,4 +116,30 @@
         <strong>{{ $message }}</strong>
     </span>
     @enderror
+</div>
+
+{{-- ==================================== Password field ========================================== --}}
+<hr>
+<div class="form-group">
+    <label for="password">{{ __('Password') }}
+        @if (request()->routeIs('admin.customer.create')) <span class="text-danger">*</span> @endif
+    </label>
+
+    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
+    @if (request()->routeIs('admin.customer.edit')) <small class="form-text text-muted">{{ __("Leave blank if you don't want to change it") }}</small> @endif
+
+    @error('password')
+    <span class="invalid-feedback" role="alert">
+        <strong>{{ $message }}</strong>
+    </span>
+    @enderror
+</div>
+
+{{-- ==================================== Confirmation Password field ========================================== --}}
+<div class="form-group">
+    <label for="password-confirm" >{{ __('Confirm Password') }}
+        @if (request()->routeIs('admin.customer.create')) <span class="text-danger">*</span> @endif
+    </label>
+
+    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
 </div>
