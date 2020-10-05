@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Customer\OrderController as CustomerOrder;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class OrderController extends CustomerOrder
 {
@@ -69,6 +70,9 @@ class OrderController extends CustomerOrder
         $order->save();
 
         $order->product()->attach($product_list);
+        $order->statusDate()->attach([
+            'status_id' => 1
+        ]);
 
         \Session::forget('total');
         \Session::forget('order');
@@ -89,6 +93,7 @@ class OrderController extends CustomerOrder
             ->where('status_id', '<', 6)
             ->where('user_id', auth()->user()->id)
             ->first();
+
         if (!$order) {
             alert()->error(__('Error'), __('No data that you request'));
             return redirect()->route('customer.order.index');
@@ -97,6 +102,10 @@ class OrderController extends CustomerOrder
         if ($order->status_id == 5) {
             $order->status_id = 6;
             $order->save();
+
+            $order->statusDate()->attach([
+                'status_id' => 6
+            ]);
         }
 
         $order_id = 'OD-'
@@ -107,6 +116,26 @@ class OrderController extends CustomerOrder
     }
 
     /**
+     * Check user permission before show order
+     *
+     * @param $id
+     * @return RedirectResponse|View
+     */
+    public function call_order_view($id)
+    {
+        $order = Order::where('id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+
+        if (!$order) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('customer.order.index');
+        }
+
+        return $this->order_view($id);
+    }
+
+    /**
      * Get action button
      *
      * @param $order
@@ -114,7 +143,9 @@ class OrderController extends CustomerOrder
      */
     private function get_action_on_table($order)
     {
-        $route = route('employee.order.update.status', $order->id);
+       $route = route('employee.order.update.status', $order->id);
+       $view = '<a type="button" href="' . route('employee.order.view', $order->id) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
+
        if ($order->status_id == 5) {
             $status = Status::find(6);
             $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
@@ -122,9 +153,8 @@ class OrderController extends CustomerOrder
             $action = '';
         }
 
-        return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                  <button type="button" class="btn btn-secondary btn-sm">' . __('View') . '</button>
-                 ' . $action . '
+       return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                 ' . $view . $action . '
                 </div>';
     }
 }

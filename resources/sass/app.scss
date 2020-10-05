@@ -1,13 +1,16 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Niramit');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Responsive progress
+@import 'ProgressIndicator';
 
 main {
     min-height: 85vh;
@@ -119,5 +122,55 @@ main {
         right: 10px;
         height: 60px;
         width: 60px;
+    }
+}
+
+// Overide Step
+.SteppedProgress li.cancel.boxed span{
+    background: $ProgressCancel;
+    color: #FFF;
+}
+.SteppedProgress li.cancel.boxed span:after {
+    border-bottom-color: $ProgressCancel;
+}
+.SteppedProgress li.cancel.boxed.canHover span:hover{
+    background: lighten($ProgressCancel, 38 );
+    border-color: $ProgressCancel;
+    color: $ProgressCancel;
+    cursor: pointer;
+}
+.SteppedProgress li.cancel.boxed.canHover span:hover:after {
+    //	border-bottom-color: lighten($ProgressCancel, 38 );
+    border-bottom-color: $ProgressCancel;
+    cursor: pointer;
+}
+
+/*marking cancel/cancel steps green*/
+/*The number of the step and the connector before it = green*/
+.SteppedProgress li.cancel:before{
+    background: $ProgressCancel;
+    color: white;
+}
+.SteppedProgress li.cancel:after{
+    background: transparentize( $ProgressCancel, .4);
+}
+
+ul.SteppedProgress.Vertical li.cancel.boxed span:after {
+    border-color: rgba(255, 255, 255, 0);	/* Just needs to be some transparent color */
+    border-right-color: $ProgressCancel;
+}
+
+ul.SteppedProgress li span{
+    display: block;
+}
+
+@media (max-width: $VerticalBreakPoint) {
+    ul.SteppedProgress li.cancel.boxed span:after {
+        border-color: rgba(255, 255, 255, 0);	/* Just needs to be some transparent color */
+        border-right-color: $ProgressCancel;
+    }
+
+    ul.SteppedProgress li span{
+        display: inline-block;
     }
 }

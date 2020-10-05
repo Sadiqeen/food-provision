@@ -37,8 +37,10 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::get('order/clear', 'Admin\OrderController@clear')->name('order.clear');
     Route::get('order/confirm', 'Admin\OrderController@order_confirm')->name('order.confirm');
     Route::post('order/save', 'Admin\OrderController@order_save')->name('order.save');
+
     Route::get('order/{id}/update', 'Admin\OrderController@order_update_status')->name('order.update.status');
     Route::get('order/{id}/cancel', 'Admin\OrderController@order_cancel')->name('order.cancel');
+    Route::get('order/{id}/view', 'Admin\OrderController@order_view')->name('order.view');
 
     // import form exel
     Route::get('product/upload', 'Admin\ProductController@upload')->name('product.upload');
@@ -76,6 +78,8 @@ Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' =
     Route::get('order/delete/{id}', 'Customer\OrderController@delete_item')->name('order.delete');
     Route::get('order/cart', 'Customer\OrderController@cart')->name('order.cart');
     Route::post('order/save', 'Customer\OrderController@order_save')->name('order.save');
+
+    Route::get('order/{id}/view', 'Customer\OrderController@call_order_view')->name('order.view');
     Route::get('order/{id}/update', 'Customer\OrderController@order_update_status')->name('order.update.status');
     Route::get('order/{id}/cancel', 'Customer\OrderController@order_cancel')->name('order.cancel');
 
@@ -99,6 +103,7 @@ Route::group(['prefix' => 'employee' ,'middleware'=>['auth', 'employee'], 'as' =
     Route::post('order/save', 'Employee\OrderController@order_save')->name('order.save');
     Route::get('order/{id}/update', 'Customer\OrderController@order_update_status')->name('order.update.status');
 
+    Route::get('order/{id}/view', 'Employee\OrderController@call_order_view')->name('order.view');
     Route::get('profile', 'Employee\ProfileController@edit')->name('profile.edit');
     Route::put('profile', 'Employee\ProfileController@update')->name('profile.update');
 

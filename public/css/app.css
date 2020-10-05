@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Niramit);@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Niramit);@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);@charset "UTF-8";
 
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
@@ -10904,6 +10904,308 @@ a.text-dark:focus {
   }
 }
 
+/* -- Stepped Progress Bar -- */
+
+ul.SteppedProgress {
+  /*CSS counters to number the steps*/
+  counter-reset: step;
+  display: flex;
+  margin: auto;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.SteppedProgress li {
+  list-style-type: none;
+  color: #404140;
+  line-height: normal;
+  text-transform: uppercase;
+  flex: 1;
+  font-size: 22px;
+  position: relative;
+  padding: 0 2%;
+}
+
+/* - Styling for the putting the step title in a box with an arrow - */
+
+.SteppedProgress li.boxed span,
+.SteppedProgress li.current span {
+  background: silver;
+  border: 1px solid silver;
+  color: gray;
+  display: inline-block;
+  padding: 3px 6px;
+  position: relative;
+  margin: 0px -6px;
+  width: 100%;
+}
+
+.SteppedProgress li.boxed span:after,
+.SteppedProgress li.current span:after {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: silver;
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+.SteppedProgress li.current span {
+  background: #4170b0;
+  color: #FFF;
+}
+
+.SteppedProgress li.current span:after {
+  border-bottom-color: #4170b0;
+}
+
+.SteppedProgress li.current.canHover span:hover {
+  background: #b9cce5;
+  border-color: #4170b0;
+  color: #4170b0;
+}
+
+.SteppedProgress li.current.canHover span:hover:after {
+  border-bottom-color: #b9cce5;
+}
+
+.SteppedProgress li.complete.boxed span {
+  background: #23b900;
+  color: #FFF;
+}
+
+.SteppedProgress li.complete.boxed span:after {
+  border-bottom-color: #23b900;
+}
+
+.SteppedProgress li.complete.boxed.canHover span:hover {
+  background: #95ff7c;
+  border-color: #23b900;
+  color: #23b900;
+  cursor: pointer;
+}
+
+.SteppedProgress li.complete.boxed.canHover span:hover:after {
+  border-bottom-color: #23b900;
+  cursor: pointer;
+}
+
+/* - Styling for the putting the step title in a box with an arrow - */
+
+.SteppedProgress li:before {
+  content: counter(step);
+  counter-increment: step;
+  width: 30px;
+  line-height: 30px;
+  display: block;
+  font-size: 22px;
+  color: #FFF;
+  background: gray;
+  border-radius: 15px;
+  margin: 0 auto 10px;
+  position: relative;
+  z-index: 1;
+}
+
+/*progressbar connectors*/
+
+.SteppedProgress li:after {
+  content: "";
+  width: 100%;
+  height: 6px;
+  background: silver;
+  position: absolute;
+  left: -50%;
+  top: 15px;
+  z-index: -1;
+  /*put it behind the numbers*/
+}
+
+.SteppedProgress li:first-child:after {
+  /*connector not needed before the first step*/
+  content: none;
+}
+
+/*marking complete/completed steps green*/
+
+/*The number of the step and the connector before it = green*/
+
+.SteppedProgress li.complete:before {
+  background: #23b900;
+  color: white;
+}
+
+.SteppedProgress li.complete:after {
+  background: rgba(35, 185, 0, 0.6);
+}
+
+/* -- Vertical Styling -- */
+
+ul.SteppedProgress.Vertical {
+  display: block;
+}
+
+.SteppedProgress.Vertical li {
+  flex: none;
+  clear: both;
+  text-align: left;
+  padding: 0;
+  margin-left: 0;
+  min-height: 2.2em;
+}
+
+.SteppedProgress.Vertical li span {
+  white-space: nowrap;
+}
+
+ul.SteppedProgress.Vertical li:before {
+  float: none;
+  display: inline-block;
+  margin-right: 10px;
+  text-align: center;
+  margin-left: 0;
+}
+
+.SteppedProgress.Vertical li:after {
+  content: "";
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  left: 12px;
+  top: -50%;
+  z-index: -1;
+  /*put it behind the numbers*/
+}
+
+/* - Styling for the putting the step title in a box with an arrow - */
+
+ul.SteppedProgress.Vertical li.boxed,
+ul.SteppedProgress.Vertical li.current {
+  min-width: 90%;
+}
+
+ul.SteppedProgress.Vertical li.boxed span,
+ul.SteppedProgress.Vertical li.current span {
+  display: inline;
+  margin-left: 0;
+}
+
+ul.SteppedProgress.Vertical li.boxed span:after,
+ul.SteppedProgress.Vertical li.current span:after {
+  bottom: auto;
+  left: auto;
+  right: 100%;
+  top: 7px;
+  border-color: rgba(255, 255, 255, 0);
+  /* Just needs to be some transparent color */
+  border-right-color: silver;
+  margin: 0;
+}
+
+ul.SteppedProgress.Vertical li.current span:after {
+  border-right-color: #4170b0;
+  /* $Color-FV-Bright-Blue */
+}
+
+ul.SteppedProgress.Vertical li.complete.boxed span:after {
+  border-color: rgba(255, 255, 255, 0);
+  /* Just needs to be some transparent color */
+  border-right-color: #23b900;
+}
+
+/* - Styling for the putting the step title in a box with an arrow - */
+
+/* -- End: Vertical Styling -- */
+
+/* -- Style the Progress Steps for narrow/vertical displays -- */
+
+@media (max-width: 480px) {
+  ul.SteppedProgress {
+    display: block;
+  }
+
+  .SteppedProgress li {
+    flex: none;
+    clear: both;
+    text-align: left;
+    padding: 0;
+    margin-left: 0;
+    min-height: 2.2em;
+  }
+
+  .SteppedProgress li span {
+    white-space: nowrap;
+  }
+
+  ul.SteppedProgress li:before {
+    float: none;
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .SteppedProgress li:after {
+    content: "";
+    width: 6px;
+    height: 100%;
+    position: absolute;
+    left: 12px;
+    top: -50%;
+    z-index: -1;
+    /*put it behind the numbers*/
+  }
+
+  /* - Styling for the putting the step title in a box with an arrow - */
+
+  ul.SteppedProgress li.boxed,
+  ul.SteppedProgress li.current {
+    min-width: 90%;
+  }
+
+  ul.SteppedProgress li.boxed span,
+  ul.SteppedProgress li.current span {
+    display: inline;
+    margin-left: 0;
+  }
+
+  ul.SteppedProgress li.boxed span:after,
+  ul.SteppedProgress li.current span:after {
+    bottom: auto;
+    left: auto;
+    right: 100%;
+    top: 7px;
+    border-color: rgba(255, 255, 255, 0);
+    /* Just needs to be some transparent color */
+    border-right-color: silver;
+    margin: 0;
+  }
+
+  ul.SteppedProgress li.current span:after {
+    border-right-color: #4170b0;
+    /* $Color-FV-Bright-Blue */
+  }
+
+  ul.SteppedProgress li.complete.boxed span:after {
+    border-color: rgba(255, 255, 255, 0);
+    /* Just needs to be some transparent color */
+    border-right-color: #23b900;
+  }
+
+  /* - Styling for the putting the step title in a box with an arrow - */
+}
+
+/* -- Stepped Progress Bar -- */
+
 main {
   min-height: 85vh;
 }
@@ -11007,6 +11309,62 @@ main {
     right: 10px;
     height: 60px;
     width: 60px;
+  }
+}
+
+.SteppedProgress li.cancel.boxed span {
+  background: #e3342f;
+  color: #FFF;
+}
+
+.SteppedProgress li.cancel.boxed span:after {
+  border-bottom-color: #e3342f;
+}
+
+.SteppedProgress li.cancel.boxed.canHover span:hover {
+  background: #fadbda;
+  border-color: #e3342f;
+  color: #e3342f;
+  cursor: pointer;
+}
+
+.SteppedProgress li.cancel.boxed.canHover span:hover:after {
+  border-bottom-color: #e3342f;
+  cursor: pointer;
+}
+
+/*marking cancel/cancel steps green*/
+
+/*The number of the step and the connector before it = green*/
+
+.SteppedProgress li.cancel:before {
+  background: #e3342f;
+  color: white;
+}
+
+.SteppedProgress li.cancel:after {
+  background: rgba(227, 52, 47, 0.6);
+}
+
+ul.SteppedProgress.Vertical li.cancel.boxed span:after {
+  border-color: rgba(255, 255, 255, 0);
+  /* Just needs to be some transparent color */
+  border-right-color: #e3342f;
+}
+
+ul.SteppedProgress li span {
+  display: block;
+}
+
+@media (max-width: 480px) {
+  ul.SteppedProgress li.cancel.boxed span:after {
+    border-color: rgba(255, 255, 255, 0);
+    /* Just needs to be some transparent color */
+    border-right-color: #e3342f;
+  }
+
+  ul.SteppedProgress li span {
+    display: inline-block;
   }
 }
 

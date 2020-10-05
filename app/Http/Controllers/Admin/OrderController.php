@@ -51,9 +51,6 @@ class OrderController extends Controller
                     ->where('status_id', '<', 7)
                     ->get();
         return datatables()->of($orders)
-            ->addColumn('order_number', function ($orders) {
-                return 'OD-' . str_pad($orders->id, 3, '0', STR_PAD_LEFT) . '-' . str_pad($orders->customer_id, 3, '0', STR_PAD_LEFT);
-            })
             ->addColumn('customer', function ($orders) {
                 return $orders->customer->name;
             })
@@ -84,12 +81,14 @@ class OrderController extends Controller
             return redirect()->route('admin.customer.create');
         }
 
-        $categories = Category::get();
+        $products = Product::get();
 
-        if (!$categories->count()) {
-            alert()->info(__('No Category'), __('Please create category data before make an order'));
-            return redirect()->route('admin.category.index');
+        if (!$products->count()) {
+            alert()->info(__('No Product'), __('Please create product data before make an order'));
+            return redirect()->route('admin.product.index');
         }
+
+        $categories = Category::get();
 
         return view('admin.order.create', [
             'categories' => $categories,
@@ -349,12 +348,36 @@ class OrderController extends Controller
         $order->save();
 
         $order->product()->attach($product_list);
+        $order->statusDate()->attach([
+            'status_id' => 2
+        ]);
 
         \Session::forget('total');
         \Session::forget('order');
 
         alert()->success(__('Success'), __('Add new order success'));
         return redirect()->route('admin.order.index');
+    }
+
+    /**
+     * View order
+     *
+     * @param $id
+     * @return View
+     */
+    public function order_view($id)
+    {
+        $order = Order::with('product.category', 'statusDate', 'user','customer.user')->find($id);
+        
+        $statuses = Status::where('id', '>', 2)
+            ->where('id', '<', 8)
+            ->where('id', '>', $order->status_id)
+            ->get();
+
+        return view('admin.order.show', [
+            'order' => $order,
+            'statuses' => $statuses,
+        ]);
     }
 
     /**
@@ -377,9 +400,15 @@ class OrderController extends Controller
         if ($order->status_id == 2 || $order->status_id == 3) {
             $order->status_id = 4;
             $order->save();
+            $order->statusDate()->attach([
+                'status_id' => 4
+            ]);
         } elseif ($order->status_id > 3 && $order->status_id < 7) {
-            $order->status_id++;
+            $order->status_id = $order->status_id + 1;
             $order->save();
+            $order->statusDate()->attach([
+                'status_id' => $order->status_id
+            ]);
         }
 
         $order_id = 'OD-'
@@ -409,6 +438,9 @@ class OrderController extends Controller
 
         $order->status_id = 8;
         $order->save();
+        $order->statusDate()->attach([
+            'status_id' => 8
+        ]);
 
         $order_id = 'OD-'
             . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
@@ -473,6 +505,7 @@ class OrderController extends Controller
         $action = '';
         $status = null;
         $route = route('admin.order.update.status', $order->id);
+        $view = '<a type="button" href="' . route('admin.order.view', $order->id) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
 
         if ($order->status_id == 2 || $order->status_id == 3) {
             $status = Status::find(4);
@@ -490,8 +523,7 @@ class OrderController extends Controller
         }
 
         return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                  <button type="button" class="btn btn-secondary btn-sm">' . __('View') . '</button>
-                 ' . $action . '
+                 ' . $view . $action . '
                 </div>';
     }
 

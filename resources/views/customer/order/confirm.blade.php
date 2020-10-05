@@ -41,7 +41,8 @@
                                                         <input type="number" class="form-control" min="1"
                                                                data-id="{{ $product_key }}"
                                                                data-price="{{ $product['price'] }}"
-                                                               onchange="updateCart(this, '{{ route( auth()->user()->position . '.order.update', $product_key) }}')"
+                                                               onkeyup="updateCart(this, '{{ route( auth()->user()->position . '.order.update', $product_key) }}')"
+                                                               onchange="$(this).trigger('onkeyup')"
                                                                value="{{ $product['quantity'] }}">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text" id="basic-addon2">{{ $product['unit'] }}</span>

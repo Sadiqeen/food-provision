@@ -240,6 +240,9 @@ class OrderController extends AdminOrder
         $order->save();
 
         $order->product()->attach($product_list);
+        $order->statusDate()->attach([
+            'status_id' => 3
+        ]);
 
         \Session::forget('total');
         \Session::forget('order');
@@ -265,9 +268,17 @@ class OrderController extends AdminOrder
         if ($order->status_id < 3) {
             $order->status_id = 3;
             $order->save();
+
+            $order->statusDate()->attach([
+                'status_id' => 3
+            ]);
         } elseif ($order->status_id == 5) {
             $order->status_id = 6;
             $order->save();
+
+            $order->statusDate()->attach([
+                'status_id' => 6
+            ]);
         }
 
         $order_id = 'OD-'
@@ -297,6 +308,9 @@ class OrderController extends AdminOrder
 
         $order->status_id = 9;
         $order->save();
+        $order->statusDate()->attach([
+            'status_id' => 9
+        ]);
 
         $order_id = 'OD-'
             . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
@@ -307,6 +321,26 @@ class OrderController extends AdminOrder
     }
 
     /**
+     * Check user permission before show order
+     *
+     * @param $id
+     * @return RedirectResponse|View
+     */
+    public function call_order_view($id)
+    {
+        $order = Order::where('id', $id)
+            ->where('customer_id', auth()->user()->customer_id)
+            ->first();
+
+        if (!$order) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('customer.order.index');
+        }
+
+        return $this->order_view($id);
+    }
+
+    /**
      * Get action button
      *
      * @param $order
@@ -314,9 +348,10 @@ class OrderController extends AdminOrder
      */
     private function get_action_on_table($order)
     {
-        $route = route('customer.order.update.status', $order->id);
         $action = '';
         $status = null;
+        $route = route('customer.order.update.status', $order->id);
+        $view = '<a type="button" href="' . route('customer.order.view', $order->id) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
 
         if ($order->status_id < 3) {
             $status = Status::find(3);
@@ -334,8 +369,7 @@ class OrderController extends AdminOrder
         }
 
         return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                  <button type="button" class="btn btn-secondary btn-sm">' . __('View') . '</button>
-                 ' . $action . '
+                 ' . $view . $action . '
                 </div>';
     }
 }

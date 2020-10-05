@@ -69,14 +69,38 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return View
+     * @return RedirectResponse|View
      */
     public function create()
     {
         $units = Unit::all();
+
+        if (!$units->count()) {
+            alert()->info(__('No Product Unit'), __('Please create product unit data before create product'));
+            return redirect()->route('admin.unit.index');
+        }
+
         $brands = Brand::all();
+
+        if (!$brands->count()) {
+            alert()->info(__('No Product Brand'), __('Please create product brand data before create product'));
+            return redirect()->route('admin.brand.index');
+        }
+
         $categories = Category::all();
+
+        if (!$categories->count()) {
+            alert()->info(__('No Product Category'), __('Please create product category data before create product'));
+            return redirect()->route('admin.category.index');
+        }
+
         $suppliers = Supplier::all();
+
+        if (!$suppliers->count()) {
+            alert()->info(__('No Supplier'), __('Please create supplier data before create product'));
+            return redirect()->route('admin.supplier.index');
+        }
+
         return view('admin.product.create', [
             'units' => $units,
             'brands' => $brands,

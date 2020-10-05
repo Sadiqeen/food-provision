@@ -112,7 +112,7 @@
                                         <div class="row mt-3">
                                             <div class="col-12 mb-3">
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" name="quantity" min="0" value="0" onchange="enableAddToCart(this, {{ $product->id }})">
+                                                    <input type="number" class="form-control" name="quantity" min="0" value="0" onkeyup="enableAddToCart(this, {{ $product->id }})" onkeydown="$(this).trigger('onkeyup')" onchange="$(this).trigger('onkeyup')">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text" id="basic-addon2">{{ $product->unit->name }}</span>
                                                     </div>
