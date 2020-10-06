@@ -7,6 +7,7 @@ use App\Category;
 use App\Customer;
 use App\Order;
 use App\Product;
+use App\Setting;
 use App\Status;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -505,6 +506,7 @@ class OrderController extends Controller
         $action = '';
         $status = null;
         $route = route('admin.order.update.status', $order->id);
+        $print = '<a type="button" target="_blank" href="' . route('admin.order.print.quotation', $order->id) . '" class="btn btn-secondary btn-sm mr-2">' . __('Quotation') . '</a>';
         $view = '<a type="button" href="' . route('admin.order.view', $order->id) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
 
         if ($order->status_id == 2 || $order->status_id == 3) {
@@ -522,7 +524,7 @@ class OrderController extends Controller
             $action .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('admin.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
         }
 
-        return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        return  $print . '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                  ' . $view . $action . '
                 </div>';
     }
@@ -548,5 +550,18 @@ class OrderController extends Controller
         return '<span class="' . $color . ' px-1 rounded">' . $order->status->status . '</span>';
     }
 
+    public function  print_quotation($id)
+    {
+        $host = Setting::first();
+        $order = Order::with('product.category', 'statusDate', 'user','customer.user')->find($id);
+
+        $pdf = \PDF::loadView('pdf.quotation', [
+            'host' => $host,
+            'order' => $order,
+        ]);
+        $pdf->setPaper('a4');
+
+        return $pdf->stream();
+    }
 
 }

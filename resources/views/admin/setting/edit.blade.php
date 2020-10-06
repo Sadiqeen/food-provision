@@ -111,8 +111,7 @@
                                 @endphp
                                 <label for="com_address">{{ __('Address') }} <span class="text-danger">*</span></label>
                                 <textarea rows="5" cols="3" name="com_address" id="com_address"
-                                          class="form-control @error('com_address') is-invalid @enderror">{{ $com_address ?? '' }}
-                                </textarea>
+                                          class="form-control @error('com_address') is-invalid @enderror">{{ $com_address ?? '' }}</textarea>
                                 @error('com_address')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

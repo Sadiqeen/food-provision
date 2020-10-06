@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::get('order/{id}/cancel', 'Admin\OrderController@order_cancel')->name('order.cancel');
     Route::get('order/{id}/view', 'Admin\OrderController@order_view')->name('order.view');
 
+    Route::get('order/{id}/print_quotation', 'Admin\OrderController@print_quotation')->name('order.print.quotation');
+
     Route::get('setting', 'Admin\SettingController@edit')->name('setting.edit');
     Route::put('setting/company', 'Admin\SettingController@update_setting')->name('setting.update.setting');
     Route::put('setting/profile', 'Admin\SettingController@update_profile')->name('setting.update.profile');
