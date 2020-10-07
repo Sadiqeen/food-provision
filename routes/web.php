@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::get('order/create/new/api', 'Admin\OrderController@create_api')->name('order.create.api');
     Route::post('order/update/{id}', 'Admin\OrderController@update')->name('order.update');
     Route::get('order/clear', 'Admin\OrderController@clear')->name('order.clear');
+    Route::get('order/delete/{id}', 'Customer\OrderController@delete_item')->name('order.delete');
     Route::get('order/confirm', 'Admin\OrderController@order_confirm')->name('order.confirm');
     Route::post('order/save', 'Admin\OrderController@order_save')->name('order.save');
 
@@ -86,6 +87,7 @@ Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' =
     Route::post('order/save', 'Customer\OrderController@order_save')->name('order.save');
 
     Route::get('order/{id}/update', 'Customer\OrderController@order_update_status')->name('order.update.status');
+    Route::post('order/{id}/update', 'Customer\OrderController@order_update_status_confirm')->name('order.update.status');
     Route::get('order/{id}/cancel', 'Customer\OrderController@order_cancel')->name('order.cancel');
 
     Route::get('order/{id}/call/{doc}', 'Customer\OrderController@call_to_endpoint')->name('order.call');

@@ -8,7 +8,7 @@
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
             <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Manage Order') }}</span>
-            <a type="button" href="{{ route('admin.order.create') }}"  class="btn btn-secondary">{{ __('Add Order') }}</a>
+            <a type="button" href="{{ route('admin.order.create') }}"  class="btn btn-secondary">{{ __('Create Order') }}</a>
         </h3>
         @if ($errors->any())
             @foreach ($errors->all() as $error)
@@ -103,9 +103,6 @@
     <script type="text/javascript" src="{{ asset('plugins/DataTables/datatables.js') }}"></script>
     <script>
         $(document).ready(function () {
-            @if($errors->any())
-
-            @endif
 
             $("#purchase_order_file").change(function () {
                 let size = this.files[0].size

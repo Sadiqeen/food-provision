@@ -52,7 +52,7 @@ class OrderController extends Controller
     public function index_api()
     {
         $orders = Order::with('customer', 'status')
-            ->where('status_id', '>', 1)
+            ->where('status_id', '>', 2)
             ->where('status_id', '<', 8)
             ->get();
         return datatables()->of($orders)
@@ -265,6 +265,28 @@ class OrderController extends Controller
         \Session::put('order', $order);
     }
 
+
+    /**
+     * Delete item from cart
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function delete_item($id)
+    {
+        $product = Product::with('category', 'unit')->find($id);
+        if (!$product) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->back();
+        }
+
+        $this->del_product_from_order($product);
+        $this->update_price();
+        alert()->success(__('Success'),__('Remove :product from order', ['product' => $product->name]));
+        return redirect()->back();
+    }
+
+
     /**
      * Delete product from order
      *
@@ -291,7 +313,7 @@ class OrderController extends Controller
             foreach ($each_category['products'] as $product) {
                 $price += $product['quantity'] * $product['price'];
                 if ($product['vat']) {
-                    $price += (($product['quantity'] * $product['price']) * 7) / 100;
+                    $price += round((($product['quantity'] * $product['price']) * 7) / 100);
                 }
             }
             $order[$key]['total'] = $price;
@@ -567,7 +589,7 @@ class OrderController extends Controller
             $action .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('admin.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
         }
 
-        return $this->get_print_on_table($order) . '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        return $this->get_print_on_table($order) . '<div class="btn-group mb-2" role="group" aria-label="Button group with nested dropdown">
                  ' . $view . $action . '
                 </div>';
     }
@@ -589,7 +611,7 @@ class OrderController extends Controller
             $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'po']) . '">Purchase Order</a>';
         }
 
-        if ($order->status_id >= 4) {
+        if ($order->status_id >= 4 && auth()->user()->position == 'admin') {
             $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'supply']) . '">Order supplier list</a>';
         }
 
@@ -602,7 +624,7 @@ class OrderController extends Controller
         }
 
         if ($action) {
-            return '<div class="btn-group btn-group-sm mr-2" role="group" aria-label="Button group with nested dropdown">
+            return '<div class="btn-group btn-group-sm mr-2 mb-2" role="group" aria-label="Button group with nested dropdown">
                           <div class="btn-group" role="group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Print
@@ -658,9 +680,13 @@ class OrderController extends Controller
     {
         $order = $this->check_order_access($id);
 
-        $employeeCheck = (strtolower($doc) !== 'view' && auth()->user()->position == 'employee');
+        // Avoid doc from employee
+        $employee_check = (strtolower($doc) !== 'view' && auth()->user()->position == 'employee');
 
-        if (!$order || $employeeCheck) {
+        // Set supplier list to admin only
+        $supplier_list = strtolower($doc) == 'supply' && auth()->user()->position != 'admin';
+
+        if (!$order || $employee_check || $supplier_list) {
             alert()->error(__('Error'), __('No data that you request'));
             return redirect()->route(auth()->user()->position . '.order.index');
         }

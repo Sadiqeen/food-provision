@@ -89,7 +89,9 @@
     "Company" : "บริษัท",
     "Order number" : "หมายเลขคำสั่งซื้อ",
     "Vessel name" : "ชื่อเรือ",
-    "Make an order by" : "สั่งซื้อโดย",
+    "Make an order by" : "สร้างคำสั่งซื้อโดย",
+    "Request order" : "ร้องขอคำสั่งซื้อ",
+    "Request Quote" : "ขอใบเสนอราคา",
 
     "Manage Customer" : "จัดการลูกค้า",
     "Add Customer" : "เพิ่มลูกค้า",
@@ -105,7 +107,7 @@
     "Status" : "สถานะ",
 
     "Manage Order" : "จัดการคำสั่งซื้อ",
-    "Add Order" : "เพิ่มคำสั่งซื้อ",
+    "Create Order" : "เพิ่มคำสั่งซื้อ",
     "Update quantity of :product": "อัพเดทจำนวนออเดอร์ของ :product",
     "Remove :product from order": "นำ :product ออกจากออเดอร์",
     "Add :product to order" : "เพิ่ม :product ในออเดอร์",

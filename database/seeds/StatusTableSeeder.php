@@ -17,11 +17,11 @@ class StatusTableSeeder extends Seeder
                     'status_th' => 'คำสั่งซื้อจากเรือ',
                 ],
                 1 => [
-                    'status_en' => 'New order',
-                    'status_th' => 'ออเดอร์ใหม่',
+                    'status_en' => 'Waiting for PO',
+                    'status_th' => 'รอใบสั่งซื้อ',
                 ],
                 2 => [
-                    'status_en' => 'Add by Administrator',
+                    'status_en' => 'Added by Administrator',
                     'status_th' => 'เพิ่มโดยผู้ดูแลระบบ',
                 ],
                 3 => [

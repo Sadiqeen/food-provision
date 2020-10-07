@@ -107,7 +107,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group text-center">
-                                       <button type="submit" class="btn btn-primary">{{ __('Confirm Order') }}</button>
+                                       <button type="submit" class="btn btn-primary">{{ auth()->user()->position == 'customer' ? __('Request Quote') : __('Request order') }}</button>
                                     </div>
                                 </form>
                             </div>

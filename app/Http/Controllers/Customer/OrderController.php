@@ -175,26 +175,6 @@ class OrderController extends AdminOrder
     }
 
     /**
-     * Delete item from cart
-     *
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function delete_item($id)
-    {
-        $product = Product::with('category', 'unit')->find($id);
-        if (!$product) {
-            alert()->error(__('Error'), __('No data that you request'));
-            return redirect()->back();
-        }
-
-        $this->del_product_from_order($product);
-        $this->update_price();
-        alert()->success(__('Success'),__('Remove :product from order', ['product' => $product->name]));
-        return redirect()->back();
-    }
-
-    /**
      * Show cart
      */
     public function cart()
@@ -340,7 +320,13 @@ class OrderController extends AdminOrder
         }
 
         if ($status) {
-            $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
+            if ($status->id == 2) {
+                $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' .  __('Request Quote') . '</a>';
+            } elseif ($status->id != 4) {
+                $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
+            } else {
+                $action = '<a type="button" class="btn btn-primary btn-sm" onclick="confirm_order(\'' . route('customer.order.update.status', $order->id) . '\')" href="javascript:void(0)">' . $status->status . '</a>';
+            }
         }
 
         if ($order->status_id < 4)
@@ -348,7 +334,7 @@ class OrderController extends AdminOrder
             $action .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('customer.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
         }
 
-        return  $this->get_print_on_table($order) . '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        return  $this->get_print_on_table($order) . '<div class="btn-group mb-2" role="group" aria-label="Button group with nested dropdown">
                  ' . $view . $action . '
                 </div>';
     }

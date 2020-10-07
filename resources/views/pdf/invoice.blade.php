@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>{{ $order->quotation_number }}</title>
+    <title>{{ $order->invoice_number }}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
         .custom-table {
@@ -58,7 +58,7 @@
                 {{ $order->customer->address }}
             </th>
             <th colspan="2">DATE</th>
-            <th colspan="2" class="text-center text-uppercase">{{ $order->statusDate->find(7)->create_at }}</th>
+            <th colspan="2" class="text-center text-uppercase">{{ $order->statusDate[0]->pivot->created_at->format('d/m/Y') }}</th>
         </tr>
         <tr>
             <th colspan="2">NO</th>

@@ -8,20 +8,12 @@
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
             <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Confirm Order') }}</span>
-            <a type="button" href="{{ route('admin.order.create') }}"  class="btn btn-secondary">{{ __('Back') }}</a>
+            <a type="button" href="{{ route( auth()->user()->position . '.order.create') }}"  class="btn btn-secondary">{{ __('Back') }}</a>
         </h3>
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h2 class="m-0 font-weight-bold">
-                                    {{ __('Total') }}
-                                    <span class="float-right" id="total">{{ number_format(Session::get('total')) }}</span>
-                                </h2>
-                            </div>
-                        </div>
                         @if (Session::has('order'))
                             @php $order = Session::get('order'); @endphp
                             @foreach($order as $category_key => $category)
@@ -29,24 +21,32 @@
                                 <ul class="list-group mb-3">
                                     <li class="list-group-item bg-success text-white">
                                         <span class="h4 font-weight-bold">{{ $category['name'] }}</span>
-                                        <span class="float-right text-dark bg-white rounded py-1 px-2"  id="cat-{{ $category_key }}">{{ number_format( $category['total'] ) }}</span>
+                                        <span class="float-right text-dark bg-white rounded py-1 px-2  cat-{{ $category_key }}"  >{{ number_format( $category['total'] ) }}</span>
                                     </li>
                                     @foreach($category['products'] as $product_key => $product)
                                         <li class="list-group-item">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-sm-6 col-6 mb-3">
                                                     @if(app()->getLocale() == "th")
                                                         {{ $product['name_th'] ? $product['name_th'] : $product['name_en'] }}
                                                     @else
                                                         {{ $product['name_en'] }}
                                                     @endif
+                                                    @if ( $product['vat'])
+                                                        &nbsp;&nbsp;<i  style="font-size: 0.6rem;" class="fa fa-percent bg-secondary text-white p-1 rounded-lg"></i>
+                                                    @endif
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="input-group mb-3">
+                                                <div class="d-md-none col-6 text-right">
+                                                    <a href="{{ route( auth()->user()->position . '.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="input-group input-group-sm mb-3">
                                                         <input type="number" class="form-control" min="1"
                                                                data-id="{{ $product_key }}"
                                                                data-price="{{ $product['price'] }}"
-                                                               onchange="updateCart(this, '{{ route('admin.order.update', $product_key) }}')"
+                                                               data-vat="{{ $product['vat'] }}"
+                                                               onkeyup="updateCart(this, '{{ route( auth()->user()->position . '.order.update', $product_key) }}')"
+                                                               onchange="$(this).trigger('onkeyup')"
                                                                value="{{ $product['quantity'] }}">
                                                         <div class="input-group-append">
                                                             <span class="input-group-text" id="basic-addon2">{{ $product['unit'] }}</span>
@@ -54,8 +54,17 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="col-md-3 text-right">
-                                                    <span id="product-{{ $product_key }}">{{ number_format($product['quantity'] * $product['price']) }}</span>
+                                                <div class="col-md-3 col-6 text-right">
+                                                    @php
+                                                    $price = $product['quantity'] * $product['price'];
+                                                    if ($product['vat']) {
+                                                        $price += (($price * 7) / 100);
+                                                    }
+                                                    @endphp
+                                                    <span id="product-{{ $product_key }}">{{ number_format($price) }}</span>
+                                                    <div class="d-none d-md-inline-block">
+                                                        <a href="{{ route( auth()->user()->position . '.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </li>
@@ -68,8 +77,26 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('admin.order.save') }}" method="post">
+                                <form action="{{ route( auth()->user()->position . '.order.save') }}" method="post">
                                     @csrf
+                                    @foreach($order as $category_key => $category)
+                                        @if (count($category['products'])  > 0)
+                                            <div class="form-group">
+                                                <h6 class="m-0">
+                                                    {{ $category['name'] }}
+                                                    <span class="float-right cat-{{ $category_key }}">{{ number_format( $category['total'] ) }}</span>
+                                                </h6>
+                                            </div>
+                                            <hr>
+                                        @endif
+                                    @endforeach
+                                    <div class="form-group">
+                                        <h2 class="m-0">
+                                            {{ __('Total') }}
+                                            <span class="float-right" id="total">{{ number_format(Session::get('total')) }}</span>
+                                        </h2>
+                                    </div>
+                                    <hr>
                                     <div class="form-group">
                                         <label for="unit">{{ __('Order for') }} <span class="text-danger">*</span></label>
                                         <select class="form-control border selectpicker @error('customer') is-invalid @enderror" data-live-search="true" data-size="10" name="customer" id="customer" >
@@ -152,11 +179,14 @@
                     success: function(data){
                         if (data.status === "success") {
                             $.each(data.data.category, function(i, item) {
-                                $('#cat-' + i).text(item)
+                                $('.cat-' + i).text(item)
                             })
 
                             let price = $(el).data('price') * $(el).val()
-                            $('#product-' + $(el).data('id')).text( price.toLocaleString() )
+                            if ($(el).data('vat')) {
+                                price += (price * 7) / 100
+                            }
+                            $('#product-' + $(el).data('id')).text( Math.round(price).toLocaleString() )
                             $('#total').text(data.data.total)
 
                             Toast.fire({

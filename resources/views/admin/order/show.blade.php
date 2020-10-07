@@ -16,7 +16,7 @@
                 <ul class="SteppedProgress">
                     @foreach($order->statusDate as $status)
                         <li class="{{ $status->id > 8 ? 'cancel' : 'complete' }}">
-                            <span class="h6">{{ $status->status }}</span>
+                            <span class="h6">{{ $status->id == 2 ? __('Request Quote') : $status->status }}</span>
                             <small class="text-muted" style="font-size: small;">{{ $status->pivot->created_at->format('d/m/Y') }}</small>
                         </li>
                     @endforeach

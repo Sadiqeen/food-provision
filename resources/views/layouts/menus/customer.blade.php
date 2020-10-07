@@ -4,10 +4,10 @@
     </a>
     <div aria-labelledby="orderDropdown" class="dropdown-menu mb-3">
         <a class="dropdown-item {{ request()->routeIs('customer.order.create') ? 'active' : '' }}" href="{{ route('customer.order.create') }}">
-            {{ __('Create new order') }}
+            {{ __('Create Order') }}
         </a>
         <a class="dropdown-item {{ request()->routeIs('customer.order.index') ? 'active' : '' }}" href="{{ route('customer.order.index') }}">
-            {{ __('All order') }}
+            {{ __('Manage Order') }}
         </a>
     </div>
 </li>

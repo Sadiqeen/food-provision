@@ -80,7 +80,7 @@
         <thead>
         <tr>
             <th class="text-center font-weight-bold" style="width: 30px">NO</th>
-            <th class="text-center font-weight-bold">ITEM DESCRIPTION</th>
+            <th class="text-center font-weight-bold" style="width: 200px">ITEM DESCRIPTION</th>
             <th class="text-center font-weight-bold">PACKING</th>
             <th class="text-center font-weight-bold">PRICE/UNIT</th>
             <th class="text-center font-weight-bold">QUANTITY</th>
