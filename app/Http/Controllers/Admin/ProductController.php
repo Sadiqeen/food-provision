@@ -43,6 +43,12 @@ class ProductController extends Controller
     {
         $product = Product::with(['brand', 'category', 'supplier', 'unit'])->get();
         return datatables()->of($product)
+                    ->addColumn('name_en', function ($product) {
+                        if ($product->vat) {
+                            return $product->name_en . '&nbsp;&nbsp;<i  style="font-size: 0.6rem;" class="fa fa-percent bg-secondary text-white p-1 rounded-lg"></i>';
+                        }
+                        return $product->name_en;
+                    })
                     ->addColumn('brand', function ($product) {
                         return $product->brand->name;
                     })
@@ -125,6 +131,7 @@ class ProductController extends Controller
         $product->brand_id = $request->brand;
         $product->category_id = $request->category;
         $product->unit_id = $request->unit;
+        $product->vat = $request->vat ? true : false;
 
         if ($request->image) {
             $url = Storage::disk('public')->put(null, $request->image);
@@ -215,6 +222,7 @@ class ProductController extends Controller
         $product->brand_id = $request->brand;
         $product->category_id = $request->category;
         $product->unit_id = $request->unit;
+        $product->vat = $request->vat ? true : false;
 
         if ($request->image) {
             $url = Storage::disk('public')->put(null, $request->image);
@@ -272,7 +280,7 @@ class ProductController extends Controller
     public function import(Request $request)
     {
         $this->validate($request, [
-            'excel'  => 'required|mimes:xls,xlsx'
+//            'excel'  => 'required|mimes:xls,xlsx,csv'
         ]);
 
         Excel::import(new ExcelImport, $request->excel);

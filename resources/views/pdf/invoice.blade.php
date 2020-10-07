@@ -19,7 +19,7 @@
         }
 
         .header {
-            position:fixed; top: -255px;
+            position:fixed; top: -266px;
         }
 
         /*.title:after {*/
@@ -49,24 +49,28 @@
             </th>
         </tr>
         <tr>
-            <th scope="col" colspan="8" class="text-center">QUOTATION</th>
+            <th scope="col" colspan="8" class="text-center text-uppercase">Invoice/Tax Invoice</th>
         </tr>
         <tr>
-            <th scope="row" rowspan="3" class="text-center" style="width: 30px">To</th>
-            <th rowspan="3" colspan="3">
+            <th scope="row" rowspan="4" class="text-center" style="width: 30px">To</th>
+            <th rowspan="4" colspan="3">
                 <span class="font-weight-bold">{{ $order->customer->name }}</span><br><br>
                 {{ $order->customer->address }}
             </th>
             <th colspan="2">DATE</th>
-            <th colspan="2" class="text-center">{{ $order->created_at->format('d/m/Y') }}</th>
+            <th colspan="2" class="text-center text-uppercase">{{ $order->statusDate->find(7)->create_at }}</th>
         </tr>
         <tr>
-            <th colspan="2">QT No</th>
-            <th colspan="2" class="text-center">{{ $order->quotation_number }}</th>
+            <th colspan="2">NO</th>
+            <th colspan="2" class="text-center text-uppercase">{{ $order->invoice_number }}</th>
         </tr>
         <tr>
             <th colspan="2">VESSEL</th>
-            <th colspan="2" class="text-center">{{ $order->vessel_name }}</th>
+            <th colspan="2" class="text-center text-uppercase">{{ $order->vessel_name }}</th>
+        </tr>
+        <tr>
+            <th colspan="2">PO NO.</th>
+            <th colspan="2" class="text-center text-uppercase">{{ $order->purchase_order_number }}</th>
         </tr>
         <tr>
             <th scope="row" class="text-center">Attn</th>
@@ -80,7 +84,7 @@
         <thead>
         <tr>
             <th class="text-center font-weight-bold" style="width: 30px">NO</th>
-            <th class="text-center font-weight-bold">ITEM DESCRIPTION</th>
+            <th class="text-center font-weight-bold" style="width: 200px">ITEM DESCRIPTION</th>
             <th class="text-center font-weight-bold">PACKING</th>
             <th class="text-center font-weight-bold">PRICE/UNIT</th>
             <th class="text-center font-weight-bold">QUANTITY</th>
@@ -136,14 +140,6 @@
         <tr style="border: none !important;">
             <td scope="row" class="text-center" style="border: none !important;">Remarks</td>
             <td colspan="5" style="border: none !important;">Payment Terms:   14 days after of  invoice.</td>
-        </tr>
-        <tr style="border: none !important;">
-            <td scope="row" class="text-center" style="border: none !important;"></td>
-            <td colspan="5" style="border: none !important;">Delivery  Date  :  5-6 Day after receipt PO.</td>
-        </tr>
-        <tr style="border: none !important;">
-            <td scope="row" class="text-center" style="border: none !important;"></td>
-            <td colspan="5" style="border: none !important;">We hope our offer would meet your requirement and looking forward to receive yours confirm order soon.</td>
         </tr>
         <tr style="border: none !important;">
             <td scope="row" class="text-center" style="border: none !important;"></td>

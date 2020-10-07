@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>{{ $order->quotation_number }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
         .custom-table {
@@ -19,7 +20,7 @@
         }
 
         .header {
-            position:fixed; top: -255px;
+            position:fixed; top: -266px;
         }
 
         /*.title:after {*/
@@ -49,11 +50,11 @@
             </th>
         </tr>
         <tr>
-            <th scope="col" colspan="8" class="text-center">QUOTATION</th>
+            <th scope="col" colspan="8" class="text-center">Delivery Order</th>
         </tr>
         <tr>
-            <th scope="row" rowspan="3" class="text-center" style="width: 30px">To</th>
-            <th rowspan="3" colspan="3">
+            <th scope="row" rowspan="4" class="text-center" style="width: 30px">To</th>
+            <th rowspan="4" colspan="3">
                 <span class="font-weight-bold">{{ $order->customer->name }}</span><br><br>
                 {{ $order->customer->address }}
             </th>
@@ -61,12 +62,16 @@
             <th colspan="2" class="text-center">{{ $order->created_at->format('d/m/Y') }}</th>
         </tr>
         <tr>
-            <th colspan="2">QT No</th>
-            <th colspan="2" class="text-center">{{ $order->quotation_number }}</th>
+            <th colspan="2">DO No</th>
+            <th colspan="2" class="text-center text-uppercase">{{ $order->do_number }}</th>
         </tr>
         <tr>
             <th colspan="2">VESSEL</th>
-            <th colspan="2" class="text-center">{{ $order->vessel_name }}</th>
+            <th colspan="2" class="text-center text-uppercase">{{ $order->vessel_name }}</th>
+        </tr>
+        <tr>
+            <th colspan="2">PO No.</th>
+            <th colspan="2" class="text-center text-uppercase">{{ $order->purchase_order_number }}</th>
         </tr>
         <tr>
             <th scope="row" class="text-center">Attn</th>
@@ -81,12 +86,8 @@
         <tr>
             <th class="text-center font-weight-bold" style="width: 30px">NO</th>
             <th class="text-center font-weight-bold">ITEM DESCRIPTION</th>
-            <th class="text-center font-weight-bold">PACKING</th>
-            <th class="text-center font-weight-bold">PRICE/UNIT</th>
             <th class="text-center font-weight-bold">QUANTITY</th>
-            <th class="text-center font-weight-bold">SUB TOTAL</th>
-            <th class="text-center font-weight-bold">VAT 7%</th>
-            <th class="text-center font-weight-bold">TOTAL AMOUNT</th>
+            <th class="text-center font-weight-bold">UNIT</th>
         </tr>
         </thead>
         <tbody>
@@ -97,62 +98,22 @@
                 @php
                     if ($loop->first) {
                         $category = $product->category->id;
-                        echo '<tr class="bg-secondary text-white"><td></td><td scope="row" colspan="7">' . $product->category->name . '</td></tr>';
+                        echo '<tr class="bg-secondary text-white"><td></td><td scope="row" colspan="3">' . $product->category->name . '</td></tr>';
                     } else {
                         $index += 1;
                         if ($category != $product->category->id) {
-                            echo '<tr class="bg-secondary text-white"><td></td><td scope="row" colspan="7">' . $product->category->name . '</td></tr>';
+                            echo '<tr class="bg-secondary text-white"><td></td><td scope="row" colspan="3">' . $product->category->name . '</td></tr>';
                             $category = $product->category->id;
                         }
                     }
-                    $vat = 0;
                 @endphp
                 <tr>
                     <td class="text-center">{{ $index }}</td>
-                    <th scope="row">{{ $product->name_en }}</th>
-                    <td class="text-center">{{ $product->desc }}</td>
-                    <td class="text-center">{{ number_format($product->price) }}</td>
-                    <td class="text-center">{{ $product->pivot->quantity }}</td>
-                    <td class="text-center">{{ number_format($product->price * $product->pivot->quantity) }}</td>
-                    <td class="text-center">{{ number_format($product->vat ? $vat = (($product->price * $product->pivot->quantity) * 7) / 100 : 0) }}</td>
-                    <td class="text-center">{{ number_format($product->price * $product->pivot->quantity + $vat) }}</td>
+                    <th>{{ $product->name_en }}</th>
+                    <th class="text-center">{{ $product->pivot->quantity }}</th>
+                    <th class="text-center">{{ $product->unit->name }}</th>
                 </tr>
-                @if ($loop->last)
-                    <tr>
-                        <td></td>
-                        <th scope="row" colspan="6" class="text-center h5 font-weight-bold">{{ __('Total (THB)') }}</th>
-                        <td class="text-center h5 font-weight-bold">{{ number_format($order->total_price) }}</td>
-                    </tr>
-                @endif
             @endforeach
-        </tbody>
-    </table>
-    <table style="width:100%;font-size: 10pt;margin-top: 2em;">
-        <tbody>
-        <tr style="border: none !important;">
-            <td scope="row" class="text-center" style="border: none !important;"></td>
-            <td colspan="5" style="border: none !important;"></td>
-        </tr>
-        <tr style="border: none !important;">
-            <td scope="row" class="text-center" style="border: none !important;">Remarks</td>
-            <td colspan="5" style="border: none !important;">Payment Terms:   14 days after of  invoice.</td>
-        </tr>
-        <tr style="border: none !important;">
-            <td scope="row" class="text-center" style="border: none !important;"></td>
-            <td colspan="5" style="border: none !important;">Delivery  Date  :  5-6 Day after receipt PO.</td>
-        </tr>
-        <tr style="border: none !important;">
-            <td scope="row" class="text-center" style="border: none !important;"></td>
-            <td colspan="5" style="border: none !important;">We hope our offer would meet your requirement and looking forward to receive yours confirm order soon.</td>
-        </tr>
-        <tr style="border: none !important;">
-            <td scope="row" class="text-center" style="border: none !important;"></td>
-            <td colspan="5" style="border: none !important;">All transaction in THAI BHAT(THB) currency.</td>
-        </tr>
-        <tr style="border: none !important;">
-            <td scope="row" class="text-center" style="border: none !important;"></td>
-            <td colspan="5" style="border: none !important;"></td>
-        </tr>
         </tbody>
     </table>
     <table style="width:100%;margin-top: 5em;">

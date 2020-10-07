@@ -54,6 +54,7 @@ class Product extends Model
         'price',
         'image',
         'desc',
+        'vat',
         'supplier_id',
         'brand_id',
         'category_id',

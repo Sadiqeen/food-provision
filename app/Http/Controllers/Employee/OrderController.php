@@ -14,34 +14,6 @@ use Illuminate\View\View;
 class OrderController extends CustomerOrder
 {
     /**
-     * Send data of index through API.
-     *
-     * @return Response
-     * @throws
-     */
-    public function index_api()
-    {
-        $orders = Order::with('status')
-                    ->where('user_id', auth()->user()->id)
-                    ->where('status_id', '<', 7)
-                    ->get();
-        return datatables()->of($orders)
-            ->addColumn('order_number', function ($orders) {
-                return 'OD-' . str_pad($orders->id, 3, '0', STR_PAD_LEFT) . '-' . str_pad($orders->customer_id, 3, '0', STR_PAD_LEFT);
-            })
-            ->addColumn('status', function ($orders) {
-                return $this->get_status_label($orders);
-            })
-            ->addColumn('total_price', function ($orders) {
-                return '<span class="bg-danger text-white px-1 rounded">' . number_format($orders->total_price) . '</span>';
-            })
-            ->addColumn('action', function ($orders) {
-                return $this->get_action_on_table($orders);
-            })
-            ->escapeColumns([])->toJson();
-    }
-
-    /**
      * Save new order to DB
      *
      * @param Request $request
@@ -90,40 +62,47 @@ class OrderController extends CustomerOrder
     public function order_update_status($id)
     {
         $order = Order::where('id', $id)
-            ->where('status_id', '<', 6)
+            ->where('status_id', '<', 7)
             ->where('user_id', auth()->user()->id)
             ->first();
 
         if (!$order) {
             alert()->error(__('Error'), __('No data that you request'));
-            return redirect()->route('customer.order.index');
+            return redirect()->route('employee.order.index');
         }
 
-        if ($order->status_id == 5) {
-            $order->status_id = 6;
+        if ($order->status_id == 1) {
+            $order->status_id = 11;
             $order->save();
 
             $order->statusDate()->attach([
-                'status_id' => 6
+                'status_id' => 11
             ]);
         }
 
-        $order_id = 'OD-'
-            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
-            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
-        alert()->success(__('Success'), __('Update status for order :order success', ['order' => $order_id]));
+        if ($order->status_id == 6) {
+            $order->status_id = 7;
+            $order->save();
+
+            $order->statusDate()->attach([
+                'status_id' => 7
+            ]);
+        }
+
+        alert()->success(__('Success'), __('Update status for order :order success', ['order' => $order->order_number]));
         return redirect()->back();
     }
 
     /**
-     * Check user permission before show order
+     * Cancel order
      *
      * @param $id
-     * @return RedirectResponse|View
+     * @return RedirectResponse
      */
-    public function call_order_view($id)
+    public function order_cancel($id)
     {
         $order = Order::where('id', $id)
+            ->where('status_id',  1)
             ->where('user_id', auth()->user()->id)
             ->first();
 
@@ -132,7 +111,15 @@ class OrderController extends CustomerOrder
             return redirect()->route('customer.order.index');
         }
 
-        return $this->order_view($id);
+        $order->status_id = 11;
+        $order->save();
+        $order->statusDate()->attach([
+            'status_id' => 11
+        ]);
+
+        alert()->success(__('Success'), __('Cancel order :order success', ['order' => $order->order_number]));
+        return redirect()->back();
+
     }
 
     /**
@@ -141,20 +128,26 @@ class OrderController extends CustomerOrder
      * @param $order
      * @return string
      */
-    private function get_action_on_table($order)
+    public function get_action_on_table($order)
     {
        $route = route('employee.order.update.status', $order->id);
-       $view = '<a type="button" href="' . route('employee.order.view', $order->id) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
+       $view = '<a type="button" href="' . route('employee.order.call',[$order->id, 'view']) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
+       $cancel = '';
 
-       if ($order->status_id == 5) {
-            $status = Status::find(6);
+        if (in_array($order->status_id, [1]))
+        {
+            $cancel .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('employee.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
+        }
+
+       if ($order->status_id == 6) {
+            $status = Status::find(7);
             $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
         } else {
             $action = '';
         }
 
        return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                 ' . $view . $action . '
+                 ' . $view . $action . $cancel . '
                 </div>';
     }
 }

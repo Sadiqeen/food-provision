@@ -32,6 +32,9 @@
                                                     @else
                                                         {{ $product['name_en'] }}
                                                     @endif
+                                                    @if ( $product['vat'])
+                                                        &nbsp;&nbsp;<i  style="font-size: 0.6rem;" class="fa fa-percent bg-secondary text-white p-1 rounded-lg"></i>
+                                                    @endif
                                                 </div>
                                                 <div class="d-md-none col-6 text-right">
                                                     <a href="{{ route( auth()->user()->position . '.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
@@ -41,6 +44,7 @@
                                                         <input type="number" class="form-control" min="1"
                                                                data-id="{{ $product_key }}"
                                                                data-price="{{ $product['price'] }}"
+                                                               data-vat="{{ $product['vat'] }}"
                                                                onkeyup="updateCart(this, '{{ route( auth()->user()->position . '.order.update', $product_key) }}')"
                                                                onchange="$(this).trigger('onkeyup')"
                                                                value="{{ $product['quantity'] }}">
@@ -51,7 +55,13 @@
 
                                                 </div>
                                                 <div class="col-md-3 col-6 text-right">
-                                                    <span id="product-{{ $product_key }}">{{ number_format($product['quantity'] * $product['price']) }}</span>
+                                                    @php
+                                                    $price = $product['quantity'] * $product['price'];
+                                                    if ($product['vat']) {
+                                                        $price += (($price * 7) / 100);
+                                                    }
+                                                    @endphp
+                                                    <span id="product-{{ $product_key }}">{{ number_format($price) }}</span>
                                                     <div class="d-none d-md-inline-block">
                                                         <a href="{{ route( auth()->user()->position . '.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
                                                     </div>
@@ -160,7 +170,10 @@
                             })
 
                             let price = $(el).data('price') * $(el).val()
-                            $('#product-' + $(el).data('id')).text( price.toLocaleString() )
+                            if ($(el).data('vat')) {
+                                price += (price * 7) / 100
+                            }
+                            $('#product-' + $(el).data('id')).text( Math.round(price).toLocaleString() )
                             $('#total').text(data.data.total)
 
                             Toast.fire({

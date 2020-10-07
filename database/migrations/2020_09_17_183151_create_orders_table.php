@@ -17,6 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->integer('total_price');
             $table->string('vessel_name');
+            $table->string('purchase_order_number')->nullable();
+            $table->string('purchase_order_file')->nullable();
 
             // Customer ref
             $table->unsignedBigInteger('customer_id');

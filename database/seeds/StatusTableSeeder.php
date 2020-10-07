@@ -12,9 +12,13 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         DB::table('statuses')->insert([
-                1 => [
+                0 => [
                     'status_en' => 'Request from vessel',
                     'status_th' => 'คำสั่งซื้อจากเรือ',
+                ],
+                1 => [
+                    'status_en' => 'New order',
+                    'status_th' => 'ออเดอร์ใหม่',
                 ],
                 2 => [
                     'status_en' => 'Add by Administrator',
@@ -47,6 +51,10 @@ class StatusTableSeeder extends Seeder
                 9 => [
                     'status_en' => 'Order canceled by customer',
                     'status_th' => 'คำสั่งซื้อถูกยกเลิกโดยลูกค้า',
+                ],
+                10 => [
+                    'status_en' => 'Order canceled by vessel',
+                    'status_th' => 'คำสั่งซื้อถูกยกเลิกโดยเรือ',
                 ],
             ]);
     }

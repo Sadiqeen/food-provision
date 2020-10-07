@@ -84,10 +84,19 @@
                             <div class="card">
                                 <div class="card-body text-center">
                                     <span class="text-success">{{ $product->category->name }}</span>
-                                    <h5 class="card-title">{{ $product->name }} @if ($product->desc)
+                                    <h5 class="card-title">{{ $product->name }}
+                                        @if ($product->desc)
                                             <span>{{ $product->desc }}</span>
-                                        @endif</h5>
-                                    <h6 class="text-danger">{{ $product->price }} ฿</h6>
+                                        @endif
+                                        @if ($product->vat)
+                                            &nbsp;&nbsp;<i  style="font-size: 0.6rem;" class="fa fa-percent bg-secondary text-white p-1 rounded-lg"></i>
+                                        @endif
+                                    </h5>
+                                    @if ($product->vat)
+                                        <h6 class="text-danger">{{ number_format($product->price + (($product->price * 7) / 100)) }} ฿</h6>
+                                    @else
+                                        <h6 class="text-danger">{{ number_format($product->price) }} ฿</h6>
+                                    @endif
                                     {{-- If product in cart --}}
                                     @if ( isset( Session::get('order')[$product->category_id]['products'][$product->id] ) )
                                     <form method="post" action="{{ route( auth()->user()->position . '.order.update.item', $product->id) }}">
@@ -143,6 +152,7 @@
         </div>
     </div>
     <a href="{{ route( auth()->user()->position . '.order.cart') }}" class="cart bg-danger rounded-circle text-white text-decoration-none">
+        <span id="total" class="cart-price" >{{ number_format(Session::get('total', '0')) }}</span>
         <i class="fa fa-shopping-bag fa-2x"></i>
     </a>
 @endsection

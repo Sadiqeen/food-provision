@@ -17,7 +17,7 @@
         <span class="invalid-feedback d-block" role="alert">
             <strong>{{ $message }}</strong>
         </span>
-        @enderror
+      @enderror
 </div>
 
 {{-- ==================================== Name field (Eng) ========================================== --}}
@@ -97,6 +97,20 @@
         <strong>{{ $message }}</strong>
     </span>
     @enderror
+</div>
+
+{{-- ==================================== VAT check box ========================================== --}}
+@php
+    $vat = '';
+    if (old('checked')) {
+        $vat = old('description');
+    } elseif (isset($product)) {
+        $vat = $product->vat;
+    }
+@endphp
+<div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="vat" name="vat" {{ $vat ? 'checked' : '' }}>
+    <label class="form-check-label" for="vat">VAT 7%</label>
 </div>
 
 {{-- ==================================== Unit field ========================================== --}}

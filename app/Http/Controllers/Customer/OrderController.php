@@ -35,12 +35,9 @@ class OrderController extends AdminOrder
     {
         $orders = Order::with('status')
                     ->where('customer_id', auth()->user()->customer_id)
-                    ->where('status_id', '<', 7)
+                    ->where('status_id', '<', 8)
                     ->get();
         return datatables()->of($orders)
-            ->addColumn('order_number', function ($orders) {
-                return 'OD-' . str_pad($orders->id, 3, '0', STR_PAD_LEFT) . '-' . str_pad($orders->customer_id, 3, '0', STR_PAD_LEFT);
-            })
             ->addColumn('status', function ($orders) {
                 return $this->get_status_label($orders);
             })
@@ -235,13 +232,13 @@ class OrderController extends AdminOrder
         $order->total_price = $request->session()->get('total');
         $order->vessel_name = $request->vessel_name;
         $order->customer_id = auth()->user()->customer_id;
-        $order->status_id = 3;
+        $order->status_id = 2;
         $order->user_id = auth()->user()->id;
         $order->save();
 
         $order->product()->attach($product_list);
         $order->statusDate()->attach([
-            'status_id' => 3
+            'status_id' => 2
         ]);
 
         \Session::forget('total');
@@ -265,26 +262,30 @@ class OrderController extends AdminOrder
             return redirect()->route('customer.order.index');
         }
 
-        if ($order->status_id < 3) {
-            $order->status_id = 3;
+        if ($order->status_id == 1) {
+            $order->status_id = 2;
             $order->save();
 
             $order->statusDate()->attach([
-                'status_id' => 3
+                'status_id' => 2
             ]);
-        } elseif ($order->status_id == 5) {
-            $order->status_id = 6;
+        } elseif (in_array($order->status_id , [2,3])) {
+            $order->status_id = 4;
             $order->save();
 
             $order->statusDate()->attach([
-                'status_id' => 6
+                'status_id' => 4
+            ]);
+        } elseif ($order->status_id == 6) {
+            $order->status_id = 7;
+            $order->save();
+
+            $order->statusDate()->attach([
+                'status_id' => 7
             ]);
         }
 
-        $order_id = 'OD-'
-            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
-            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
-        alert()->success(__('Success'), __('Update status for order :order success', ['order' => $order_id]));
+        alert()->success(__('Success'), __('Update status for order :order success', ['order' => $order->order_number]));
         return redirect()->back();
     }
 
@@ -306,38 +307,15 @@ class OrderController extends AdminOrder
             return redirect()->route('customer.order.index');
         }
 
-        $order->status_id = 9;
+        $order->status_id = 10;
         $order->save();
         $order->statusDate()->attach([
-            'status_id' => 9
+            'status_id' => 10
         ]);
 
-        $order_id = 'OD-'
-            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
-            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
-        alert()->success(__('Success'), __('Cancel order :order success', ['order' => $order_id]));
+        alert()->success(__('Success'), __('Cancel order :order success', ['order' => $order->order_number]));
         return redirect()->back();
 
-    }
-
-    /**
-     * Check user permission before show order
-     *
-     * @param $id
-     * @return RedirectResponse|View
-     */
-    public function call_order_view($id)
-    {
-        $order = Order::where('id', $id)
-            ->where('customer_id', auth()->user()->customer_id)
-            ->first();
-
-        if (!$order) {
-            alert()->error(__('Error'), __('No data that you request'));
-            return redirect()->route('customer.order.index');
-        }
-
-        return $this->order_view($id);
     }
 
     /**
@@ -346,17 +324,19 @@ class OrderController extends AdminOrder
      * @param $order
      * @return string
      */
-    private function get_action_on_table($order)
+    public function get_action_on_table($order)
     {
         $action = '';
         $status = null;
         $route = route('customer.order.update.status', $order->id);
-        $view = '<a type="button" href="' . route('customer.order.view', $order->id) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
+        $view = '<a type="button" href="' . route('customer.order.call', [$order->id, 'view']) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
 
-        if ($order->status_id < 3) {
-            $status = Status::find(3);
-        } elseif ($order->status_id == 5) {
-            $status = Status::find(6);
+        if ($order->status_id == 1) {
+            $status = Status::find(2);
+        }  elseif ($order->status_id == 2) {
+            $status = Status::find(4);
+        } elseif ($order->status_id == 6) {
+            $status = Status::find(7);
         }
 
         if ($status) {
@@ -368,8 +348,22 @@ class OrderController extends AdminOrder
             $action .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('customer.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
         }
 
-        return  '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        return  $this->get_print_on_table($order) . '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                  ' . $view . $action . '
                 </div>';
+    }
+
+    /**
+     * Check permission to access order data
+     *
+     * @param $id
+     * @return bool
+     */
+    public function check_order_access($id) {
+        $order = Order::where('id', $id)
+            ->where('customer_id', auth()->user()->customer_id)
+            ->first();
+
+        return $order ? true : false;
     }
 }

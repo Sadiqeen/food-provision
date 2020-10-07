@@ -39,10 +39,10 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::post('order/save', 'Admin\OrderController@order_save')->name('order.save');
 
     Route::get('order/{id}/update', 'Admin\OrderController@order_update_status')->name('order.update.status');
+    Route::post('order/{id}/update', 'Admin\OrderController@order_update_status_confirm')->name('order.update.status');
     Route::get('order/{id}/cancel', 'Admin\OrderController@order_cancel')->name('order.cancel');
-    Route::get('order/{id}/view', 'Admin\OrderController@order_view')->name('order.view');
 
-    Route::get('order/{id}/print_quotation', 'Admin\OrderController@print_quotation')->name('order.print.quotation');
+    Route::get('order/{id}/call/{doc}', 'Admin\OrderController@call_to_endpoint')->name('order.call');
 
     Route::get('setting', 'Admin\SettingController@edit')->name('setting.edit');
     Route::put('setting/company', 'Admin\SettingController@update_setting')->name('setting.update.setting');
@@ -85,9 +85,10 @@ Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' =
     Route::get('order/cart', 'Customer\OrderController@cart')->name('order.cart');
     Route::post('order/save', 'Customer\OrderController@order_save')->name('order.save');
 
-    Route::get('order/{id}/view', 'Customer\OrderController@call_order_view')->name('order.view');
     Route::get('order/{id}/update', 'Customer\OrderController@order_update_status')->name('order.update.status');
     Route::get('order/{id}/cancel', 'Customer\OrderController@order_cancel')->name('order.cancel');
+
+    Route::get('order/{id}/call/{doc}', 'Customer\OrderController@call_to_endpoint')->name('order.call');
 
     Route::get('employee/api', 'Customer\EmployeeController@index_api')->name('employee.api');
     Route::resource('employee', 'Customer\EmployeeController');
@@ -107,9 +108,11 @@ Route::group(['prefix' => 'employee' ,'middleware'=>['auth', 'employee'], 'as' =
     Route::get('order/delete/{id}', 'Employee\OrderController@delete_item')->name('order.delete');
     Route::get('order/cart', 'Employee\OrderController@cart')->name('order.cart');
     Route::post('order/save', 'Employee\OrderController@order_save')->name('order.save');
-    Route::get('order/{id}/update', 'Customer\OrderController@order_update_status')->name('order.update.status');
+    Route::get('order/{id}/update', 'Employee\OrderController@order_update_status')->name('order.update.status');
+    Route::get('order/{id}/cancel', 'Employee\OrderController@order_cancel')->name('order.cancel');
 
-    Route::get('order/{id}/view', 'Employee\OrderController@call_order_view')->name('order.view');
+    Route::get('order/{id}/call/{doc}', 'Employee\OrderController@call_to_endpoint')->name('order.call');
+
     Route::get('profile', 'Employee\ProfileController@edit')->name('profile.edit');
     Route::put('profile', 'Employee\ProfileController@update')->name('profile.update');
 

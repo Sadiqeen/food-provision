@@ -13,6 +13,7 @@ class SettingsTableSeeder extends Seeder
     {
         DB::table('settings')->insert([
             'company' => 'FN & D SERVICES AND AGENCY CO., LTD',
+            'image' => 'uploads/Px2dPUUjyV1BKzcXYkmJS9S3ZnU0Kb31l5Qt5MxL.png',
             'email' => 'operation@fndservice.com',
             'tel' => '+66 95 786 5864',
             'address' => '118/67 Moo1 Tha kam Sub-Distrct Hatyai District Songkhla province 90110',

@@ -41,12 +41,14 @@ class ProductImport implements ToCollection
                 $unit_id = $this->getOrCreateUnit($rows[$i][5]);
                 $category_id = $this->getOrCreateCategory($rows[$i][3]);
                 $supplier_id = $this->getSupplier($rows[$i][7]);
+                $vat = $rows[$i][8] ? true : false;
 
                 Product::create([
                     'name_th' => $rows[$i][0],
                     'name_en' => $rows[$i][1],
                     'price' => $rows[$i][6],
                     'desc' => $rows[$i][4],
+                    'vat' => $vat,
                     'supplier_id' => $supplier_id,
                     'brand_id' => $brand_id,
                     'category_id' => $category_id,

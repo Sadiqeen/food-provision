@@ -15,7 +15,7 @@
             <div class="holder my-5">
                 <ul class="SteppedProgress">
                     @foreach($order->statusDate as $status)
-                        <li class="{{ $status->id > 7 ? 'cancel' : 'complete' }}">
+                        <li class="{{ $status->id > 8 ? 'cancel' : 'complete' }}">
                             <span class="h6">{{ $status->status }}</span>
                             <small class="text-muted" style="font-size: small;">{{ $status->pivot->created_at->format('d/m/Y') }}</small>
                         </li>
@@ -88,10 +88,12 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">{{ __('Product') }}</th>
-                            <th scope="col">{{ __('Packing') }}</th>
-                            <th scope="col">{{ __('Price') }}</th>
-                            <th scope="col">{{ __('Quantity') }}</th>
-                            <th scope="col">{{ __('Total amount') }}</th>
+                            <th scope="col" class="text-center">{{ __('Packing') }}</th>
+                            <th scope="col" class="text-center">{{ __('Price') }}/{{__('Unit') }}</th>
+                            <th scope="col" class="text-center">{{ __('Quantity') }}</th>
+                            <th scope="col" class="text-center">{{ __('Subtotal') }}</th>
+                            <th scope="col" class="text-center">{{ __('VAT 7 %') }}</th>
+                            <th scope="col" class="text-center">{{ __('Total amount') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,25 +101,29 @@
                             @php
                                 if ($loop->first) {
                                     $category = $product->category->id;
-                                    echo '<tr class="bg-secondary text-white"><th scope="row" colspan="5">' . $product->category->name . '</th></tr>';
+                                    echo '<tr class="bg-secondary text-white"><th scope="row" colspan="7">' . $product->category->name . '</th></tr>';
                                 } else {
                                     if ($category != $product->category->id) {
-                                        echo '<tr class="bg-secondary text-white"><th scope="row" colspan="5">' . $product->category->name . '</th></tr>';
+                                        echo '<tr class="bg-secondary text-white"><th scope="row" colspan="7">' . $product->category->name . '</th></tr>';
                                         $category = $product->category->id;
                                     }
                                 }
+
+                                $vat = 0;
                             @endphp
                             <tr>
                                 <th scope="row">{{ $product->name }}</th>
-                                <td>{{ $product->desc }}</td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->pivot->quantity }}</td>
-                                <td>{{ number_format($product->price * $product->pivot->quantity) }}</td>
+                                <td class="text-center">{{ $product->desc }}</td>
+                                <td class="text-center">{{ number_format($product->price) }}</td>
+                                <td class="text-center">{{ number_format($product->pivot->quantity) }}</td>
+                                <td class="text-center">{{ number_format($product->price * $product->pivot->quantity) }}</td>
+                                <td class="text-center">{{ number_format($product->vat ? $vat = (($product->price * $product->pivot->quantity) * 7) / 100 : 0) }}</td>
+                                <td class="text-center">{{ number_format($product->price * $product->pivot->quantity + $vat) }}</td>
                             </tr>
                             @if ($loop->last)
                                 <tr>
-                                    <th scope="row" colspan="4" class="text-center h5 font-weight-bold">{{ __('Total') }}</th>
-                                    <td class="h5 font-weight-bold">{{ number_format($order->total_price) }}</td>
+                                    <th scope="row" colspan="6" class="text-center h5 font-weight-bold">{{ __('Total') }} (THB)</th>
+                                    <td class="h5 font-weight-bold text-center">{{ number_format($order->total_price) }}</td>
                                 </tr>
                             @endif
                         @endforeach

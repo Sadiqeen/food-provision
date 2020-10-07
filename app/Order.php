@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $appends = ['order_number', 'quotation_number'];
+    protected $appends = ['order_number', 'quotation_number', 'do_number', 'invoice_number'];
 
     public function getOrderNumberAttribute()
     {
@@ -16,6 +16,16 @@ class Order extends Model
     public function getQuotationNumberAttribute()
     {
         return  'QFN' . str_pad($this->id, 3, '0', STR_PAD_LEFT) . str_pad($this->customer_id, 3, '0', STR_PAD_LEFT);
+    }
+
+    public function getDoNumberAttribute()
+    {
+        return  'FNDO' . str_pad($this->id, 3, '0', STR_PAD_LEFT) . str_pad($this->customer_id, 3, '0', STR_PAD_LEFT);
+    }
+
+    public function getInvoiceNumberAttribute()
+    {
+        return  'FN' . str_pad($this->id, 3, '0', STR_PAD_LEFT) . str_pad($this->customer_id, 3, '0', STR_PAD_LEFT);
     }
 
     public function product() {

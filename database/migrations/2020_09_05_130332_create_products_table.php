@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name_en');
             $table->string('name_th');
             $table->integer('price');
+            $table->boolean('vat')->default(0);
             $table->string('image')->nullable();
             $table->text('desc')->nullable();
             $table->timestamps();

@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Category;
 use App\Customer;
+use App\Http\Controllers\DocController;
 use App\Order;
 use App\Product;
 use App\Setting;
 use App\Status;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Psy\Util\Json;
 
@@ -48,9 +52,9 @@ class OrderController extends Controller
     public function index_api()
     {
         $orders = Order::with('customer', 'status')
-                    ->where('status_id', '>', 1)
-                    ->where('status_id', '<', 7)
-                    ->get();
+            ->where('status_id', '>', 1)
+            ->where('status_id', '<', 8)
+            ->get();
         return datatables()->of($orders)
             ->addColumn('customer', function ($orders) {
                 return $orders->customer->name;
@@ -119,6 +123,11 @@ class OrderController extends Controller
                 if (app()->getLocale() == "th") {
                     $name = $product->name_th ? $product->name_th : $product->name_en;
                 }
+
+                if ($product->vat) {
+                    return $name . '&nbsp;&nbsp;<i  style="font-size: 0.6rem;" class="fa fa-percent bg-secondary text-white p-1 rounded-lg"></i>';
+                }
+
                 return '<h6 class="mb-0"><strong>' . $name . '</strong></h6>
                             <p class="text-success mb-0">' . $product->brand->name . '</p>';
             })
@@ -129,20 +138,24 @@ class OrderController extends Controller
                 return '<div class="w-100 text-center">' . $product->desc . '</div>';
             })
             ->addColumn('price', function ($product) {
+                $price = $product->price;
+                if ($product->vat) {
+                    $price += ($product->price * 7) / 100;
+                }
                 return '<div class="w-100 text-center">
-                                <span class="bg-danger text-white px-1 rounded">' . number_format($product->price) . '</span>
+                                <span class="bg-danger text-white px-1 rounded">' . number_format($price) . '</span>
                             </div>';
             })
             ->addColumn('value', function ($product) {
                 $quantity = 0;
-                if ( isset( \Session::get('order')[$product->category_id]['products'][$product->id] ) ) {
+                if (isset(\Session::get('order')[$product->category_id]['products'][$product->id])) {
                     $quantity = \Session::get('order')[$product->category_id]['products'][$product->id]['quantity'];
                 }
                 return $quantity;
             })
             ->addColumn('quantity', function ($product) {
                 $quantity = 0;
-                if ( isset( \Session::get('order')[$product->category_id]['products'][$product->id] ) ) {
+                if (isset(\Session::get('order')[$product->category_id]['products'][$product->id])) {
                     $quantity = \Session::get('order')[$product->category_id]['products'][$product->id]['quantity'];
                 }
 
@@ -230,6 +243,7 @@ class OrderController extends Controller
             'name_th' => $product->name_th,
             'unit' => $product->unit->name,
             'image' => $product->image,
+            'vat' => $product->vat,
             'price' => $product->price,
             'quantity' => $quantity
         ];
@@ -272,12 +286,13 @@ class OrderController extends Controller
         $order = \Session::get('order');
 
         $total = 0;
-        foreach ($order as $key => $each_category)
-        {
+        foreach ($order as $key => $each_category) {
             $price = 0;
-            foreach ($each_category['products'] as $product)
-            {
+            foreach ($each_category['products'] as $product) {
                 $price += $product['quantity'] * $product['price'];
+                if ($product['vat']) {
+                    $price += (($product['quantity'] * $product['price']) * 7) / 100;
+                }
             }
             $order[$key]['total'] = $price;
             $total += $price;
@@ -307,8 +322,7 @@ class OrderController extends Controller
      */
     public function order_confirm()
     {
-        if (!(\Session::has('total') && (\Session::get('total') > 0)))
-        {
+        if (!(\Session::has('total') && (\Session::get('total') > 0))) {
             alert()->error(__('Error'), __('No item in order'));
             return redirect()->route('admin.order.create');
         }
@@ -327,8 +341,7 @@ class OrderController extends Controller
      */
     public function order_save(Request $request)
     {
-        if (!(\Session::has('total') && (\Session::get('total') > 0)))
-        {
+        if (!(\Session::has('total') && (\Session::get('total') > 0))) {
             alert()->error(__('Error'), __('No item in order'));
             return redirect()->route('admin.order.create');
         }
@@ -344,13 +357,13 @@ class OrderController extends Controller
         $order->total_price = $request->session()->get('total');
         $order->vessel_name = $request->vessel_name;
         $order->customer_id = $request->customer;
-        $order->status_id = 2;
+        $order->status_id = 3;
         $order->user_id = auth()->user()->id;
         $order->save();
 
         $order->product()->attach($product_list);
         $order->statusDate()->attach([
-            'status_id' => 2
+            'status_id' => 3
         ]);
 
         \Session::forget('total');
@@ -368,10 +381,10 @@ class OrderController extends Controller
      */
     public function order_view($id)
     {
-        $order = Order::with('product.category', 'statusDate', 'user','customer.user')->find($id);
+        $order = Order::with('product.category', 'statusDate', 'user', 'customer.user')->find($id);
 
-        $statuses = Status::where('id', '>', 2)
-            ->where('id', '<', 8)
+        $statuses = Status::where('id', '>', 3)
+            ->where('id', '<', 9)
             ->where('id', '>', $order->status_id)
             ->get();
 
@@ -390,8 +403,8 @@ class OrderController extends Controller
     public function order_update_status($id)
     {
         $order = Order::where('id', $id)
-                    ->where('status_id', '<', 7)
-                    ->first();
+            ->where('status_id', '<', 8)
+            ->first();
 
         if (!$order) {
             alert()->error(__('Error'), __('No data that you request'));
@@ -404,7 +417,7 @@ class OrderController extends Controller
             $order->statusDate()->attach([
                 'status_id' => 4
             ]);
-        } elseif ($order->status_id > 3 && $order->status_id < 7) {
+        } elseif ($order->status_id > 3 && $order->status_id < 8) {
             $order->status_id = $order->status_id + 1;
             $order->save();
             $order->statusDate()->attach([
@@ -412,11 +425,43 @@ class OrderController extends Controller
             ]);
         }
 
-        $order_id = 'OD-'
-            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
-            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
-        alert()->success(__('Success'), __('Update status for order :order success', ['order' => $order_id]));
+        alert()->success(__('Success'), __('Update status for order :order success', ['order' => $order->order_number]));
         return redirect()->back();
+    }
+
+    /**
+     * Save po data before update status
+     *
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function order_update_status_confirm(Request $request, $id)
+    {
+        $rules = [
+            'purchase_order_number' => 'required|min:5',
+        ];
+
+        if ($request->purchase_order_file) {
+            $rules['purchase_order_file'] = 'mimes:jpeg,png,pdf';
+        }
+
+        $request->validate($rules);
+
+        $order = Order::find($id);
+        if (!$order) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.product.index');
+        }
+
+        $order->purchase_order_number = $request->purchase_order_number;
+        if ($request->purchase_order_file) {
+            $url = Storage::disk('public')->put(null, $request->purchase_order_file);
+            $order->purchase_order_file = 'uploads/' . $url;
+        }
+        $order->save();
+
+        return $this->order_update_status($id);
     }
 
     /**
@@ -437,16 +482,13 @@ class OrderController extends Controller
             return redirect()->route('admin.order.index');
         }
 
-        $order->status_id = 8;
+        $order->status_id = 9;
         $order->save();
         $order->statusDate()->attach([
-            'status_id' => 8
+            'status_id' => 9
         ]);
 
-        $order_id = 'OD-'
-            . str_pad($order->id, 3, '0', STR_PAD_LEFT) . '-'
-            . str_pad($order->customer_id, 3, '0', STR_PAD_LEFT);
-        alert()->success(__('Success'), __('Cancel order :order success', ['order' => $order_id]));
+        alert()->success(__('Success'), __('Cancel order :order success', ['order' => $order->order_number]));
         return redirect()->back();
 
     }
@@ -481,8 +523,7 @@ class OrderController extends Controller
     {
         $order = \Session::get('order');
         $res = null;
-        foreach ($order as $key => $category)
-        {
+        foreach ($order as $key => $category) {
             $res['category'][$key] = number_format($category['total']);
         }
 
@@ -506,27 +547,74 @@ class OrderController extends Controller
         $action = '';
         $status = null;
         $route = route('admin.order.update.status', $order->id);
-        $print = '<a type="button" target="_blank" href="' . route('admin.order.print.quotation', $order->id) . '" class="btn btn-secondary btn-sm mr-2">' . __('Quotation') . '</a>';
-        $view = '<a type="button" href="' . route('admin.order.view', $order->id) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
+        $view = '<a type="button" href="' . route('admin.order.call', [$order->id, 'view']) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
 
         if ($order->status_id == 2 || $order->status_id == 3) {
             $status = Status::find(4);
-        } elseif ($order->status_id > 3 && $order->status_id < 7) {
+        } elseif ($order->status_id > 3 && $order->status_id < 8) {
             $status = Status::find($order->status_id + 1);
         }
 
         if ($status) {
-            $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
+            if ($status->id != 4) {
+                $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
+            } else {
+                $action = '<a type="button" class="btn btn-primary btn-sm" onclick="confirm_order(\'' . route('admin.order.update.status', $order->id) . '\')" href="javascript:void(0)">' . $status->status . '</a>';
+            }
         }
 
-        if ($order->status_id > 2 && $order->status_id < 5)
-        {
+        if ($order->status_id > 2 && $order->status_id < 5) {
             $action .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('admin.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
         }
 
-        return  $print . '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        return $this->get_print_on_table($order) . '<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                  ' . $view . $action . '
                 </div>';
+    }
+
+    /**
+     * Get print button
+     *
+     * @param $order
+     * @return string
+     */
+    public function get_print_on_table($order)
+    {
+        $action = '';
+        if ($order->status_id >= 2 && auth()->user()->position != 'employee') {
+            $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'quote']) . '">Quote</a>';
+        }
+
+        if ($order->status_id >= 4 && $order->purchase_order_file) {
+            $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'po']) . '">Purchase Order</a>';
+        }
+
+        if ($order->status_id >= 4) {
+            $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'supply']) . '">Order supplier list</a>';
+        }
+
+        if ($order->status_id >= 6 && auth()->user()->position == 'admin') {
+            $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'do']) . '">Delivery Order</a>';
+        }
+
+        if ($order->status_id >= 7 && auth()->user()->position != 'employee') {
+            $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'invoice']) . '">Invoice</a>';
+        }
+
+        if ($action) {
+            return '<div class="btn-group btn-group-sm mr-2" role="group" aria-label="Button group with nested dropdown">
+                          <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Print
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                              ' . $action . '
+                            </div>
+                          </div>
+                        </div>';
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -550,18 +638,49 @@ class OrderController extends Controller
         return '<span class="' . $color . ' px-1 rounded">' . $order->status->status . '</span>';
     }
 
-    public function  print_quotation($id)
+    /**
+     * Check permission to access order data
+     *
+     * @param $id
+     * @return bool
+     */
+    public function check_order_access($id)
     {
-        $host = Setting::first();
-        $order = Order::with('product.category', 'statusDate', 'user','customer.user')->find($id);
+        $order = $order = Order::where('id', $id)->first();
+        return $order ? true : false;
+    }
 
-        $pdf = \PDF::loadView('pdf.quotation', [
-            'host' => $host,
-            'order' => $order,
-        ]);
-        $pdf->setPaper('a4');
+    /**
+     * Check permission and call to print quotation
+     *
+     */
+    public function call_to_endpoint($id, $doc)
+    {
+        $order = $this->check_order_access($id);
 
-        return $pdf->stream();
+        $employeeCheck = (strtolower($doc) !== 'view' && auth()->user()->position == 'employee');
+
+        if (!$order || $employeeCheck) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route(auth()->user()->position . '.order.index');
+        }
+
+        switch (strtolower($doc)) {
+            case 'view':
+                return $this->order_view($id);
+            case 'quote':
+                return (new DocController)->print_quotation($id);
+            case 'po':
+                return (new DocController)->get_purchase_order_file($id);
+            case 'supply':
+                return (new DocController)->get_order_supplier_list($id);
+            case 'do':
+                return (new DocController)->print_delivery_order($id);
+            case 'invoice':
+                return (new DocController)->print_invoice($id);
+            default:
+                return abort(404);
+        }
     }
 
 }
