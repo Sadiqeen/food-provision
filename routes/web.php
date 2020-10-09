@@ -71,6 +71,7 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::resource('unit', 'Admin\UnitController');
 
     Route::get('report', 'Admin\ReportController@index')->name('report.index');
+    Route::get('report/history', 'Admin\ReportController@history_api')->name('report.history');
 
 });
 

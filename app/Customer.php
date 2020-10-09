@@ -62,4 +62,9 @@ class Customer extends Model
         return $this->hasMany('App\User')->where('position', 2);
     }
 
+    public function order()
+    {
+        return $this->hasMany('App\Order');
+    }
+
 }

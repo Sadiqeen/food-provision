@@ -645,7 +645,7 @@ class OrderController extends Controller
      * @param $order
      * @return string
      */
-    protected function get_status_label($order)
+    public function get_status_label($order)
     {
         $color = 'bg-warning';
         if ($order->status->id > 3) {

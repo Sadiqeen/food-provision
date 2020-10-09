@@ -153,7 +153,6 @@
 @endpush
 
 @push('script')
-<script type="text/javascript" src="{{ asset('plugins/moment.js/moment.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('plugins/Chart.js-2.9.3/dist/Chart.min.js') }}"></script>
 <script>
     var chart1 = document.getElementById('chart1');
