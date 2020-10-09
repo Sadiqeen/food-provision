@@ -68,6 +68,7 @@ class ReportController extends Controller
             ->get();
 
         $top_spendors = [];
+        $top_spendors_label = [];
         $top_spendors['label'] = __('Most spendor');
         $color = $this->random_color();
 
