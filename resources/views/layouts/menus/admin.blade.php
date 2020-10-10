@@ -1,3 +1,9 @@
+<li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('dashboard') }}">
+        {{ __('Dashboard') }}
+    </a>
+</li>
+
 <li class="nav-item {{ request()->routeIs( 'admin.order.*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route( 'admin.order.index') }}">
         {{ __('Orders') }}

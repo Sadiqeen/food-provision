@@ -72,6 +72,7 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
 
     Route::get('report', 'Admin\ReportController@index')->name('report.index');
     Route::get('report/history', 'Admin\ReportController@history_api')->name('report.history');
+    Route::get('report/export', 'Admin\ReportController@export')->name('report.export');
 
 });
 
@@ -92,6 +93,9 @@ Route::group(['prefix' => 'customer' ,'middleware'=>['auth', 'customer'], 'as' =
     Route::get('order/{id}/cancel', 'Customer\OrderController@order_cancel')->name('order.cancel');
 
     Route::get('order/{id}/call/{doc}', 'Customer\OrderController@call_to_endpoint')->name('order.call');
+
+    Route::get('report', 'Customer\ReportController@index')->name('report.index');
+    Route::get('report/history', 'Customer\ReportController@history_api')->name('report.history');
 
     Route::get('employee/api', 'Customer\EmployeeController@index_api')->name('employee.api');
     Route::resource('employee', 'Customer\EmployeeController');

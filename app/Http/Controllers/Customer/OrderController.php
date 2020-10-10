@@ -313,7 +313,7 @@ class OrderController extends AdminOrder
 
         if ($order->status_id == 1) {
             $status = Status::find(2);
-        }  elseif ($order->status_id == 2) {
+        }  elseif ($order->status_id == 2 || $order->status_id == 3) {
             $status = Status::find(4);
         } elseif ($order->status_id == 6) {
             $status = Status::find(7);

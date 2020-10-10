@@ -33,7 +33,7 @@
                     <p class="h4">{{ __('Product') }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-envelope-o"></i>
+                    <i class="fa fa-cutlery"></i>
                 </div>
                 <a href="{{ route('admin.product.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
@@ -72,20 +72,23 @@
     </div>
     <div class="row justify-content-center">
 
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
             <div class="card">
-                <h5 class="card-header">{{ __('Sales summary') }}</h5>
+                <div class="card-header">
+                    {{ __('Sale result') }}
+                </div>
                 <div class="card-body">
-                    <canvas id="chart1" width="400" height="300"></canvas>
+                    {!! $sale_result_average->render() !!}
                 </div>
             </div>
         </div>
-
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
             <div class="card">
-                <h5 class="card-header">{{ __('Supplier summary') }}</h5>
+                <div class="card-header">
+                    {{ __('Top Companies in Purchase') }}
+                </div>
                 <div class="card-body">
-                    <canvas id="chart2" width="400" height="300"></canvas>
+                    {!! $most_spendors->render() !!}
                 </div>
             </div>
         </div>
@@ -154,64 +157,4 @@
 
 @push('script')
 <script type="text/javascript" src="{{ asset('plugins/Chart.js-2.9.3/dist/Chart.min.js') }}"></script>
-<script>
-    var chart1 = document.getElementById('chart1');
-    var myChart1 = new Chart(chart1, {
-        type: 'line',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                fill: false,
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: 'rgb(153, 102, 255)',
-                borderColor: 'rgb(153, 102, 255)',
-            }, {
-                label: '# of Votes',
-                fill: false,
-                data: [4, 2, 13, 11, 25, 30],
-                backgroundColor: 'rgba(255, 159, 64, 1)',
-                borderColor: 'rgba(255, 159, 64, 1)',
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-    var chart2 = document.getElementById('chart2');
-    var myChart2 = new Chart(chart2, {
-        type: 'line',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                fill: false,
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: 'rgb(54, 162, 235)',
-                borderColor: 'rgb(54, 162, 235)',
-            }, {
-                label: '# of Votes',
-                fill: false,
-                data: [4, 2, 13, 11, 25, 30],
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-</script>
 @endpush

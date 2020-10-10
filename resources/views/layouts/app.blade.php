@@ -70,11 +70,6 @@
             <div class="collapse navbar-collapse" id="menuArea">
 
                 <ul class="navbar-nav m-auto">
-                    <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('dashboard') }}">
-                            {{ __('Dashboard') }}
-                        </a>
-                    </li>
 
                     {{-- Admin menu --}}
                     @if (auth()->user()->position == 'admin')

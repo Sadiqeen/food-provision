@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Order;
 use App\Supplier;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Product;
 
@@ -31,7 +30,14 @@ class DashboardController extends Controller
         //Admin
 
         if (auth()->user()->position == 'admin') {
-            $order = Order::where('status_id', 3)->count();
+            $graph = new GraphController();
+
+            $sale_result_average = $graph->get_sale_result_average();
+            $most_spendors = $graph->get_most_spendors();
+
+            $order = Order::where('status_id', 3)
+                ->orWhere('status_id', 4)
+                ->count();
             $product = Product::count();
             $supplier = Supplier::count();
             $customer = Customer::count();
@@ -41,25 +47,21 @@ class DashboardController extends Controller
                 'product' => $product,
                 'supplier' => $supplier,
                 'customer' => $customer,
+                'sale_result_average' => $sale_result_average,
+                'most_spendors' => $most_spendors,
             ]);
         }
 
         // Customer
 
         if (auth()->user()->position == 'customer') {
-            $order = Order::where('status_id', 1)->where('customer_id', auth()->user()->id)->count();
-
-            return view('customer.dashboad', [
-                'order' => $order,
-            ]);
+           return redirect()->route('customer.order.create');
         }
 
-        if (auth()->user()->position == 'employee') {
-            $order = Order::where('status_id', 1)->where('customer_id', auth()->user()->id)->count();
+        // Employee
 
-            return view('employee.dashboad', [
-                'order' => $order,
-            ]);
+        if (auth()->user()->position == 'employee') {
+            return redirect()->route('employee.order.create');
         }
     }
 }

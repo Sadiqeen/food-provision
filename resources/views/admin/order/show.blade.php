@@ -8,7 +8,11 @@
 <div class="container">
     <h3 class="my-3 text-uppercase font-weight-bold d-flex">
         <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('View Order') }}</span>
-        <a type="button" href="{{ route( auth()->user()->position . '.order.index') }}"  class="btn btn-secondary">{{ __('Manage Order') }}</a>
+        @if ($order->status_id >= 8)
+            {!! $print !!}
+        @else
+            <a type="button" href="{{ route( auth()->user()->position . '.order.index') }}"  class="btn btn-secondary">{{ __('Manage Order') }}</a>
+        @endif
     </h3>
     <div class="card">
         <div class="card-body">

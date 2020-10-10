@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
-            <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Confirm Order') }}</span>
+            <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ auth()->user()->position == 'customer' ? __('Request Quote') : __('Request order') }}</span>
             <a type="button" href="{{ route( auth()->user()->position . '.order.create') }}"  class="btn btn-secondary">{{ __('Back') }}</a>
         </h3>
         <div class="card">

@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ __('Create Order') }}
+@endsection
+
 @section('content')
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
-            <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Add Order') }}</span>
+            <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Create Order') }}</span>
             <a type="button" href="{{ route( auth()->user()->position . '.order.cart') }}"
                class="btn btn-success">{{ auth()->user()->position == 'customer' ? __('Request Quote') : __('Request order') }}</a>
         </h3>

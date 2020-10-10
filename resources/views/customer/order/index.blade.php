@@ -8,7 +8,7 @@
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
             <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('Manage Order') }}</span>
-            <a type="button" href="{{ route( auth()->user()->position . '.order.create') }}"  class="btn btn-secondary">{{ __('Add Order') }}</a>
+            <a type="button" href="{{ route( auth()->user()->position . '.order.create') }}"  class="btn btn-secondary">{{ __('Create Order') }}</a>
         </h3>
         @if ($errors->any())
             @foreach ($errors->all() as $error)
