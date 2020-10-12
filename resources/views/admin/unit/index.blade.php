@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success">{{ __('Save') }}</button>
+                            <button type="submit" class="btn btn-success" data-cy="create">{{ __('Save') }}</button>
                         </div>
                     </form>
                 </div>
@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success">{{ __('Save') }}</button>
+                            <button type="submit" class="btn btn-success" data-cy="update">{{ __('Save') }}</button>
                             <a href="javascript:void(0)" onclick="addUnit()" class="btn btn-warning float-right">{{ __('Add Unit') }}</a>
                         </div>
                     </form>

@@ -1,3 +1,13 @@
 {
-  "baseUrl": "http://food-provision.test"
+  "baseUrl": "https://food-provision.test",
+    "testFiles": [
+        "login.spec.js",
+        "supplier.spec.js",
+        "customer.spec.js",
+        "unit.spec.js",
+        "brand.spec.js",
+        "category.spec.js",
+        "product.spec.js",
+        "order.spec.js"
+    ]
 }
