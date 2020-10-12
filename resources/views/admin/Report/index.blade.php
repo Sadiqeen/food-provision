@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ __('Report') }}
+    {{ __('Order History') }}
 @endsection
 
 @section('content')
     <div class="container">
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
-            <span class="mr-auto"><i class="fa fa-file-text fa-lg mr-2"></i> {{ __('Report') }}</span>
+            <span class="mr-auto"><i class="fa fa-file-text fa-lg mr-2"></i> {{ __('Order History') }}</span>
             <a type="button" href="{{ route('dashboard') }}"
                class="btn btn-secondary">{{ __('Dashboard') }}</a>
         </h3>

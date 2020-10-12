@@ -405,11 +405,6 @@ class OrderController extends Controller
     public function order_view($id)
     {
         $order = Order::with('product.category', 'statusDate', 'user', 'customer.user')->find($id);
-        if (auth()->user()->position == 'admin') {
-            $print = $this->get_print_on_table($order);
-        } else {
-            $print = \App\Http\Controllers\Customer\OrderController::get_print_on_table($order);
-        }
 
         $statuses = Status::where('id', '>', 3)
             ->where('id', '<', 9)
@@ -419,7 +414,6 @@ class OrderController extends Controller
         return view('admin.order.show', [
             'order' => $order,
             'statuses' => $statuses,
-            'print' => $print,
         ]);
     }
 
@@ -626,7 +620,7 @@ class OrderController extends Controller
             $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'do']) . '">Delivery Order</a>';
         }
 
-        if ($order->status_id == 8 && auth()->user()->position != 'employee') {
+        if ($order->status_id == 7 && auth()->user()->position != 'employee') {
             $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'invoice']) . '">Invoice</a>';
         }
 

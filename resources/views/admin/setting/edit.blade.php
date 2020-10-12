@@ -46,6 +46,32 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group mt-2 text-center">
+                                <img class="img-fluid rounded border" width="150px" height="150px"
+                                     style="max-height: 300px"
+                                     src="{{ isset($setting->authorised_signature) ? asset($setting->authorised_signature) : asset('imgs/placeholder.jpg') }}"
+                                     id='img-authorised'/>
+                            </div>
+                            <div class="form-group">
+                                <label class="w-100">
+                                    {{ __('Authorised signature') }}
+                                    <a id="del-auth-btn" href="javascript:void(0)" onclick="removeAuth()"
+                                       class="d-none float-right text-danger">
+                                        {{ __('Delete') }}
+                                    </a>
+                                </label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input @error('authorised') is-invalid @enderror"
+                                           name="authorised" id="authorised">
+                                    <label class="custom-file-label" for="customFile">{{ __('Choose file') }}</label>
+                                </div>
+                                @error('authorised')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+
                             <div class="form-group">
                                 @php
                                     $company = '';
@@ -217,7 +243,20 @@
                 readURL(this);
 
                 $('#del-img-btn').removeClass('d-none')
-                $('#img-upload').removeClass('d-none')
+            });
+
+            $("#authorised").change(function () {
+                let size = this.files[0].size
+                if (size > 2000000) {
+                    alert('ขนาดรูปใหญ่เกินไป')
+                    return false;
+                }
+                let fileName = $(this).val().split('\\').pop()
+                $(this).next('.custom-file-label').addClass("selected").text(imageName(fileName))
+
+                readAuth(this);
+
+                $('#del-auth-btn').removeClass('d-none')
             });
         });
 
@@ -239,6 +278,24 @@
 
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+
+        function readAuth(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader()
+
+                reader.onload = function (e) {
+                    $('#img-authorised').attr('src', e.target.result)
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeAuth() {
+            $('#authorised').val(null).next('.custom-file-label').text('{{ __('Choose file') }}')
+            $('#del-auth-btn').addClass('d-none')
+            $('#img-authorised').attr('src', '{{ isset($setting->authorised_signature) ? asset($setting->authorised_signature) : asset('imgs/placeholder.jpg') }}')
         }
 
         function removeImage() {

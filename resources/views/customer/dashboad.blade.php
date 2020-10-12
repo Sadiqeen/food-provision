@@ -13,14 +13,14 @@
             <!-- small box -->
             <div class="small-box bg-order">
                 <div class="inner text-white">
-                    <h2>{{ $order }}</h2>
+                    <h2>{{ $vessel_request ?? 0 }}</h2>
 
-                    <p class="h4">{{ __('New Order') }}</p>
+                    <p class="h4">{{ __('Request from vessel') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-shopping-bag"></i>
                 </div>
-                <a href="{{ route('admin.order.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+                <a href="{{ route('customer.order.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
         </div>
 
@@ -28,14 +28,14 @@
             <!-- small box -->
             <div class="small-box bg-product">
                 <div class="inner text-white">
-                    <h2>{{ $product ?? 0 }}</h2>
+                    <h2>{{ $employee ?? 0 }}</h2>
 
-                    <p class="h4">{{ __('Quotation') }}</p>
+                    <p class="h4">{{ __('Employee') }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-envelope-o"></i>
+                    <i class="fa fa-users"></i>
                 </div>
-                <a href="{{ route('admin.product.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+                <a href="{{ route('customer.employee.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
         </div>
 
@@ -43,14 +43,14 @@
             <!-- small box -->
             <div class="small-box bg-customer">
                 <div class="inner text-white">
-                    <h2>{{ $customer ?? 0 }}</h2>
+                    <h2>{{ $success ?? 0 }}</h2>
 
                     <p class="h4">{{ __('Success Order') }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-check-circle"></i>
                 </div>
-                <a href="{{ route('admin.customer.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+                <a href="{{ route('customer.report.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
         </div>
 
@@ -58,14 +58,14 @@
             <!-- small box -->
             <div class="small-box bg-supplier">
                 <div class="inner text-white">
-                    <h2>{{ $supplier ?? 0 }}</h2>
+                    <h2>{{ $cancel ?? 0 }}</h2>
 
                     <p class="h4">{{ __('Cancel Order') }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-truck"></i>
+                    <i class="fa fa-times-circle"></i>
                 </div>
-                <a href="{{ route('admin.supplier.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+                <a href="{{ route('customer.report.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
             </div>
         </div>
     </div>

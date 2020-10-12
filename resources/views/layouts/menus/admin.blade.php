@@ -1,9 +1,3 @@
-<li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('dashboard') }}">
-        {{ __('Dashboard') }}
-    </a>
-</li>
-
 <li class="nav-item {{ request()->routeIs( 'admin.order.*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route( 'admin.order.index') }}">
         {{ __('Orders') }}
@@ -48,7 +42,7 @@
 
 <li class="nav-item {{ request()->routeIs('admin.report.*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('admin.report.index') }}">
-        {{ __('Report') }}
+        {{ __('Order History') }}
     </a>
 </li>
 

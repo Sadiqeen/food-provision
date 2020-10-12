@@ -39,7 +39,7 @@
         <tr style="border: none !important;">
             <th scope="col" colspan="6" style="border: none !important;">
                 <div style="display:inline-block;vertical-align:top;">
-                    <img src="{{ public_path($host->image) }}" width="100px" align="top">
+                    <img src="{{ public_path($host->image) }}" width="100px" height="65px" align="top">
                 </div>
                 <div style="display:inline-block;">
                     <div class="h6 title">{{ $host->company }}</div>
@@ -165,7 +165,7 @@
                             <td>FN&D SERVICES AND AGENCY CO. LTD</td>
                         </tr>
                         <tr>
-                            <td><img src="{{ public_path($host->image) }}" width="200px" ></td>
+                            <td><img src="{{ public_path($host->authorised_signature) }}" width="200px" height="120px" ></td>
                         </tr>
                         <tr style="font-size: 10pt;" class="text-center">
                             <td>AUTHORISED SIGNATURE</td>

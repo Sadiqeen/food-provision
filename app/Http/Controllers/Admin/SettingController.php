@@ -47,6 +47,10 @@ class SettingController extends Controller
             $rules["image"] = 'image|max:500000';
         }
 
+        if ($request->authorised) {
+            $rules["authorised"] = 'image|max:500000';
+        }
+
         $request->validate($rules);
 
         $setting = Setting::first();
@@ -58,6 +62,11 @@ class SettingController extends Controller
         if ($request->image) {
             $url = Storage::disk('public')->put(null, $request->image);
             $setting->image = 'uploads/' . $url;
+        }
+
+        if ($request->authorised) {
+            $url = Storage::disk('public')->put(null, $request->authorised);
+            $setting->authorised_signature = 'uploads/' . $url;
         }
 
         $setting->save();

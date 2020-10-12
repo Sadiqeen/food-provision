@@ -128,6 +128,9 @@
     "Order for" : "คำสั่งซื้อสำหรับ",
     "Edit Profile" : "แก้ไขโปรไฟล์",
     "Order History" : "ประวัติการสั่งซื้อ",
+    "Confirm order" : "ยืนยันคำสั่งซื้อ",
+    "Purchase Order no." : "หมายเลขใบสั่งซื้อ",
+    "Upload Purchase Order file" : "อัพโหลดใบสั่งซื้อ",
 
     "Manage Employee" : "จัดการพนักงาน",
     "Add Employee" : "เพิ่มพนักงาน",
@@ -135,6 +138,16 @@
     "Employee data edited": "แก้ไขข้อมูลพนักงานสำเร็จ",
     "Employee deleted": "ลบข้อมูลพนักงานสำเร็จ",
     "Leave blank if you don't want to change it" : "ปล่อยให้รหัสผ่านว่าง หากไม่ต้องการเปลี่ยน",
+    "Update status for order :order success" : "เปลี่ยนสถานะของออเดอร์ :order สำเร็จ",
+    "Add new order success" : "เพิ่มออเดอร์ใหม่สำเร็จ",
+    "Order in process" : "ออเดอร์กำลังดำเนินการ",
+    "Success Order" : "ออเดอร์สำเร็จ",
+    "Cancel Order" : "ออเดอร์ที่ถูกยกเลิก",
+    "Add to cart" : "เพิ่มในตะกร้า",
+    "Update quantity" : "อัพเดทจำนวน",
+    "Request from vessel" : "คำขอจากเรือ",
+    "Authorised signature" : "ลายเซ็นยืนยัน",
+    "Update company profile success" : "แก้ไขข้อมูลบริษัทสำเร็จ",
 
     "_comment_": "End of file",
 

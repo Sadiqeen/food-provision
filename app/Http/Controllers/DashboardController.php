@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Order;
 use App\Supplier;
+use App\User;
 use Illuminate\View\View;
 use App\Product;
 
@@ -55,7 +56,20 @@ class DashboardController extends Controller
         // Customer
 
         if (auth()->user()->position == 'customer') {
-           return redirect()->route('customer.order.create');
+            $vessel_request = Order::where('customer_id', auth()->user()->customer_id)
+                ->where('status_id',  1)->count();
+            $success = Order::where('customer_id', auth()->user()->customer_id)
+                ->where('status_id', 8)->count();
+            $cancel = Order::where('customer_id', auth()->user()->customer_id)
+                ->where('status_id', '>', 8)->count();
+            $employee = User::where('customer_id', auth()->user()->customer_id)
+                ->where('position', 'employee')->count();
+            return view('customer.dashboad', [
+                'vessel_request' => $vessel_request,
+                'success' => $success,
+                'cancel' => $cancel,
+                'employee' => $employee,
+            ]);
         }
 
         // Employee

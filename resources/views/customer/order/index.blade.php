@@ -84,7 +84,7 @@
                             @enderror
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">{{ __('Confirmed order') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Confirm order') }}</button>
                         </div>
                     </form>
                 </div>
