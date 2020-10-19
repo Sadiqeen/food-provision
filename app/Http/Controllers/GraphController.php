@@ -20,6 +20,11 @@ class GraphController extends Controller
         '#6cb2eb',
     ];
 
+    /**
+     * Generate graph of Most spendors
+     *
+     * @return mixed
+     */
     public function get_most_spendors()
     {
         $top_spendors_result = Order::select(\DB::raw('customer_id'), \DB::raw('sum(total_price) as total'))
@@ -92,6 +97,11 @@ class GraphController extends Controller
             }");
     }
 
+    /**
+     * Generate graph of sale result
+     *
+     * @return mixed
+     */
     public function get_sale_result_average()
     {
         $success = Order::where('status_id', 8)->count();

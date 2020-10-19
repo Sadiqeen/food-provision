@@ -54,7 +54,7 @@ describe('Category module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(category)
         cy.wait(2000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
     it('Delete category', () => {
@@ -67,7 +67,7 @@ describe('Category module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(category_update)
         cy.wait(2000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
 })

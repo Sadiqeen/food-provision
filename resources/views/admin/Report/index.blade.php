@@ -169,8 +169,8 @@
             })
 
             @if (auth()->user()->position == 'admin')
-            let start = moment('{{ $start_range->updated_at }}')
-            let end = moment('{{ $end_range->updated_at }}')
+            let start = moment('{{ $start_range->updated_at ?? '' }}')
+            let end = moment('{{ $end_range->updated_at ?? '' }}')
 
             $('#reportrange').daterangepicker({
                 startDate: start,

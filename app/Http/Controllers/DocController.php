@@ -48,6 +48,12 @@ class DocController extends Controller
         return $pdf->stream($order->quotation_number . '.pdf');
     }
 
+    /**
+     * Print delivery order
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function print_delivery_order($id)
     {
         $host = Setting::first();
@@ -76,6 +82,12 @@ class DocController extends Controller
         return $pdf->stream($order->do_number . '.pdf');
     }
 
+    /**
+     * Print purchase order file
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
     public function get_purchase_order_file($id)
     {
         $order = Order::find($id);
@@ -88,6 +100,12 @@ class DocController extends Controller
         return response()->file($order->purchase_order_file);
     }
 
+    /**
+     * Print list product of order to each supplier
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
     public function get_order_supplier_list($id)
     {
         $order = Order::with('customer')->find($id);
@@ -101,6 +119,12 @@ class DocController extends Controller
             ->download(  $order->customer->name . '-' . $order->order_number . '.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 
+    /**
+     * Print invoice
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function print_invoice($id)
     {
         $host = Setting::first();

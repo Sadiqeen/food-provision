@@ -66,7 +66,7 @@ describe('Customer module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type('EH LTD')
         cy.wait(1000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
     it('Delete customer', () => {
@@ -79,7 +79,7 @@ describe('Customer module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type('EH Company')
         cy.wait(1000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
 })

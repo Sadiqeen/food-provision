@@ -7,6 +7,12 @@ use App\User;
 
 class LanguageController extends Controller
 {
+    /**
+     * Switch language
+     *
+     * @param $locale
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function index($locale)
     {
         if (!in_array($locale, ['en', 'th'])) {

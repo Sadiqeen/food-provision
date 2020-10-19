@@ -53,7 +53,7 @@ describe('Brand module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(brand)
         cy.wait(1000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
     it('Delete brand', () => {
@@ -66,7 +66,7 @@ describe('Brand module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(brand_update)
         cy.wait(1000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
 })

@@ -90,7 +90,7 @@ describe('Brand module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(vessel_name)
         cy.wait(2000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
     it('Check order history', () => {

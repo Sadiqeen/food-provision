@@ -48,7 +48,7 @@ describe('Customer module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type('Test Unit')
         cy.wait(1000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
     it('Delete unit', () => {
@@ -61,7 +61,7 @@ describe('Customer module', () => {
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type('Test Updated')
         cy.wait(1000)
-        cy.contains('No matching records found')
+        cy.contains(/No matching records found|No data available in table/g)
     })
 
 })
