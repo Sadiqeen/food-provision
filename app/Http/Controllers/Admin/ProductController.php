@@ -82,28 +82,28 @@ class ProductController extends Controller
         $units = Unit::all();
 
         if (!$units->count()) {
-            alert()->info(__('No Product Unit'), __('Please create product unit data before create product'));
+            alert()->info(__('Product Unit not found'), __('Please create product unit data before create product'));
             return redirect()->route('admin.unit.index');
         }
 
         $brands = Brand::all();
 
         if (!$brands->count()) {
-            alert()->info(__('No Product Brand'), __('Please create product brand data before create product'));
+            alert()->info(__('Product Brand not found'), __('Please create product brand data before create product'));
             return redirect()->route('admin.brand.index');
         }
 
         $categories = Category::all();
 
         if (!$categories->count()) {
-            alert()->info(__('No Product Category'), __('Please create product category data before create product'));
+            alert()->info(__('Product Category not found'), __('Please create product category data before create product'));
             return redirect()->route('admin.category.index');
         }
 
         $suppliers = Supplier::all();
 
         if (!$suppliers->count()) {
-            alert()->info(__('No Supplier'), __('Please create supplier data before create product'));
+            alert()->info(__('Supplier not found'), __('Please create supplier data before create product'));
             return redirect()->route('admin.supplier.index');
         }
 

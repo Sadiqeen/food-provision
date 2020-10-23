@@ -29,7 +29,7 @@ class Order extends Model
     }
 
     public function product() {
-        return $this->belongsToMany('App\Product', 'order_has_product')->withPivot('quantity')->withTimestamps();
+        return $this->belongsToMany('App\Product', 'order_has_product')->withPivot(['quantity', 'price'])->withTimestamps();
     }
 
     public function customer() {

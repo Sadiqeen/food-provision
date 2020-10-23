@@ -42,8 +42,10 @@ class ReportController extends Controller
             ]);
         }
 
-        $start_range = Order::orderBy('updated_at', 'ASC')->first();
-        $end_range = Order::orderBy('updated_at', 'DESC')->first();
+        $start_range = Order::orderBy('updated_at', 'ASC')
+            ->where('status_id', '>=', 8)->first();
+        $end_range = Order::orderBy('updated_at', 'DESC')
+            ->where('status_id', '>=', 8)->first();
         $customers = Customer::whereHas('order', function ($query) {
             $query->where('status_id', '>=', 8);
         })->get();

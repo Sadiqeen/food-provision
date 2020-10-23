@@ -83,14 +83,14 @@ class OrderController extends Controller
     {
         $customers = Customer::get();
         if (!$customers->count()) {
-            alert()->info(__('No Customer'), __('Please create customer data before make an order'));
+            alert()->info(__('Customer not found'), __('Please create customer data before make an order'));
             return redirect()->route('admin.customer.create');
         }
 
         $products = Product::get();
 
         if (!$products->count()) {
-            alert()->info(__('No Product'), __('Please create product data before make an order'));
+            alert()->info(__('Product not found'), __('Please create product data before make an order'));
             return redirect()->route('admin.product.index');
         }
 
@@ -529,7 +529,8 @@ class OrderController extends Controller
             foreach ($category['products'] as $product_key => $product) {
                 $product_list[] = [
                     'product_id' => $product_key,
-                    'quantity' => $product['quantity']
+                    'quantity' => $product['quantity'],
+                    'price' => $product['price']
                 ];
             }
         }

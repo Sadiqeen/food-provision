@@ -115,11 +115,11 @@
                     <td class="text-center">{{ $index }}</td>
                     <th scope="row">{{ $product->name_en }}</th>
                     <td class="text-center">{{ $product->desc }}</td>
-                    <td class="text-center">{{ number_format($product->price) }}</td>
+                    <td class="text-center">{{ number_format($product->pivot->price) }}</td>
                     <td class="text-center">{{ $product->pivot->quantity }}</td>
-                    <td class="text-center">{{ number_format($product->price * $product->pivot->quantity) }}</td>
-                    <td class="text-center">{{ number_format($product->vat ? $vat = (($product->price * $product->pivot->quantity) * 7) / 100 : 0) }}</td>
-                    <td class="text-center">{{ number_format($product->price * $product->pivot->quantity + $vat) }}</td>
+                    <td class="text-center">{{ number_format($product->pivot->price * $product->pivot->quantity) }}</td>
+                    <td class="text-center">{{ number_format($product->vat ? $vat = (($product->pivot->price * $product->pivot->quantity) * 7) / 100 : 0) }}</td>
+                    <td class="text-center">{{ number_format($product->pivot->price * $product->pivot->quantity + $vat) }}</td>
                 </tr>
                 @if ($loop->last)
                     <tr>

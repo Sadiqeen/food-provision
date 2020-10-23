@@ -16,6 +16,7 @@ class CreateOrderHasProduct extends Migration
         Schema::create('order_has_product', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
+            $table->float('price');
 
             // Order ref
             $table->unsignedBigInteger('order_id');

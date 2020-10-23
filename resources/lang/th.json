@@ -148,6 +148,18 @@
     "Request from vessel" : "คำขอจากเรือ",
     "Authorised signature" : "ลายเซ็นยืนยัน",
     "Update company profile success" : "แก้ไขข้อมูลบริษัทสำเร็จ",
+    "Sale result" : "ผลการขาย",
+    "Top Companies in Purchase" : "บริษัทที่ทำการซื้อขายมากที่สุด",
+    "Cancel by administrator" : "ยกเลิกโดยผู้ดูแลระบบ",
+    "Cancel by customer" : "ยกเลิกโดยลูกค้า",
+    "Cancel by vessel" : "ยกเลิกโดยเรือ",
+    "Product Unit not found" : "ไม่มีหน่วยสินค้า",
+    "Product Brand not found" : "ไม่มีเครื่องหมายการค้า",
+    "Product Category not found" : "ไม่มีประเภทสินค้า",
+    "Supplier not found" : "ไม่มีผู้ผลิต",
+    "Customer not found" : "ไม่มีลูกค้า",
+    "Product not found" : "ไม่มีสินค้า",
+    "Duration" : "ระยะเวลา",
 
     "_comment_": "End of file",
 
