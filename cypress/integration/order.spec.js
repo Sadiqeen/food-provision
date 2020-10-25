@@ -1,10 +1,10 @@
 import faker from 'faker'
 
-describe('Brand module', () => {
+describe('Order module', () => {
 
     const vessel_name = faker.name.findName()
     const product_select = "Acacia"
-    const po = faker.random.uuid()
+    const po = 'FNDO008001'
 
     before(() => {
         cy.clearCookies()
@@ -51,7 +51,8 @@ describe('Brand module', () => {
 
         cy.get('#dataTable_filter > label > .form-control').type(vessel_name)
         cy.wait(2000)
-        cy.get(':nth-child(2) > .btn-primary').click()
+        cy.get('[aria-label="action group"] > .dropdown-toggle').click()
+        cy.get('[data-cy=update_status]').click()
         cy.get('#po').type(po)
         cy.get('.text-center > .btn').click()
         cy.contains('Success')
@@ -67,25 +68,29 @@ describe('Brand module', () => {
 
         cy.get('#dataTable_filter > label > .form-control').type(vessel_name)
         cy.wait(2000)
-        cy.get(':nth-child(2) > .btn-primary').click()
+        cy.get('[aria-label="action group"] > .dropdown-toggle').click()
+        cy.get('[data-cy=update_status]').click()
         cy.contains('Success')
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(vessel_name)
         cy.wait(2000)
         cy.contains('Order in process')
-        cy.get(':nth-child(2) > .btn-primary').click()
+        cy.get('[aria-label="action group"] > .dropdown-toggle').click()
+        cy.get('[data-cy=update_status]').click()
         cy.contains('Success')
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(vessel_name)
         cy.wait(2000)
         cy.contains('Shipping')
-        cy.get(':nth-child(2) > .btn-primary').click()
+        cy.get('[aria-label="action group"] > .dropdown-toggle').click()
+        cy.get('[data-cy=update_status]').click()
         cy.contains('Success')
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(vessel_name)
         cy.wait(2000)
         cy.contains('Delivery confirmed')
-        cy.get(':nth-child(2) > .btn-primary').click()
+        cy.get('[aria-label="action group"] > .dropdown-toggle').click()
+        cy.get('[data-cy=update_status]').click()
         cy.contains('Success')
         cy.get('.swal2-confirm').click()
         cy.get('#dataTable_filter > label > .form-control').type(vessel_name)

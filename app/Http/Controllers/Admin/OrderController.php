@@ -471,7 +471,7 @@ class OrderController extends Controller
     public function order_update_status_confirm(Request $request, $id)
     {
         $rules = [
-            'purchase_order_number' => 'required|min:5',
+            'purchase_order_number' => 'required|min:5|unique:orders,purchase_order_number',
         ];
 
         if ($request->purchase_order_file) {
@@ -606,9 +606,9 @@ class OrderController extends Controller
                     '<div class="dropdown-divider"></div>';
             }
             if ($status->id != 4) {
-                $action .= '<a class="dropdown-item" href="' . $route . '">' . $status->status . '</a>';
+                $action .= '<a class="dropdown-item" data-cy="update_status" href="' . $route . '">' . $status->status . '</a>';
             } else {
-                $action .= '<a class="dropdown-item" onclick="confirm_order(\'' . route('admin.order.update.status', $order->id) . '\')" href="javascript:void(0)">' . $status->status . '</a>';
+                $action .= '<a class="dropdown-item" data-cy="update_status" onclick="confirm_order(\'' . route('admin.order.update.status', $order->id) . '\')" href="javascript:void(0)">' . $status->status . '</a>';
             }
         }
 

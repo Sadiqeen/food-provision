@@ -69,7 +69,37 @@ describe('Customer module', () => {
         cy.contains(/No matching records found|No data available in table/g)
     })
 
+    it('Customer can sign in', () => {
+        cy.get('#navbarSupportedContent > .navbar-nav > .nav-item > #navbarDropdown').click()
+        cy.get('#navbarSupportedContent > .navbar-nav > .nav-item > .dropdown-menu > .dropdown-item').click()
+        cy.get('input[name="email"]').clear()
+        cy.get('input[name="email"]').type('testcustomer@customer.com')
+        cy.get('input[name="password"]').clear()
+        cy.get('input[name="password"]').type('password')
+        cy.get('button[type="submit"]').click()
+        cy.url().should('include', '/dashboard')
+    })
+
+    it('Customer permission', () => {
+        cy.visit('admin/customer')
+        cy.url().should('include', '/dashboard')
+    })
+
     it('Delete customer', () => {
+        cy.get('#navbarSupportedContent > .navbar-nav > .nav-item > #navbarDropdown').click()
+        cy.get('#navbarSupportedContent > .navbar-nav > .nav-item > .dropdown-menu > .dropdown-item').click()
+
+        cy.clearCookies()
+        cy.visit('/')
+
+        cy.get('input[name="email"]').clear()
+        cy.get('input[name="email"]').type('admin@admin.com')
+        cy.get('input[name="password"]').clear()
+        cy.get('input[name="password"]').type('password')
+        cy.get('button[type="submit"]').click()
+        cy.url().should('include', '/dashboard')
+
+        cy.visit('admin/customer')
         cy.get('#dataTable_filter > label > .form-control').clear()
         cy.get('#dataTable_filter > label > .form-control').type('EH Company')
         cy.wait(1000)
