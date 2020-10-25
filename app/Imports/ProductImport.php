@@ -33,6 +33,8 @@ class ProductImport implements ToCollection
             '*.7' => 'required',
         ])->validate();
 
+        $insert_data = [];
+
         for ( $i = 0 ; $i < count($rows) ; $i++ )
         {
 
@@ -43,7 +45,7 @@ class ProductImport implements ToCollection
                 $supplier_id = $this->getSupplier($rows[$i][7]);
                 $vat = $rows[$i][8] ? true : false;
 
-                Product::create([
+                $insert_data[] = [
                     'name_th' => $rows[$i][0],
                     'name_en' => $rows[$i][1],
                     'price' => $rows[$i][6],
@@ -53,9 +55,11 @@ class ProductImport implements ToCollection
                     'brand_id' => $brand_id,
                     'category_id' => $category_id,
                     'unit_id' => $unit_id,
-                ]);
+                ];
             }
         }
+
+        Product::insert($insert_data);
     }
 
     private function isExistProduct($product) {
@@ -67,13 +71,13 @@ class ProductImport implements ToCollection
     }
 
     private function getSupplier($supplier) {
-        $supplier = Supplier::where('name', 'like', '%' . $supplier . '%')->first();
+        $supplier_data = Supplier::where('name', 'like', '%' . $supplier . '%')->first();
 
-        if (!$supplier) {
-            abort(500);
+        if (!$supplier_data) {
+            abort(500, 'Supplier ' . $supplier .' not fount in the system.');
         }
 
-        return $supplier->id;
+        return $supplier_data->id;
     }
 
     private function getOrCreateBrand($brand_param) {
