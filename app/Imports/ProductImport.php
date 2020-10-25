@@ -39,9 +39,9 @@ class ProductImport implements ToCollection
         {
 
             if (!$this->isExistProduct($rows[$i][1])) {
-                $brand_id = $this->getOrCreateBrand($rows[$i][2]);
-                $unit_id = $this->getOrCreateUnit($rows[$i][5]);
-                $category_id = $this->getOrCreateCategory($rows[$i][3]);
+                $brand = Brand::firstOrCreate( ['name' => $rows[$i][2]] );
+                $unit = Unit::firstOrCreate( ['name' => $rows[$i][5]] );
+                $category = Category::firstOrCreate( ['name' => $rows[$i][3]] );
                 $supplier_id = $this->getSupplier($rows[$i][7]);
                 $vat = $rows[$i][8] ? true : false;
 
@@ -49,12 +49,12 @@ class ProductImport implements ToCollection
                     'name_th' => $rows[$i][0],
                     'name_en' => $rows[$i][1],
                     'price' => $rows[$i][6],
-                    'desc' => $rows[$i][4],
+                    'desc' => isset($rows[$i][4]) ? $rows[$i][4] : '',
                     'vat' => $vat,
                     'supplier_id' => $supplier_id,
-                    'brand_id' => $brand_id,
-                    'category_id' => $category_id,
-                    'unit_id' => $unit_id,
+                    'brand_id' => $brand->id,
+                    'category_id' => $category->id,
+                    'unit_id' => $unit->id,
                 ];
             }
         }
@@ -78,41 +78,5 @@ class ProductImport implements ToCollection
         }
 
         return $supplier_data->id;
-    }
-
-    private function getOrCreateBrand($brand_param) {
-        $brand = Brand::where('name', 'like', '%' . $brand_param . '%')->first();
-
-        if (!$brand) {
-            $brand = Brand::create([
-                'name' => $brand_param
-            ]);
-        }
-
-        return $brand->id;
-    }
-
-    private function getOrCreateUnit($unit_param) {
-        $unit = Unit::where('name', 'like', '%' . $unit_param . '%')->first();
-
-        if (!$unit) {
-            $unit = Unit::create([
-                'name' => $unit_param
-            ]);
-        }
-
-        return $unit->id;
-    }
-
-    private function getOrCreateCategory($category_param) {
-        $category = Category::where('name', 'like', '%' . $category_param . '%')->first();
-
-        if (!$category) {
-            $category = Category::create([
-                'name' => $category_param
-            ]);
-        }
-
-        return $category->id;
     }
 }
