@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Brand;
 use App\Category;
 use App\Imports\ExcelImport;
+use App\Imports\ProductImport;
 use App\Product;
 use App\Unit;
 use App\Supplier;
@@ -280,10 +281,10 @@ class ProductController extends Controller
     public function import(Request $request)
     {
         $this->validate($request, [
-//            'excel'  => 'required|mimes:xls,xlsx,csv'
+            'excel'  => 'required|mimes:xls,xlsx,csv'
         ]);
 
-        Excel::import(new ExcelImport, $request->excel);
+        Excel::import(new ProductImport(), $request->excel);
 
         alert()->success(__('Success'), __('New product added to the system'));
         return redirect()->route('admin.product.index');
