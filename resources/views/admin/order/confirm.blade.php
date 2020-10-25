@@ -21,7 +21,15 @@
                                 <ul class="list-group mb-3">
                                     <li class="list-group-item bg-success text-white">
                                         <span class="h4 font-weight-bold">{{ $category['name'] }}</span>
-                                        <span class="float-right text-dark bg-white rounded py-1 px-2  cat-{{ $category_key }}"  >{{ number_format( $category['total'] ) }}</span>
+                                        <span class="float-right text-dark bg-white rounded py-1 px-2  cat-{{ $category_key }}"  >
+                                        @php
+                                            $total = 0;
+                                            if ($category['total']) {
+                                                $total = $category['total'];
+                                            }
+                                        @endphp
+                                        {{ (int) $total == $total ? number_format($total) : number_format($total, 2) }}
+                                        </span>
                                     </li>
                                     @foreach($category['products'] as $product_key => $product)
                                         <li class="list-group-item">
@@ -52,16 +60,14 @@
                                                             <span class="input-group-text" id="basic-addon2">{{ $product['unit'] }}</span>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-md-3 col-6 text-right">
-                                                    @php
-                                                    $price = $product['quantity'] * $product['price'];
-                                                    if ($product['vat']) {
-                                                        $price += (($price * 7) / 100);
-                                                    }
-                                                    @endphp
-                                                    <span id="product-{{ $product_key }}">{{ number_format($price) }}</span>
+                                                    <span id="product-{{ $product_key }}">
+                                                        @php
+                                                            $price = $product['quantity'] * $product['price'];
+                                                        @endphp
+                                                        {{ (int) $price == $price ? number_format($price) : number_format($price, 2) }}
+                                                    </span>
                                                     <div class="d-none d-md-inline-block">
                                                         <a href="{{ route( auth()->user()->position . '.order.delete', $product_key) }}" class="text-decoration-none text-danger"><i class="fa fa-times"></i></a>
                                                     </div>
@@ -84,7 +90,15 @@
                                             <div class="form-group">
                                                 <h6 class="m-0">
                                                     {{ $category['name'] }}
-                                                    <span class="float-right cat-{{ $category_key }}">{{ number_format( $category['total'] ) }}</span>
+                                                    <span class="float-right cat-{{ $category_key }}">
+                                                         @php
+                                                             $total = 0;
+                                                             if ($category['total']) {
+                                                                 $total = $category['total'];
+                                                             }
+                                                         @endphp
+                                                        {{ (int) $total == $total ? number_format($total) : number_format($total, 2) }}
+                                                    </span>
                                                 </h6>
                                             </div>
                                             <hr>
@@ -93,23 +107,33 @@
                                     <div class="form-group">
                                         <h2 class="m-0">
                                             {{ __('Total') }}
-                                            <span class="float-right" id="total">{{ number_format(Session::get('total')) }}</span>
+                                            <span class="float-right" id="total">
+                                                @php
+                                                    $total = 0;
+                                                    if (Session::has('total')) {
+                                                        $total = Session::get('total');
+                                                    }
+                                                @endphp
+                                                {{ (int) $total == $total ? number_format($total) : number_format($total, 2) }}
+                                            </span>
                                         </h2>
                                     </div>
                                     <hr>
-                                    <div class="form-group">
-                                        <label for="unit">{{ __('Order for') }} <span class="text-danger">*</span></label>
-                                        <select class="form-control border selectpicker @error('customer') is-invalid @enderror" data-live-search="true" data-size="10" name="customer" id="customer" >
-                                            @foreach ($customers as $customer)
-                                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('customer')
-                                        <span class="invalid-feedback" role="alert">
+                                    @if (auth()->user()->position == 'admin')
+                                        <div class="form-group">
+                                            <label for="unit">{{ __('Order for') }} <span class="text-danger">*</span></label>
+                                            <select class="form-control border selectpicker @error('customer') is-invalid @enderror" data-live-search="true" data-size="10" name="customer" id="customer" >
+                                                @foreach ($customers as $customer)
+                                                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('customer')
+                                            <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                        @enderror
-                                    </div>
+                                            @enderror
+                                        </div>
+                                    @endif
                                     <div class="form-group">
                                         <label for="vessel_name">{{ __('Vessel Name') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('vessel_name') is-invalid @enderror" name="vessel_name" id="vessel_name" value="{{ old('vessel_name') }}">
@@ -183,10 +207,11 @@
                             })
 
                             let price = $(el).data('price') * $(el).val()
-                            if ($(el).data('vat')) {
-                                price += (price * 7) / 100
+
+                            if (price % 1 !== 0) {
+                                price = price.toFixed(2)
                             }
-                            $('#product-' + $(el).data('id')).text( Math.round(price).toLocaleString() )
+                            $('#product-' + $(el).data('id')).text( price.toLocaleString() )
                             $('#total').text(data.data.total)
 
                             Toast.fire({

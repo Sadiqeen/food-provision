@@ -42,7 +42,13 @@ class OrderController extends AdminOrder
                 return $this->get_status_label($orders);
             })
             ->addColumn('total_price', function ($orders) {
-                return '<span class="bg-danger text-white px-1 rounded">' . number_format($orders->total_price) . '</span>';
+                $price = $orders->total_price;
+                if ((int) $price == $price) {
+                    $price = number_format($price);
+                } else {
+                    $price = number_format($price, 2);
+                }
+                return '<span class="bg-danger text-white px-1 rounded">' . $price . '</span>';
             })
             ->addColumn('action', function ($orders) {
                 return $this->get_action_on_table($orders);
@@ -185,7 +191,7 @@ class OrderController extends AdminOrder
             return redirect()->route(auth()->user()->position . '.order.create');
         }
 
-        return view('customer.order.confirm');
+        return view('admin.order.confirm');
     }
 
     /**

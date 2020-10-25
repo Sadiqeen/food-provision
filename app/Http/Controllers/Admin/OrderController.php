@@ -53,7 +53,7 @@ class OrderController extends Controller
     public function index_api()
     {
         $orders = Order::with('customer', 'status')
-            ->where('status_id', '>', 2)
+            ->where('status_id', '>', 1)
             ->where('status_id', '<', 8)
             ->get();
         return datatables()->of($orders)
@@ -64,7 +64,12 @@ class OrderController extends Controller
                 return $this->get_status_label($orders);
             })
             ->addColumn('total_price', function ($orders) {
-                return '<span class="bg-danger text-white px-1 rounded">' . number_format($orders->total_price) . '</span>';
+                if ((int) $orders->total_price == $orders->total_price) {
+                    $price = number_format($orders->total_price);
+                } else {
+                    $price = number_format($orders->total_price, 2);
+                }
+                return '<span class="bg-danger text-white px-1 rounded">' . $price . '</span>';
             })
             ->addColumn('action', function ($orders) {
                 return $this->get_action_on_table($orders);
@@ -139,12 +144,14 @@ class OrderController extends Controller
                 return '<div class="w-100 text-center">' . $product->desc . '</div>';
             })
             ->addColumn('price', function ($product) {
-                $price = $product->price;
-                if ($product->vat) {
-                    $price += ($product->price * 7) / 100;
+                $price = 0;
+                if ( (int) $product->calculate->total_amount == $product->calculate->total_amount ) {
+                    $price = number_format($product->calculate->total_amount);
+                } else {
+                    $price = number_format($product->calculate->total_amount, 2);
                 }
                 return '<div class="w-100 text-center">
-                                <span class="bg-danger text-white px-1 rounded">' . number_format($price) . '</span>
+                                <span class="bg-danger text-white px-1 rounded">' . $price . '</span>
                             </div>';
             })
             ->addColumn('value', function ($product) {
@@ -245,7 +252,8 @@ class OrderController extends Controller
             'unit' => $product->unit->name,
             'image' => $product->image,
             'vat' => $product->vat,
-            'price' => $product->price,
+            'price' => $product->calculate->total_amount,
+            'price_no_vat' => $product->price,
             'quantity' => $quantity
         ];
 
@@ -283,7 +291,7 @@ class OrderController extends Controller
 
         $this->del_product_from_order($product);
         $this->update_price();
-        alert()->success(__('Success'),__('Remove :product from order', ['product' => $product->name]));
+        alert()->success(__('Success'), __('Remove :product from order', ['product' => $product->name]));
         return redirect()->back();
     }
 
@@ -313,9 +321,6 @@ class OrderController extends Controller
             $price = 0;
             foreach ($each_category['products'] as $product) {
                 $price += $product['quantity'] * $product['price'];
-                if ($product['vat']) {
-                    $price += round((($product['quantity'] * $product['price']) * 7) / 100);
-                }
             }
             $order[$key]['total'] = $price;
             $total += $price;
@@ -435,6 +440,10 @@ class OrderController extends Controller
         }
 
         if ($order->status_id == 2 || $order->status_id == 3) {
+            if (!$order->purchase_order_number) {
+                alert()->error(__('Error'), __('No data that you request'));
+                return redirect()->route('admin.order.index');
+            }
             $order->status_id = 4;
             $order->save();
             $order->statusDate()->attach([
@@ -530,7 +539,7 @@ class OrderController extends Controller
                 $product_list[] = [
                     'product_id' => $product_key,
                     'quantity' => $product['quantity'],
-                    'price' => $product['price']
+                    'price' => $product['price_no_vat']
                 ];
             }
         }
@@ -548,10 +557,19 @@ class OrderController extends Controller
         $order = \Session::get('order');
         $res = null;
         foreach ($order as $key => $category) {
-            $res['category'][$key] = number_format($category['total']);
+            if ( (int) $category['total'] == $category['total']) {
+                $res['category'][$key] = number_format($category['total']);
+            } else {
+                $res['category'][$key] = number_format($category['total'], 2);
+            }
         }
 
-        $res['total'] = number_format(\Session::get('total'));
+        if ( (int) \Session::get('total') == \Session::get('total')) {
+            $res['total'] = number_format(\Session::get('total'));
+
+        } else {
+            $res['total'] = number_format(\Session::get('total'), 2);
+        }
 
         return response()->json([
             'status' => 'success',
@@ -571,7 +589,7 @@ class OrderController extends Controller
         $action = '';
         $status = null;
         $route = route('admin.order.update.status', $order->id);
-        $view = '<a type="button" href="' . route('admin.order.call', [$order->id, 'view']) . '" class="btn btn-secondary btn-sm">' . __('View') . '</a>';
+        $view = '<a type="button" href="' . route('admin.order.call', [$order->id, 'view']) . '" class="btn btn-primary btn-sm">' . __('View') . '</a>';
 
         if ($order->status_id == 2 || $order->status_id == 3) {
             $status = Status::find(4);
@@ -580,18 +598,31 @@ class OrderController extends Controller
         }
 
         if ($status) {
+            $action = '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Action Button</span>
+                      </button><div class="dropdown-menu">';
+            if ($order->status_id == 2 || $order->status_id == 3) {
+                $action .= '<a class="dropdown-item" href="' . route('admin.quote.edit', $order->id) . '">' . __('Edit') . ' Quote</a>' .
+                    '<div class="dropdown-divider"></div>';
+            }
             if ($status->id != 4) {
-                $action = '<a type="button" class="btn btn-primary btn-sm" href="' . $route . '">' . $status->status . '</a>';
+                $action .= '<a class="dropdown-item" href="' . $route . '">' . $status->status . '</a>';
             } else {
-                $action = '<a type="button" class="btn btn-primary btn-sm" onclick="confirm_order(\'' . route('admin.order.update.status', $order->id) . '\')" href="javascript:void(0)">' . $status->status . '</a>';
+                $action .= '<a class="dropdown-item" onclick="confirm_order(\'' . route('admin.order.update.status', $order->id) . '\')" href="javascript:void(0)">' . $status->status . '</a>';
             }
         }
 
         if ($order->status_id > 2 && $order->status_id < 5) {
-            $action .= '<a type="button" class="btn btn-danger btn-sm" href="' . route('admin.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
+            if ($status) {
+                $action .= '<div class="dropdown-divider"></div>';
+            }
+            $action .= '<a type="button" class="dropdown-item" href="' . route('admin.order.cancel', $order->id) . '">' . __('Cancel') . '</a>';
+            if ($status) {
+                $action .= '</div>';
+            }
         }
 
-        return $this->get_print_on_table($order) . '<div class="btn-group mb-2" role="group" aria-label="Button group with nested dropdown">
+        return $this->get_print_on_table($order) . '<div class="btn-group mb-2" role="group" aria-label="action group">
                  ' . $view . $action . '
                 </div>';
     }
@@ -613,7 +644,7 @@ class OrderController extends Controller
             $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'po']) . '">Purchase Order</a>';
         }
 
-        if ($order->status_id >= 4 && auth()->user()->position == 'admin') {
+        if ($order->status_id >= 5 && auth()->user()->position == 'admin') {
             $action .= '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'supply']) . '">Order supplier list</a>';
         }
 
@@ -711,4 +742,103 @@ class OrderController extends Controller
         }
     }
 
+    public function quote_edit($id)
+    {
+        $order = Order::with('product')->where('id', $id)->first();
+
+        if (!$order || ($order->status_id !== 2 && $order->status_id !== 3)) {
+            alert()->error(__('Error'), __('No data that you request'));
+            return redirect()->route('admin.order.index');
+        }
+
+        return view('admin.order.edit', [
+            'order' => $order
+        ]);
+    }
+
+    public function quote_price_update(Request $request, $id, $product)
+    {
+        $order = Order::find($id);
+
+        if (!$order || ($order->status_id !== 2 && $order->status_id !== 3)) {
+            return response()->json([
+                'status' => 'error',
+            ]);
+        }
+
+        $product_data = Product::find($product);
+        if (!$product_data || ($request->price < ($product_data->price/2) || $request->price > $product_data->price)) {
+            return response()->json([
+                'status' => 'error',
+            ]);
+        }
+
+        $order->product()->updateExistingPivot( $product , [
+            'price' => $request->price
+        ]);
+
+        $total_amount = $this->quote_update_total_price($order->id);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'id' => $id,
+                'product' => $product,
+                'price' => (int) $request->price == $request->price
+                            ? number_format($request->price)
+                            : number_format($request->price, 2),
+                'total_amount' => number_format($total_amount, 2)
+            ]
+        ]);
+    }
+
+    public function quote_price_discount(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        if (!$order || ($order->status_id !== 2 && $order->status_id !== 3)) {
+            return response()->json([
+                'status' => 'error',
+            ]);
+        }
+
+        if ($request->discount < 0 || $request->discount > $order->total_price) {
+            return response()->json([
+                'status' => 'error',
+            ]);
+        }
+
+        $order->discount = $request->discount;
+        $order->save();
+
+        $total_amount = $this->quote_update_total_price($order->id);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'id' => $id,
+                'total_amount' => number_format($total_amount, 2)
+            ]
+        ]);
+    }
+
+    private function quote_update_total_price($id)
+    {
+        $order = Order::with('product')->find($id);
+        $total_amount = 0;
+
+        foreach ($order->product as $product)
+        {
+            $total_amount +=  $product->calculate->total_amount;
+        }
+
+        if ($order->discount) {
+            $total_amount -= $order->discount;
+        }
+
+        $order->total_price = $total_amount;
+        $order->save();
+
+        return $total_amount;
+    }
 }

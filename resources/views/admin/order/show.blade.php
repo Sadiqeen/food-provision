@@ -9,6 +9,38 @@
         <h3 class="my-3 text-uppercase font-weight-bold d-flex">
             <span class="mr-auto"><i class="fa fa-shopping-bag fa-lg mr-2" aria-hidden="true"></i> {{ __('View Order') }}</span>
             @if ($order->status_id >= 8)
+                <div class="dropdown mr-2">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Print
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach($order->statusDate as $status)
+                            @php
+                                if ($status->id == 2 || $status->id == 3 && auth()->user()->position != 'employee') {
+                                    echo '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'quote']) . '">Quote</a>';
+                                }
+
+                                if ($status->id == 4 && $order->purchase_order_file) {
+                                    echo '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'po']) . '">Purchase Order</a>';
+                                }
+
+                                if ($status->id == 5 && auth()->user()->position == 'admin') {
+                                    echo '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'supply']) . '">Order supplier list</a>';
+                                }
+
+                                if ($status->id == 6 && auth()->user()->position == 'admin') {
+                                    echo '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'do']) . '">Delivery Order</a>';
+                                }
+
+                                if ($status->id == 7 && auth()->user()->position != 'employee') {
+                                    echo '<a class="dropdown-item" target="_blank" href="' . route(auth()->user()->position . '.order.call', [$order->id, 'invoice']) . '">Invoice</a>';
+                                }
+                            @endphp
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+            @if ($order->status_id >= 8)
                 <a type="button" href="{{ route(auth()->user()->position . '.report.index') }}"
                    class="btn btn-secondary">{{ __('Order History') }}</a>
             @else
@@ -73,7 +105,11 @@
                                     </tr>
                                     <tr>
                                         <th scope="row">{{ __('Total') }}</th>
-                                        <td>{{ number_format($order->total_price) }}</td>
+                                        <td>
+                                            {{ (int) $order->total_price == $order->total_price
+                                                ? number_format($order->total_price)
+                                                : number_format($order->total_price, 2) }}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">{{ __('Vessel name') }}</th>
@@ -119,20 +155,55 @@
                                 $vat = 0;
                             @endphp
                             <tr>
-                                <th scope="row">{{ $product->name }}</th>
-                                <td class="text-center">{{ $product->desc }}</td>
-                                <td class="text-center">{{ number_format($product->pivot->price) }}</td>
-                                <td class="text-center">{{ number_format($product->pivot->quantity) }}</td>
-                                <td class="text-center">{{ number_format($product->pivot->price * $product->pivot->quantity) }}</td>
-                                <td class="text-center">{{ number_format($product->vat ? $vat = (($product->pivot->price * $product->pivot->quantity) * 7) / 100 : 0) }}</td>
-                                <td class="text-center">{{ number_format($product->pivot->price * $product->pivot->quantity + $vat) }}</td>
+                                <th scope="row" id="p-{{ $product->id }}-name">{{ $product->name }}</th>
+                                <td class="text-center" id="p-{{ $product->id }}-desc">{{ $product->desc }}</td>
+                                <td class="text-center">
+                                    <span id="p-{{ $product->id }}-price"
+                                          data-main="{{ $product->price }}">
+                                        {{ (int) $product->calculate->price == $product->calculate->price
+                                            ? number_format($product->calculate->price)
+                                            : number_format($product->calculate->price, 2)}}
+                                    </span>
+                                </td>
+                                <td class="text-center" id="p-{{ $product->id }}-quantity">
+                                    {{ (int) $product->calculate->quantity == $product->calculate->quantity
+                                            ? number_format($product->calculate->quantity)
+                                            : number_format($product->calculate->quantity, 2)}}
+                                </td>
+                                <td class="text-center" id="p-{{ $product->id }}-subtotal">
+                                    {{ (int) $product->calculate->sub_total == $product->calculate->sub_total
+                                            ? number_format($product->calculate->sub_total)
+                                            : number_format($product->calculate->sub_total, 2)}}
+                                </td>
+                                <td class="text-center" id="p-{{ $product->id }}-vat">
+                                    {{ (int) $product->calculate->vat == $product->calculate->vat
+                                            ? number_format($product->calculate->vat)
+                                            : number_format($product->calculate->vat, 2)}}
+                                </td>
+                                <td class="text-center" id="p-{{ $product->id }}-total">
+                                    {{ number_format($product->calculate->total_amount, 2)}}
+                                </td>
                             </tr>
                             @if ($loop->last)
+                                @if ($order->discount)
+                                <tr>
+                                    <td scope="row" colspan="6"
+                                        class="text-center">{{ __('Subtotal') }} (THB)
+                                    </td>
+                                    <td class="text-center font-weight-bold" id="discount">{{ number_format($order->total_price + $order->discount , 2)}}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row" colspan="6"
+                                        class="text-center text-danger">{{ __('Discount') }} (THB)
+                                    </td>
+                                    <td class="text-center text-danger" id="discount">{{ number_format($order->discount, 2) }}</td>
+                                </tr>
+                                @endif
                                 <tr>
                                     <th scope="row" colspan="6"
-                                        class="text-center h5 font-weight-bold">{{ __('Total') }} (THB)
+                                        class="text-center h5 font-weight-bold">{{ __('Total amount') }} (THB)
                                     </th>
-                                    <td class="h5 font-weight-bold text-center">{{ number_format($order->total_price) }}</td>
+                                    <td class="h5 font-weight-bold text-center">{{ number_format($order->total_price, 2) }}</td>
                                 </tr>
                             @endif
                         @endforeach

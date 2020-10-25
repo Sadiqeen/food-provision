@@ -31,7 +31,9 @@ class SupplierOrderListExport implements WithMultipleSheets
         }])->get();
 
         foreach ($suppliers as $supplier) {
-            $sheets[] = new OrderPerSupplierSheet($supplier);
+            if($supplier->product->count() > 0) {
+                $sheets[] = new OrderPerSupplierSheet($supplier);
+            }
         }
 
         return $sheets;

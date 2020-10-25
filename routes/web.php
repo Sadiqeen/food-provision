@@ -55,6 +55,10 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::get('product/api', 'Admin\ProductController@index_api')->name('product.api');
     Route::resource('product', 'Admin\ProductController');
 
+    Route::get('quote/{id}/edit', 'Admin\OrderController@quote_edit')->name('quote.edit');
+    Route::post('quote/{id}/price/{product}', 'Admin\OrderController@quote_price_update')->name('quote.price.update');
+    Route::post('quote/{id}/discount', 'Admin\OrderController@quote_price_discount')->name('quote.discount.update');
+
     Route::get('supplier/api', 'Admin\SupplierController@index_api')->name('supplier.api');
     Route::resource('supplier', 'Admin\SupplierController');
 

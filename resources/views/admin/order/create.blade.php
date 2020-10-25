@@ -43,7 +43,13 @@
                                 <a class="list-group-item list-group-item-action {{ $active ? 'list-group-item-info' : '' }}" href="{{ route('admin.order.create') }}?category={{ $category->name }}">
                                     {{ $category->name }}
                                     <span class="bg-white text-dark px-1 rounded float-right" id="cat-{{ $category->id }}">
-                                        {{ isset(Session::get('order')[$category->id]['total']) ? number_format(Session::get('order')[$category->id]['total']) : 0 }}
+                                        @php
+                                            $total = 0;
+                                            if (isset(Session::get('order')[$category->id]['total'])) {
+                                                $total = Session::get('order')[$category->id]['total'];
+                                            }
+                                        @endphp
+                                        {{ (int) $total == $total ? number_format($total) : number_format($total, 2) }}
                                     </span>
                                 </a>
                             @endforeach
@@ -53,7 +59,13 @@
                             <a href="javascript:void(0)" class="list-group-item list-group-item-action list-group-item-success" tabindex="-1" aria-disabled="true">
                                 <strong>{{ __('Total') }}</strong>
                                 <span class="bg-white text-dark px-1 rounded float-right" id="total">
-                                    {{ Session::has('total') ? number_format(Session::get('total')) : 0 }}
+                                    @php
+                                        $total = 0;
+                                        if (Session::has('total')) {
+                                            $total = Session::get('total');
+                                        }
+                                    @endphp
+                                    {{ (int) $total == $total ? number_format($total) : number_format($total, 2) }}
                                 </span>
                             </a>
                         </div>

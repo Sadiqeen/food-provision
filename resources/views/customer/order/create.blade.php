@@ -111,7 +111,10 @@
                                         @endif
                                     </h5>
                                     @if ($product->vat)
-                                        <h6 class="text-danger">{{ number_format($product->price + (($product->price * 7) / 100)) }}
+                                        <h6 class="text-danger">
+                                            {{ (int) $product->calculate->total_amount == $product->calculate->total_amount
+                                                 ? number_format($product->calculate->total_amount)
+                                                 :number_format($product->calculate->total_amount, 2) }}
                                             ฿</h6>
                                     @else
                                         <h6 class="text-danger">{{ number_format($product->price) }} ฿</h6>

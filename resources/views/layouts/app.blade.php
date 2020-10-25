@@ -71,11 +71,13 @@
 
                 <ul class="navbar-nav m-auto">
 
+                    @if (auth()->user()->position != 'employee')
                     <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dashboard') }}">
                             {{ __('Dashboard') }}
                         </a>
                     </li>
+                    @endif
 
                     {{-- Admin menu --}}
                     @if (auth()->user()->position == 'admin')

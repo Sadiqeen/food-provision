@@ -109,19 +109,52 @@
                 @endphp
                 <tr>
                     <td class="text-center">{{ $index }}</td>
-                    <th scope="row">{{ $product->name_en }}</th>
-                    <td class="text-center">{{ $product->desc }}</td>
-                    <td class="text-center">{{ number_format($product->pivot->price) }}</td>
-                    <td class="text-center">{{ $product->pivot->quantity }}</td>
-                    <td class="text-center">{{ number_format($product->pivot->price * $product->pivot->quantity) }}</td>
-                    <td class="text-center">{{ number_format($product->vat ? $vat = (($product->pivot->price * $product->pivot->quantity) * 7) / 100 : 0) }}</td>
-                    <td class="text-center">{{ number_format($product->pivot->price * $product->pivot->quantity + $vat) }}</td>
+                    <th scope="row" id="p-{{ $product->id }}-name">{{ $product->name_en }}</th>
+                    <td class="text-center" id="p-{{ $product->id }}-desc">{{ $product->desc }}</td>
+                    <td class="text-center">
+                                    <span id="p-{{ $product->id }}-price"
+                                          data-main="{{ $product->price }}">
+                                        {{ (int) $product->calculate->price == $product->calculate->price
+                                            ? number_format($product->calculate->price)
+                                            : number_format($product->calculate->price, 2)}}
+                                    </span>
+                    </td>
+                    <td class="text-center" id="p-{{ $product->id }}-quantity">
+                        {{ (int) $product->calculate->quantity == $product->calculate->quantity
+                                ? number_format($product->calculate->quantity)
+                                : number_format($product->calculate->quantity, 2)}}
+                    </td>
+                    <td class="text-center" id="p-{{ $product->id }}-subtotal">
+                        {{ (int) $product->calculate->sub_total == $product->calculate->sub_total
+                                ? number_format($product->calculate->sub_total)
+                                : number_format($product->calculate->sub_total, 2)}}
+                    </td>
+                    <td class="text-center" id="p-{{ $product->id }}-vat">
+                        {{ (int) $product->calculate->vat == $product->calculate->vat
+                                ? number_format($product->calculate->vat)
+                                : number_format($product->calculate->vat, 2)}}
+                    </td>
+                    <td class="text-center" id="p-{{ $product->id }}-total">
+                        {{ number_format($product->calculate->total_amount, 2)}}
+                    </td>
                 </tr>
                 @if ($loop->last)
+                    @if($order->discount)
                     <tr>
                         <td></td>
-                        <th scope="row" colspan="6" class="text-center h5 font-weight-bold">{{ __('Total (THB)') }}</th>
-                        <td class="text-center h5 font-weight-bold">{{ number_format($order->total_price) }}</td>
+                        <th scope="row" colspan="6" class="text-center font-weight-bold">Subtotal (THB)</th>
+                        <td class="text-center font-weight-bold">{{ number_format($order->total_price + $order->discount, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <th scope="row" colspan="6" class="text-center font-weight-bold text-danger">Discount (THB)</th>
+                        <td class="text-center font-weight-bold text-danger">{{ number_format($order->discount, 2) }}</td>
+                    </tr>
+                    @endif
+                    <tr>
+                        <td></td>
+                        <th scope="row" colspan="6" class="text-center h5 font-weight-bold">TOTAL AMOUNT (THB)</th>
+                        <td class="text-center h5 font-weight-bold">{{ number_format($order->total_price, 2) }}</td>
                     </tr>
                 @endif
             @endforeach

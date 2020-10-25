@@ -15,7 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('total_price');
+            $table->float('total_price');
+            $table->float('discount')->nullable();
             $table->string('vessel_name');
             $table->string('purchase_order_number')->nullable();
             $table->string('purchase_order_file')->nullable();

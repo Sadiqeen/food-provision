@@ -61,7 +61,7 @@ class Product extends Model
         'unit_id',
     ];
 
-    protected $appends = ['name'];
+    protected $appends = ['name', 'calculate'];
 
     public function getNameAttribute()
     {
@@ -93,6 +93,36 @@ class Product extends Model
 
     public function order() {
         return $this->belongsToMany('App\Order', 'order_has_product')->withPivot(['quantity', 'price']);
+    }
+
+    public function getCalculateAttribute()
+    {
+        if (isset($this->pivot)) {
+            $sub_total = round(($this->pivot->price * $this->pivot->quantity) , 2);
+            $vat = 0;
+            if ($this->vat) {
+                $vat = round(($sub_total * 7) / 100, 2);
+            }
+            $total_amount = round($sub_total + $vat, 2);
+
+            return (object) [
+                'price' => $this->pivot->price,
+                'quantity' => $this->pivot->quantity,
+                'sub_total' => $sub_total,
+                'vat' => $vat,
+                'total_amount' => $total_amount
+            ];
+        } else {
+            $vat = 0;
+            if ($this->vat) {
+                $vat = round(($this->price * 7) / 100, 2);
+            }
+            return (object) [
+                'vat' => $vat,
+                'total_amount' => $this->price + $vat
+            ];
+        }
+
     }
 
 }
