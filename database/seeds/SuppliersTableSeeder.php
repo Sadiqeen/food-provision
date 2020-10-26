@@ -33,6 +33,56 @@ class SuppliersTableSeeder extends Seeder
                 'created_at' => '2020-09-17 18:53:12',
                 'updated_at' => '2020-09-17 18:53:12',
             ),
+            2 =>
+            array (
+                'id' => 3,
+                'name' => 'SONKHLA MAKET FRUIT',
+                'tel' => '000-000-0004',
+                'email' => 'songkla.market.fruit@supplier.com',
+                'address' => 'SONKHLA MAKET FRUIT, Muang, Songkla',
+                'created_at' => '2020-10-25 15:53:19',
+                'updated_at' => '2020-10-26 09:28:31',
+            ),
+            3 =>
+            array (
+                'id' => 4,
+                'name' => 'SONKHLA MAKET VEGATABLE',
+                'tel' => '000-000-0003',
+                'email' => 'sea.food.market@supplier.com',
+                'address' => 'SONKHLA MAKET VEGATABLE, Muang, Songkla',
+                'created_at' => '2020-10-25 15:53:35',
+                'updated_at' => '2020-10-26 09:27:44',
+            ),
+            4 =>
+            array (
+                'id' => 5,
+                'name' => 'Other',
+                'tel' => '000-000-0005',
+                'email' => 'other@supplier.com',
+                'address' => 'any market, Muang, Songkla',
+                'created_at' => '2020-10-25 15:53:57',
+                'updated_at' => '2020-10-26 09:29:11',
+            ),
+            5 =>
+            array (
+                'id' => 6,
+                'name' => 'BEEF MAKET',
+                'tel' => '000-000-0002',
+                'email' => 'beef.market@supplier.com',
+                'address' => 'BEEF MAKET, Muang, Songkla',
+                'created_at' => '2020-10-25 15:54:13',
+                'updated_at' => '2020-10-26 09:26:58',
+            ),
+            6 =>
+            array (
+                'id' => 7,
+                'name' => 'SEA FOOD MAKET',
+                'tel' => '000-000-0001',
+                'email' => 'sea-food-market@supplier.com',
+                'address' => 'sea-food-market, Muang, Songkla',
+                'created_at' => '2020-10-25 15:54:28',
+                'updated_at' => '2020-10-26 09:26:19',
+            ),
         ));
     }
 }
