@@ -8,7 +8,7 @@
 <div class="container">
     <h3 class="my-3 text-uppercase font-weight-bold d-flex">
         <span class="mr-auto"><i class="fa fa-archive fa-lg mr-2"></i> {{ __('Manage Product') }}</span>
-        <a type="button" href="{{ route('admin.product.upload') }}"  class="btn btn-danger mr-2">{{ __('Import') }}</a>
+        <a type="button" href="{{ route('admin.product.upload') }}"  class="btn btn-secondary mr-2">{{ __('Import') }}</a>
         <a type="button" href="{{ route('admin.product.create') }}"  class="btn btn-secondary">{{ __('Add Product') }}</a>
     </h3>
     <div class="card">
