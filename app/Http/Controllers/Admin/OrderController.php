@@ -7,6 +7,8 @@ use App\Category;
 use App\Customer;
 use App\Http\Controllers\DocController;
 use App\Http\Controllers\GraphController;
+use App\Imports\ExcelImport;
+use App\Imports\ProductImport;
 use App\Order;
 use App\Product;
 use App\Setting;
@@ -14,12 +16,15 @@ use App\Status;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\HigherOrderBuilderProxy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\HigherOrderCollectionProxy;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 use Psy\Util\Json;
 
 class OrderController extends Controller
@@ -77,33 +82,65 @@ class OrderController extends Controller
             ->escapeColumns([])->toJson();
     }
 
+
     /**
-     * Fill order information
+     * Show product list to customer
      *
      * @param Request $request
-     * @return View | RedirectResponse
-     * @throws Exception
+     * @return View
      */
     public function create(Request $request)
     {
-        $customers = Customer::get();
-        if (!$customers->count()) {
-            alert()->info(__('Customer not found'), __('Please create customer data before make an order'));
-            return redirect()->route('admin.customer.create');
+        $categories = Category::all();
+        $productClass = Product::with('category', 'unit');
+
+        if ($request->input('category') && $request->input('category') != 'All') {
+            $productClass->whereHas('category', function($query) use($request) {
+                $query->where('name', 'like', '%' . $request->input('category') . '%');
+            });
         }
 
-        $products = Product::get();
-
-        if (!$products->count()) {
-            alert()->info(__('Product not found'), __('Please create product data before make an order'));
-            return redirect()->route('admin.product.index');
+        if ($request->input('sort')) {
+            switch ($request->input('sort')) {
+                case "Z-A":
+                    if (app()->getLocale() == "th") {
+                        $productClass->orderBy('name_th', 'DESC');
+                    } else {
+                        $productClass->orderBy('name_en', 'DESC');
+                    }
+                    break;
+                case "Price Min to Max":
+                    $productClass->orderBy('price', 'ASC');
+                    break;
+                case "Price Max to Min":
+                    $productClass->orderBy('price', 'DESC');
+                    break;
+                default:
+                    if (app()->getLocale() == "th") {
+                        $productClass->orderBy('name_th', 'ASC');
+                    } else {
+                        $productClass->orderBy('name_en', 'ASC');
+                    }
+            }
         }
 
-        $categories = Category::get();
+        if ($request->input('search')) {
+            if (app()->getLocale() == "th") {
+                $productClass->where('name_th', 'like', '%' . $request->input('search') . '%');
+            } else {
+                $productClass->where('name_en', 'like', '%' . $request->input('search') . '%');
+            }
+        }
+
+        $products = $productClass->paginate(12);
+
+        if (!$products) {
+            alert()->error(__('Error'), __('No product fount'));
+        }
 
         return view('admin.order.create', [
             'categories' => $categories,
-            'selected_category' => $request->input('category')
+            'products' => $products
         ]);
     }
 
@@ -241,7 +278,7 @@ class OrderController extends Controller
      * @param object $product
      * @param int $quantity
      */
-    protected function add_product_to_order($product, $quantity)
+    public function add_product_to_order($product, $quantity)
     {
         $order = \Session::get('order');
 
@@ -251,7 +288,7 @@ class OrderController extends Controller
             'name_th' => $product->name_th,
             'unit' => $product->unit->name,
             'image' => $product->image,
-            'vat' => $product->vat,
+            'vat' => $product->calculate->vat,
             'price' => $product->calculate->total_amount,
             'price_no_vat' => $product->price,
             'quantity' => $quantity
@@ -311,8 +348,10 @@ class OrderController extends Controller
 
     /**
      * Update price
+     *
+     * @param false $save
      */
-    protected function update_price()
+    public function update_price($save = false)
     {
         $order = \Session::get('order');
 
@@ -321,6 +360,9 @@ class OrderController extends Controller
             $price = 0;
             foreach ($each_category['products'] as $product) {
                 $price += $product['quantity'] * $product['price'];
+                if ($save && $product['vat']) {
+                    $price += $product['vat'];
+                }
             }
             $order[$key]['total'] = $price;
             $total += $price;
@@ -348,11 +390,11 @@ class OrderController extends Controller
      *
      * @return RedirectResponse | view
      */
-    public function order_confirm()
+    public function cart()
     {
         if (!(\Session::has('total') && (\Session::get('total') > 0))) {
             alert()->error(__('Error'), __('No item in order'));
-            return redirect()->route('admin.order.create');
+            return redirect()->route(auth()->user()->position . '.order.create');
         }
 
         $customers = Customer::get();
@@ -380,6 +422,7 @@ class OrderController extends Controller
         ]);
 
         $product_list = $this->order_to_array();
+        $this->update_price(true);
 
         $order = new Order();
         $order->total_price = $request->session()->get('total');
@@ -742,6 +785,12 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * Edit quotation
+     *
+     * @param $id
+     * @return Application|Factory|RedirectResponse|View
+     */
     public function quote_edit($id)
     {
         $order = Order::with('product')->where('id', $id)->first();
@@ -756,6 +805,14 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * Update price in quotation
+     *
+     * @param Request $request
+     * @param $id
+     * @param $product
+     * @return JsonResponse
+     */
     public function quote_price_update(Request $request, $id, $product)
     {
         $order = Order::find($id);
@@ -792,6 +849,13 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * Add discount
+     *
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
     public function quote_price_discount(Request $request, $id)
     {
         $order = Order::find($id);
@@ -822,6 +886,12 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * Update price after edit quotation
+     *
+     * @param $id
+     * @return HigherOrderBuilderProxy|HigherOrderCollectionProxy|int|mixed
+     */
     private function quote_update_total_price($id)
     {
         $order = Order::with('product')->find($id);
@@ -840,5 +910,20 @@ class OrderController extends Controller
         $order->save();
 
         return $total_amount;
+    }
+
+    public function upload() {
+        return view('admin.order.upload');
+    }
+
+    public function import(Request $request) {
+        $this->validate($request, [
+            'excel'  => 'required|mimes:xls,xlsx,csv'
+        ]);
+
+        Excel::import(new ExcelImport(), $request->excel);
+
+        alert()->success(__('Success'), __('New order added to the system'));
+        return redirect()->route('admin.order.create');
     }
 }

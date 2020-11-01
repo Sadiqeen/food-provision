@@ -32,6 +32,7 @@ class OrderController extends CustomerOrder
         ]);
 
         $product_list = $this->order_to_array();
+        $this->update_price(true);
 
         $order = new Order();
         $order->total_price = $request->session()->get('total');

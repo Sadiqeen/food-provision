@@ -119,7 +119,7 @@ class Product extends Model
             }
             return (object) [
                 'vat' => $vat,
-                'total_amount' => $this->price + $vat
+                'total_amount' => $this->price
             ];
         }
 

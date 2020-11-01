@@ -193,12 +193,33 @@
 
         const updateCart = function (el, url) {
             clearTimeout(timeout);
+
             timeout = setTimeout(function () {
+
+                let quantity = parseFloat($(el).val())
+
+                if (!quantity) {
+                    quantity = 1
+                    $(el).val(quantity)
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Minimum order quantity is 0.1'
+                    })
+                }
+
+                if (quantity > 1000) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Maximum order quantity is 1000'
+                    })
+                    return false;
+                }
+
                 $.ajax({
                     url: url,
                     type:'POST',
                     data: {
-                        quantity: $(el).val()
+                        quantity: quantity
                     },
                     success: function(data){
                         if (data.status === "success") {
@@ -226,7 +247,7 @@
                         }
                     }
                 });
-            }, 500)
+            }, 1000)
         }
     </script>
 @endpush

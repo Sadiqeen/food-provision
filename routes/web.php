@@ -36,7 +36,7 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::post('order/update/{id}', 'Admin\OrderController@update')->name('order.update');
     Route::get('order/clear', 'Admin\OrderController@clear')->name('order.clear');
     Route::get('order/delete/{id}', 'Customer\OrderController@delete_item')->name('order.delete');
-    Route::get('order/confirm', 'Admin\OrderController@order_confirm')->name('order.confirm');
+    Route::get('order/cart', 'Admin\OrderController@cart')->name('order.cart');
     Route::post('order/save', 'Admin\OrderController@order_save')->name('order.save');
 
     Route::get('order/{id}/update', 'Admin\OrderController@order_update_status')->name('order.update.status');
@@ -44,6 +44,9 @@ Route::group(['prefix' => 'admin' ,'middleware'=>['auth', 'admin'], 'as' => 'adm
     Route::get('order/{id}/cancel', 'Admin\OrderController@order_cancel')->name('order.cancel');
 
     Route::get('order/{id}/call/{doc}', 'Admin\OrderController@call_to_endpoint')->name('order.call');
+
+    Route::get('order/upload', 'Admin\OrderController@upload')->name('order.upload');
+    Route::post('order/import', 'Admin\OrderController@import')->name('order.import');
 
     Route::get('setting', 'Admin\SettingController@edit')->name('setting.edit');
     Route::put('setting/company', 'Admin\SettingController@update_setting')->name('setting.update.setting');

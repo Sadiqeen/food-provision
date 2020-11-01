@@ -57,67 +57,6 @@ class OrderController extends AdminOrder
     }
 
     /**
-     * Show product list to customer
-     *
-     * @param Request $request
-     * @return View
-     */
-    public function create(Request $request)
-    {
-        $categories = Category::all();
-        $productClass = Product::with('category', 'unit');
-
-        if ($request->input('category') && $request->input('category') != 'All') {
-            $productClass->whereHas('category', function($query) use($request) {
-                $query->where('name', 'like', '%' . $request->input('category') . '%');
-            });
-        }
-
-        if ($request->input('sort')) {
-            switch ($request->input('sort')) {
-                case "Z-A":
-                    if (app()->getLocale() == "th") {
-                        $productClass->orderBy('name_th', 'DESC');
-                    } else {
-                        $productClass->orderBy('name_en', 'DESC');
-                    }
-                    break;
-                case "Price Min to Max":
-                    $productClass->orderBy('price', 'ASC');
-                    break;
-                case "Price Max to Min":
-                    $productClass->orderBy('price', 'DESC');
-                    break;
-                default:
-                    if (app()->getLocale() == "th") {
-                        $productClass->orderBy('name_th', 'ASC');
-                    } else {
-                        $productClass->orderBy('name_en', 'ASC');
-                    }
-            }
-        }
-
-        if ($request->input('search')) {
-            if (app()->getLocale() == "th") {
-                $productClass->where('name_th', 'like', '%' . $request->input('search') . '%');
-            } else {
-                $productClass->where('name_en', 'like', '%' . $request->input('search') . '%');
-            }
-        }
-
-        $products = $productClass->paginate(12);
-
-        if (!$products) {
-            alert()->error(__('Error'), __('No product fount'));
-        }
-
-        return view('customer.order.create', [
-            'categories' => $categories,
-            'products' => $products
-        ]);
-    }
-
-    /**
      * Add new item to cart
      *
      * @param Request $request
@@ -181,20 +120,6 @@ class OrderController extends AdminOrder
     }
 
     /**
-     * Show cart
-     */
-    public function cart()
-    {
-        if (!(\Session::has('total') && (\Session::get('total') > 0)))
-        {
-            alert()->error(__('Error'), __('No item in order'));
-            return redirect()->route(auth()->user()->position . '.order.create');
-        }
-
-        return view('admin.order.confirm');
-    }
-
-    /**
      * Save new order to DB
      *
      * @param Request $request
@@ -213,6 +138,7 @@ class OrderController extends AdminOrder
         ]);
 
         $product_list = $this->order_to_array();
+        $this->update_price(true);
 
         $order = new Order();
         $order->total_price = $request->session()->get('total');
