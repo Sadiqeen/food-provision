@@ -129,7 +129,7 @@
                                                 <div class="col-12 mb-3">
                                                     <div class="input-group">
                                                         <input type="number" class="form-control" name="quantity"
-                                                               min="0"
+                                                               min="0" step="0.1"
                                                                id="product-quantity-{{ $product->id }}"
                                                                value="{{ Session::get('order')[$product->category_id]['products'][$product->id]['quantity'] }}">
                                                         <div class="input-group-append">
@@ -153,7 +153,7 @@
                                                 <div class="col-12 mb-3">
                                                     <div class="input-group">
                                                         <input type="number" class="form-control" name="quantity"
-                                                               min="0" value="0"
+                                                               min="0" step="0.1" value="0"
                                                                id="product-quantity-{{ $product->id }}"
                                                                onkeyup="enableAddToCart(this, {{ $product->id }})"
                                                                onkeydown="$(this).trigger('onkeyup')"
