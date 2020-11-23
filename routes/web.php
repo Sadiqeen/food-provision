@@ -131,3 +131,7 @@ Route::group(['prefix' => 'employee' ,'middleware'=>['auth', 'employee'], 'as' =
     Route::put('profile', 'Employee\ProfileController@update')->name('profile.update');
 
 });
+
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});
