@@ -18,7 +18,7 @@ describe('Category module', () => {
     })
 
     beforeEach(() => {
-        Cypress.Cookies.preserveOnce('food_provision_system_session', 'XSRF-TOKEN')
+        Cypress.Cookies.preserveOnce('food_provision_application_session', 'XSRF-TOKEN')
     })
 
     it('switch language', () => {
